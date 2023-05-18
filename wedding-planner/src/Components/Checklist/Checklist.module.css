@@ -1,0 +1,62 @@
+.checklist{
+width: 335px;
+height: 834px;
+background:rgb(255, 255, 255);
+position: relative;
+
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 0.15em;
+    margin-right: 0.5em;
+    border: 0.15em solid #007a7e;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .title {
+    overflow-y: hidden;
+
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 2;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0.4px;
+    margin-bottom: 33px;
+  }
+
+  .numbers{
+    color:rgb(144, 144, 144)
+  }
+
+  .actions{
+    display: flex;
+    justify-content: space-between;
+    width:200px;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+  }
+
+  .checklist button{
+    color: #5F41D9; background-color: transparent; border: none; outline: none; cursor: pointer;
+  }
+
+  .list{
+    /* background-color: rebeccapurple; */
+    height: 700px;
+    /* overflow-y: scroll; */
+
+    /* to do add scroll dynamin */
+  }
+
+  .third{
+    /* width:25%; */
+  }

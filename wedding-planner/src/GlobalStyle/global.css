@@ -1,0 +1,28 @@
+@font-face {
+    font-family: Manrope;
+    src:  url('./Manrope-Regular.ttf');
+  }
+
+
+  @font-face {
+    font-family: Manropelight;
+    src:  url('./Manrope-Light.ttf');
+  }
+
+  
+  @font-face {
+    font-family: American;
+    src:  url('./AmericanTypewriterRegular.ttf');
+  }
+
+    
+  @font-face {
+    font-family: Quicksand;
+    src:  url('./Quicksand-VariableFont_wght.ttf');
+  }
+
+
+  @font-face {
+    font-family:IBMPlexSans ;
+    src: url("./IBMPlexSans-Light.ttf");
+  }

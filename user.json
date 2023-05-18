@@ -1,0 +1,38 @@
+{"_id":{"$oid":"6463f4b5954d0fa53015acdd"},
+    "name": "adi peled",
+    "email": "adipeled224@gmail.com",
+    "phone": "054-1234567",
+    "address": "tel aviv",
+    "weddingDate": "2021-10-10",
+    "weddingLocation": "tel aviv",
+    "weddingTime": "20:00pm",
+    "weddingVenue": "Amare",
+    "weddingVenueAddress": "rishon lezion",
+    "groomName": "Shay",
+    "brideName": "Adi",
+    "checklist": [
+    {"label": "DG", "checked": true },
+    {"label": "Hair", "checked": true },
+    {"label": "Dress", "checked": true },
+    { "label": "Food tasting", "checked": false },
+    { "label": "Alcohol", "checked": false },
+    { "label": "DG", "checked": true }
+    ],
+    "guests": [
+      {
+        "id": 1,
+        "name": "arnon peled",
+        "email": "a@gmail.com",
+        "phone": "239383883",
+        "address": "dfdfdfd",
+       "status": "notReplied", //attending, notAttending, notReplied
+        "table": 1,
+        "seat": 1,
+        "side": "bride",
+        "group": "family",
+        "attending": 3
+      }
+    ]
+    
+}
+

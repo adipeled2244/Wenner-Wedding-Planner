@@ -1,0 +1,35 @@
+.inputs{
+    display: flex
+}
+
+.input{
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+}
+.inputTitle{
+    font-size: 14px;
+    color: #61656C;
+    margin-right: 7px;
+    margin-left: 20px;
+}
+.filtering{
+    padding: 10px;
+    padding-left: 20px;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    gap:18px;
+    background-color:#F5F7FA;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.search{
+    margin-left: 20px;
+}
+
+.filterMainTitle{
+    display: flex;
+    gap:3px
+}

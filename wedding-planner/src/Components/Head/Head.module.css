@@ -1,0 +1,41 @@
+.head {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  position: absolute;
+  top: auto;
+  left: 30px;
+}
+
+.buttons {
+    position: absolute;
+    top: auto;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    width:300px
+
+}
+
+/* .Button{
+    margin-left: 10px;
+    border-radius: 20px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(105, 75, 129);
+    font-size: 12px;
+    padding: 10px 20px;
+  } */
+
+  /* .Button{
+    overflow:"visible" !important
+  } */

@@ -1,0 +1,104 @@
+.header {
+  width: 100%;
+  height: 70px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  position: relative;
+
+}
+
+.menu {
+  position: absolute;
+  top: auto;
+  right: 70px;
+}
+
+.logo {
+  position: absolute;
+  top: auto;
+  left: 28px;
+  color: #5F41D9;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.profile {
+  width: 30px; 
+  height: 30px;
+  border-radius: 50% ; 
+  object-fit: cover; 
+  margin-left: 13px;
+
+}
+
+.list li{
+  overflow: hidden;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  color:rgb(79, 79, 79);
+  font-family: Manropelight;
+  letter-spacing: 0.7px;
+  padding: 0 20px;
+  position: relative;
+}
+
+.list li a,
+.list li img{
+    margin-left: 13px;
+}
+
+.list li a{
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  color:rgb(79, 79, 79);
+  font-family: Manropelight;
+  letter-spacing: 0.7px;
+  padding: 0 20px;
+  position: relative;
+
+}
+
+.list li a::after{
+    content: "";
+    position: absolute;
+    background-color: #5F41D9;
+    height: 3px;
+    width:0;
+    left:0;
+    /* הבעיה כאן בבוטום */
+    bottom: -10px;
+    transition: 0.6s;
+}
+
+.list li a:hover::after{
+    width:100%;
+}
+
+.list li a.active,
+.list li a.active:after{
+    color: #000000;
+    width:100%;
+
+}
+
+
+
+/* .list li a:active{
+    color: #5F41D9;
+} */
+
+
+
+

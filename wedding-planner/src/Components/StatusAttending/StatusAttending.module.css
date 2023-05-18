@@ -1,0 +1,68 @@
+.statuses{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 300px;
+    margin-top: 40px;
+}
+
+.box{
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    width:150px;
+    margin-bottom: 20px;
+    height: 46px ;
+
+}
+
+.attendingLine{
+    width: 2px;
+    height: 40px;
+    background: #5CEB73;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.notRespondLine{
+    width: 2px;
+    height: 40px;
+    background: #D0CFD7;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.notAttendLine{
+    width: 2px;
+    height: 40px;
+    background: #FF9800;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.invitiationLine{
+    width: 2px;
+    height: 40px;
+    background: #AC98FF;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.numbers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.number{
+    font-weight: bold;
+    color: black;
+    font-size: 14px;
+}
+
+.status{
+    font-size: 12px;
+    color: #716E88;
+}

@@ -1,0 +1,66 @@
+.countdown{
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    max-width: 600px;
+}
+
+.container{
+    max-width: 80px;
+    height: 100px;
+    text-align: center;
+    margin-right: 3px;
+    
+}
+
+.number{
+    background-color: #201256;
+    color: white;
+    width: 80px;
+    height: 71px;
+    font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: 100;;
+}
+
+.titleCountdown{
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: -10px;
+}
+
+.rightLeaf{
+background-image: url('../../Assets/images/leafRight.png');
+width: 90px;
+height: 60px;
+background-repeat: no-repeat;
+background-size: contain;
+}
+
+.leftLeaf{
+    background-image: url('../../Assets/images/leafLeft.png');
+    width: 90px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+}
+
+.today{
+    background-color: #201256;
+    color: white;
+    width: 300px;
+    height: 71px;
+    font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: 100;
+    margin-left: 10px;
+}
