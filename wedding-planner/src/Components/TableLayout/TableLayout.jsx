@@ -32,37 +32,37 @@ import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlin
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import Filters from "../Filters/Filters";
-const rows = [
-  {
-    name: "adi",
-    side: "groom",
-    group: "family",
-    email: "adipeeld224@gmail.com",
-    phone: "0626861776",
-    table: 1,
-    invitation: true,
-    attending: 4,
-  },
-  {
-    name: "Nofar",
-    side: "Bride",
-    group: "work",
-    email: "adipeeld224@gmail.com",
-    phone: "0626861776",
-    table: 2,
-    invitation: true,
-    attending: 4,
-  },  {
-    name: "nana",
-    side: "Bride",
-    group: "friends",
-    email: "adipeeld224@gmail.com",
-    phone: "0626861776",
-    table: 2,
-    invitation: true,
-    attending: 4,
-  },
-];
+// const rows = [
+//   {
+//     name: "adi",
+//     side: "groom",
+//     group: "family",
+//     email: "adipeeld224@gmail.com",
+//     phone: "0626861776",
+//     table: 1,
+//     invitation: true,
+//     attending: 4,
+//   },
+//   {
+//     name: "Nofar",
+//     side: "Bride",
+//     group: "work",
+//     email: "adipeeld224@gmail.com",
+//     phone: "0626861776",
+//     table: 2,
+//     invitation: true,
+//     attending: 4,
+//   },  {
+//     name: "nana",
+//     side: "Bride",
+//     group: "friends",
+//     email: "adipeeld224@gmail.com",
+//     phone: "0626861776",
+//     table: 2,
+//     invitation: true,
+//     attending: 4,
+//   },
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -141,7 +141,7 @@ const headCells = [
   },
   {
     id: "attending",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Attending",
   },
@@ -159,8 +159,8 @@ import { useContext } from "react";
 import UserContext from "../../Store/user-context";
 
 function EnhancedTableHead(props) {
-    const usrCtx=useContext(UserContext)
-    console.log(usrCtx)
+    // const usrCtx=useContext(UserContext)
+    // console.log(usrCtx)
   const {
     onSelectAllClick,
     order,
@@ -243,7 +243,7 @@ EnhancedTableHead.propTypes = {
 
 // line for slected
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected,totalGuests } = props;
 
   return (
     // <Toolbar
@@ -264,7 +264,7 @@ function EnhancedTableToolbar(props) {
     <div className={classes.tableTitle}>
       <div className={classes.title}>
         {" "}
-        {numSelected} <span className={classes.miniTitle}>out of 421</span>{" "}
+        {numSelected} <span className={classes.miniTitle}>out of {totalGuests}</span>{" "}
         Guests selected
       </div>
       <Button
@@ -310,6 +310,9 @@ EnhancedTableToolbar.propTypes = {
 
 // main table
 function EnhancedTable() {
+    const usrCtx=useContext(UserContext)
+    console.log(usrCtx)
+  const rows= usrCtx.guests;
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("side");
   const [selected, setSelected] = React.useState([]);
@@ -383,7 +386,7 @@ function EnhancedTable() {
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <Filters/>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} totalGuests={rows.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750, marginTop: "5px" }}
@@ -456,22 +459,25 @@ function EnhancedTable() {
                       )}
                     </TableCell>
                     <TableCell align="left">
-                      <div className={classes.invitation}>
+                      {row.attending!==0 &&<div className={classes.invitation}>
                         {" "}
                         <CheckCircleOutlineOutlinedIcon
                           sx={{
-                            color: row.attending === 0 ? "#000000" : "#009317",
+                            color:  "#009317",
                           }}
                           fontSize="small"
                         />{" "}
                         <span
                           style={{
-                            color: row.attending === 0 ? "#000000" : "#009317",
+                            color: "#009317",
                           }}
                         >
                           {row.attending}
                         </span>
-                      </div>
+                      </div>}
+                       {row.attending===0 &&<div className={classes.invitation}>
+                          {row.status ==="notAttending" ? "Not Attending" : "Not Replied"}
+                      </div>}
                     </TableCell>
                     <TableCell align="left">
                       {" "}
