@@ -12,7 +12,9 @@ import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import UserContext from "../../Store/user-context"; 
 
 const Checklist = (props) => {
-  const userCtx=React.useContext(UserContext);
+  const {user:{
+    checklist,
+  },    updateChecklist}=React.useContext(UserContext);
 
   // const CHECKLIST = [
   //   { label: "DG", checked: true },
@@ -23,22 +25,23 @@ const Checklist = (props) => {
   //   { label: "DG", checked: true },
   // ];
 
-  console.log(userCtx.checklist)
-
-  const [checkList, setCheckList] = useState( [ ]);
+  const [internalCheckList, setInternalCheckList] = useState( []);
 
     useEffect(() => {
-      setCheckList(userCtx.checklist)
-    }, [userCtx.checklist]);
+      if(checklist){
+        setInternalCheckList(checklist)
+      }
+   
+    }, [checklist]);
 
 
   const [newTask, setNewTask] = useState('');
-  const [checkedNumber, setCheckedNumber] = useState( checkList.filter((item) => item.checked).length);
+  const [checkedNumber, setCheckedNumber] = useState( internalCheckList.filter((item) => item.checked).length);
 
   useEffect(() => {
-    const checked= checkList.filter((item) => item.checked).length;
+    const checked= internalCheckList.filter((item) => item.checked).length;
     setCheckedNumber(checked);
-  }, [checkList]);
+  }, [internalCheckList]);
 
   // useEffect(() => {
   //   const checked= checkList.filter((item) => item.checked).length;
@@ -48,9 +51,9 @@ const Checklist = (props) => {
 
 
   const onChangeHandler = (index, checked) => {
-    const newCheckList = [...checkList];
+    const newCheckList = [...internalCheckList];
     newCheckList[index].checked = checked;
-    setCheckList(newCheckList);
+    setInternalCheckList(newCheckList);
     //to do:  send update to backend 
   };
 
@@ -64,32 +67,31 @@ const Checklist = (props) => {
   const handleKeyPressAddTask = (event) => {
     if (event.key === 'Enter') {
         setNewTask(event.target.value);
-        setCheckList([...checkList, { label: event.target.value, checked: false }])
+        setInternalCheckList([...internalCheckList, { label: event.target.value, checked: false }])
         setNewTask('');
          //to do:  send update to backend to all tasks
     }
   };
 
   const handleClear = () => {
-    setCheckList([]);
+    setInternalCheckList([]);
     }  
 
     const handleDone = (event) => {
         //to do:  send update to backend to all tasks
-        userCtx.updateChecklist(checkList)
-        console.log(checkList)
+       updateChecklist(internalCheckList)
 
     }
   return (
     <div className={classes.third}>
     <Card className={classes.checklist}>
       <div className={classes.title}>
-        Checklist<span className={classes.numbers}> {checkedNumber}/{0 || checkList.length}</span>
+        Checklist<span className={classes.numbers}> {checkedNumber}/{0 || internalCheckList.length}</span>
       </div>
     <div className={classes.list}>
       <FormGroup>
-        {checkList.map((task, index) => {
-          console.log(task);
+        {internalCheckList.map((task, index) => {
+        
           return (
             <FormControlLabel
               key={index}

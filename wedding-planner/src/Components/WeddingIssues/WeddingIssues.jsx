@@ -4,20 +4,28 @@ import React from "react";
 import UserContext from "../../Store/user-context";
 
 const WeddingIssues = () => {
-const userCtx=React.useContext(UserContext);
-const brideName=userCtx.brideName;
-const groomName=userCtx.groomName;
-const weddingDate=userCtx.weddingDate;
+// const userCtx=React.useContext(UserContext);
+const {user:{
+  brideName,
+  groomName,
+  weddingDate,
+  weddingTime,
+  img: imgWedding,
+
+  weddingVenue,
+  weddingVenueAddress,
+
+}
+} = React.useContext(UserContext);
+
 const options = { 
   year: 'numeric', 
   month: 'long', 
   day: 'numeric' 
 };
 const weddingDateFormated=new Date(weddingDate).toLocaleDateString("en-US", options);
-const weddingTime=userCtx.weddingTime;
-const imgWedding=userCtx.img;  
-const weddingVenue=userCtx.weddingVenue;
-const weddingVenueAddress=userCtx.weddingVenueAddress;
+// const weddingTime=userCtx.weddingTime;
+
 
   return (
     <div className={classes.Weddingissues}>

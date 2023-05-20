@@ -1,0 +1,45 @@
+/* .addGuest form{
+    display: flex;
+    flex-direction: column;
+    background-color: 
+    #F5F7FA;
+    gap: 20px;
+    padding: 24px 36px;
+    margin-top: 12px;
+} */
+
+.addGuest form label{
+    margin-bottom: 4px;
+ 
+}
+
+.inputBox{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
+.inputBox input{
+    width: 100%;
+    height: 38px;
+    border: 1px solid #E4E4E4;
+    border-radius: 4px;
+    padding: 0 16px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #000000;
+    border: 0.0625rem solid #ced4da;
+
+}
+
+.inputBox label{
+    font-size: 0.875rem;
+    margin-top: 15px;
+    margin-bottom: 3px;
+    word-break: break-word;
+    font-weight: 500;}
+
+
+.title{
+    font-size: 24px;
+}

@@ -7,5 +7,6 @@
     /* overflow-y: hidden; */
     padding:20px;
     overflow-x: hidden;
+    flex-wrap: wrap;
 
 }

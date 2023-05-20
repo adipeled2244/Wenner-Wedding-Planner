@@ -32,6 +32,7 @@ import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlin
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import Filters from "../Filters/Filters";
+import { useEffect } from "react";
 // const rows = [
 //   {
 //     name: "adi",
@@ -159,8 +160,7 @@ import { useContext } from "react";
 import UserContext from "../../Store/user-context";
 
 function EnhancedTableHead(props) {
-    // const usrCtx=useContext(UserContext)
-    // console.log(usrCtx)
+
   const {
     onSelectAllClick,
     order,
@@ -310,15 +310,21 @@ EnhancedTableToolbar.propTypes = {
 
 // main table
 function EnhancedTable() {
-    const usrCtx=useContext(UserContext)
-    console.log(usrCtx)
-  const rows= usrCtx.guests;
+  console.log("rendering table")
+    const {user:{
+      guests
+    }}=useContext(UserContext)
+    console.log(guests)
+
+  const rows= guests;
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("side");
+  const [orderBy, setOrderBy] = React.useState("name");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
+
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -374,13 +380,37 @@ function EnhancedTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+
+
+    const rowsAfterFilter=React.useMemo(()=>{
+
+      const filtersMap = new Map([
+        ['attending', 'all'],
+        ['side', 'all'],
+        ['group', 'all']
+      ]);    
+      return rows.filter(row=>{
+        if(row.attending === filtersMap.get('attending') || filtersMap.get('attending')=== "all"){
+          return true
+        }
+        if(row.group === filtersMap.get('group') || filtersMap.get('group')=== "all"){
+          return true
+        }
+        if(row.side === filtersMap.get('side') || filtersMap.get('side')=== "all"){
+          return true
+        }
+        return false;
+        // to ad:: filter 
+      })},[rows])
+
   const visibleRows = React.useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
+    //changerows to rowsafterfilter
+      stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rowsPerPage,rows]
   );
   return (
     <Box sx={{ width: "100%" }}>
@@ -405,7 +435,7 @@ function EnhancedTable() {
               {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row.name);
                 const labelId = `enhanced-table-checkbox-${index}`;
-
+                
                 return (
                   <TableRow
                     // hover
@@ -413,7 +443,7 @@ function EnhancedTable() {
                     // role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
+                    key={index}
                     selected={isItemSelected}
                     // sx={{ cursor: "pointer" }}
                   >
@@ -457,6 +487,13 @@ function EnhancedTable() {
                           <span>sent</span>
                         </div>
                       )}
+                        {!row.invitation && (
+                        <div className={classes.invitation}>
+                          {" "}
+                          {/* <CheckCircleOutlineOutlinedIcon fontSize="small" />{" "} */}
+                          <span>Not sent yet</span>
+                        </div>
+                      )}
                     </TableCell>
                     <TableCell align="left">
                       {row.attending!==0 &&<div className={classes.invitation}>
@@ -467,9 +504,10 @@ function EnhancedTable() {
                           }}
                           fontSize="small"
                         />{" "}
-                        <span
+                        <span 
                           style={{
                             color: "#009317",
+  
                           }}
                         >
                           {row.attending}

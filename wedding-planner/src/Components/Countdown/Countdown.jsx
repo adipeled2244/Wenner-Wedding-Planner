@@ -5,8 +5,10 @@ import UserContext from "../../Store/user-context";
 
 // to do: change from this date to props
  const Countdown = (props) => {
-  const userCtx=React.useContext(UserContext);
-  const targetTime = moment(userCtx.weddingDate);
+  const {user: {
+    weddingDate
+  }}=React.useContext(UserContext);
+  const targetTime = moment(weddingDate);
 
   const [currentTime, setCurrentTime] = useState(moment());
   const timeBetween = moment.duration(targetTime.diff(currentTime));

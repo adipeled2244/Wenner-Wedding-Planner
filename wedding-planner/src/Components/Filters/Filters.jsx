@@ -60,6 +60,7 @@ const Filters=()=>{
           //   { label: "Quote", value: "quote" },
           // ]}
           data={[
+            { label: "All", value: "all" },
             { label: "Bride and Groom", value: "brideAndGroom" },
             { label: "Bride", value: "bride" },
             { label: "Groom", value: "groom" },

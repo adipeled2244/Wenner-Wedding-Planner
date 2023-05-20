@@ -9,7 +9,7 @@ const PieChartCmp = ({id,colors,data,icon,total,internalTitle}) => {
     let  chart;
 
     function getData(year) {
-            const output = Object.entries(data).map((entry) => {
+        const output = Object.entries(data).map((entry) => {
         const [category, value] = entry;
         return [category, value];
       });
