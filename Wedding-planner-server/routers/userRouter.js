@@ -6,6 +6,7 @@ userRouter.get('/', userController.getUsers);
 userRouter.get('/:userId', userController.getUser);
 userRouter.post('/', userController.addUser);
 userRouter.patch('/:userId', userController.updateUser);
+userRouter.post('/:userId', userController.addGuestToUser);
 
 
 // more to tables 

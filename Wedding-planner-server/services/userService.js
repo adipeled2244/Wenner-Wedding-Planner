@@ -7,7 +7,8 @@ module.exports = {
   addUser,
   updateUser,
   getUser,
-  getUsers
+  getUsers,
+  addGuestToUser
 };
 
 
@@ -26,6 +27,13 @@ async function addUser(params) {
   async function updateUser(id, params) {
     logger.info(`[updateUser] - ${path.basename(__filename)}`);
     return await User.findByIdAndUpdate(id, params);
+  }
+
+  async function addGuestToUser(id, params) {
+    logger.info(`[addGuestToUser] - ${path.basename(__filename)}`);
+    const user = await User.findById(id);
+    user.guests.push(params.guest);
+    return await user.save();
   }
 
   async function getUser(id) {
