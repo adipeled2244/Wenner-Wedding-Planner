@@ -33,6 +33,7 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import Filters from "../Filters/Filters";
 import { useEffect } from "react";
+
 // const rows = [
 //   {
 //     name: "adi",
@@ -243,7 +244,9 @@ EnhancedTableHead.propTypes = {
 
 // line for slected
 function EnhancedTableToolbar(props) {
-  const { numSelected,totalGuests } = props;
+
+  const { numSelected,totalGuests ,selected,sendInvitations} = props;
+
 
   return (
     // <Toolbar
@@ -271,7 +274,7 @@ function EnhancedTableToolbar(props) {
         variant="contained"
         size="small"
         key="send"
-        onClick={() => {}}
+        onClick={sendInvitations}
         startIcon={<SendIcon />}
         style={{
           borderRadius: 35,
@@ -309,26 +312,30 @@ EnhancedTableToolbar.propTypes = {
 };
 
 // main table
-function EnhancedTable() {
-    const {user:{
-      guests
-    }}=useContext(UserContext)
+function EnhancedTable({rowsAfterFilter}) {
+    const {updateGuests}=useContext(UserContext)
 
-  const rows= guests;
-  console.log(rows)
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("name");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
-  const [rowsAfterFilter, setRowsAfterFilter] = React.useState(rows);
+  // const [rowsAfterFilter, setRowsAfterFilter] = React.useState(rows);
 
 
-  useEffect(() => {
-    setRowsAfterFilter(rows)
-  }, [rows])
+  // useEffect(() => {
+  //   setRowsAfterFilter(rows)
+  // }, [rows])
 
+  const sendInvitations= ()=>{
+    console.log("send invitations")
+    console.log(selected)
+    updateGuests(selected,{invitation:true})
+    
+    setSelected([])
+   
+  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -338,19 +345,19 @@ function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rowsAfterFilter.map((n) => n._id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, _id) => {
+    const selectedIndex = selected.indexOf(_id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, _id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -378,49 +385,49 @@ function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (_id) => selected.indexOf(_id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowsAfterFilter.length) : 0;
 
  
-    //call from filter component
-  const filterChange= (filtersMap)=>{
-    let filteredRows=[]
-    filteredRows= rows.filter(row=>{
-      if(((row.attending == filtersMap.get('attending')) || filtersMap.get('attending')== "all")&&
-        ((row.group == filtersMap.get('group')) || filtersMap.get('group')== "all") &&
-        ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all")
-      ){
-        return true
-      }
-      return false;
+  //   //call from filter component
+  // const filterChange= (filtersMap)=>{
+  //   let filteredRows=[]
+  //   filteredRows= rows.filter(row=>{
+  //     if(((row.attending == filtersMap.get('attending')) || filtersMap.get('attending')== "all")&&
+  //       ((row.group == filtersMap.get('group')) || filtersMap.get('group')== "all") &&
+  //       ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all")
+  //     ){
+  //       return true
+  //     }
+  //     return false;
 
-  })
-  setRowsAfterFilter(filteredRows)
-  }
+  // })
+  // setRowsAfterFilter(filteredRows)
+  // }
 
   //change table sort ,order, page
   const visibleRows = React.useMemo(
     () =>
     //changerows to rowsafterfilter
     {
-      console.log("inside")
-      console.log(rowsAfterFilter)
       return stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       )
     },
-    [order, orderBy, page, rowsPerPage,rows,rowsAfterFilter,guests]
+    [order, orderBy, page, rowsPerPage,rowsAfterFilter]
   );
+
+
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <Filters onFilterChange={filterChange} />
-        <EnhancedTableToolbar numSelected={selected.length} totalGuests={rows.length} />
+        {/* <Filters onFilterChange={filterChange} /> */}
+        <EnhancedTableToolbar numSelected={selected.length} totalGuests={rowsAfterFilter.length} selected={selected} sendInvitations={sendInvitations} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750, marginTop: "5px" }}
@@ -433,11 +440,11 @@ function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={rowsAfterFilter.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
+                const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
                 
                 return (
@@ -453,7 +460,7 @@ function EnhancedTable() {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        onClick={(event) => handleClick(event, row.name)}
+                        onClick={(event) => handleClick(event, row._id)}
                         checkedIcon={<CheckBoxOutlinedIcon />}
                         sx={{
                           "&.Mui-checked": {
@@ -528,9 +535,7 @@ function EnhancedTable() {
                           <ForwardToInboxOutlinedIcon
                             fontSize="small"
                             sx={{ cursor: "pointer" }}
-                            onClick={() => {
-                              console.log("send");
-                            }}
+                            onClick={() => {}}
                           />
                         </Tooltip>
                         <Tooltip title="Delete">
@@ -562,7 +567,7 @@ function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[25, 50, 100]} //5 10 25
           component="div"
-          count={rows.length}
+          count={rowsAfterFilter.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -1,20 +1,9 @@
 import React,{useEffect} from "react";
 import UserContext from "./user-context";
-import {updateUser, addGuestToUser,getUser} from "../ServerApi/userApi";
-import { debounce } from "lodash";
-
-const updateUserById=async(id,body)=>{
-    try{
-    const res= await updateUser(id,body);
-    return res;
-    }catch (err) {
-        };
-    }
-
-
+import {updateUser, addGuestToUser,getUser,updateUserGuest} from "../ServerApi/userApi";
+// import { debounce } from "lodash";
 
 function UserProvider(props) {
- 
   const [user, setUser] = React.useState({ 
     _id : "1" ,
     name: "",
@@ -34,7 +23,7 @@ function UserProvider(props) {
   });
 
   async function updateChecklist(checklist){
-    const res=await updateUserById(user._id,{checklist});
+    const res=await updateUser(user._id,{checklist});
     if(res.status===200){
       setUser({...user,checklist});
     }
@@ -46,6 +35,30 @@ function UserProvider(props) {
     if(res.status===200){
       setUser({...user,guests:[...user.guests,guest]});
     }
+  }
+
+  async function updateGuests(guests,body){
+    const updatedGuests = await Promise.all(
+      guests.map(async (guestId) => {
+        const res = await updateUserGuest(user._id, guestId,body);
+        if (res.status === 200) {
+          const updatedGuest = user.guests.find((guest) => guest._id === guestId);
+          return {
+            ...updatedGuest,
+            invitation: true
+          };
+        }
+        return null; // Failed to update, return null or handle error as needed
+      })
+    );
+  
+    // Replace the old guests with the updated ones
+    const finalGuests = user.guests.map((guest) => {
+      const updatedGuest = updatedGuests.find((updated) => updated && updated._id === guest._id);
+      return updatedGuest ? updatedGuest : guest;
+    });
+  
+    setUser({ ...user, guests: finalGuests });
   }
 
 
@@ -68,7 +81,8 @@ function UserProvider(props) {
     user ,
     setUser,
     updateChecklist,
-    addGuest
+    addGuest,
+    updateGuests
   };
 
   return (

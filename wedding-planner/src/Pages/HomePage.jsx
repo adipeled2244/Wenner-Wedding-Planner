@@ -14,6 +14,9 @@ import { useContext } from "react";
 import UserContext from "../Store/user-context";
 
  import { useEffect } from "react";
+ import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const HomePage = (props) => {
 
   const {user}=useContext(UserContext);
@@ -27,6 +30,20 @@ const HomePage = (props) => {
       <Statuses  />
       <Checklist  />
     </div>
+    <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
   </>;
 };
 

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+
 import Head from "../Components/Head/Head";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
@@ -7,6 +8,7 @@ import GetAppIcon from "@mui/icons-material/GetApp";
 import EnhancedTable from "../Components/TableLayout/TableLayout";
 import { CSVLink, CSVDownload } from "react-csv";
 import UserContext from "../Store/user-context";
+import Filters from "../Components/Filters/Filters";  
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -22,6 +24,8 @@ const style = {
   p: 4,
 };
 import AddGuestForm from "../Components/AddGuestForm/AddGuestForm";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ToCsv = (data) => {
   let dataToCsv = [];
@@ -42,9 +46,8 @@ const GuestPage = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  
   let dataToCsv = ToCsv(guests);
-
-  7;
   const headerName = "Guests";
   const buttonsHeader = [
     <CSVLink data={dataToCsv} filename={"guests.csv"}>
@@ -82,11 +85,34 @@ const GuestPage = (props) => {
       Add Guest{" "}
     </Button>,
   ];
+  const [rowsAfterFilter, setRowsAfterFilter] = React.useState(guests);
+
+  useEffect(() => {
+    setRowsAfterFilter(guests)
+  }, [guests])
+
+    //call from filter component
+    const filterChange= (filtersMap)=>{
+      let filteredRows=[]
+      filteredRows= guests.filter(row=>{
+        if(((row.attending == filtersMap.get('attending')) || filtersMap.get('attending')== "all")&&
+          ((row.group == filtersMap.get('group')) || filtersMap.get('group')== "all") &&
+          ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all")
+        ){
+          return true
+        }
+        return false;
+  
+    })
+    setRowsAfterFilter(filteredRows)
+    }
+
 
   return (
     <>
       <Head buttonsHeader={buttonsHeader} headerName={headerName} />
-      <EnhancedTable />
+      <Filters onFilterChange={filterChange}  />
+      <EnhancedTable rowsAfterFilter={rowsAfterFilter } />
       <Modal
         open={open}
         onClose={handleClose}
@@ -97,6 +123,20 @@ const GuestPage = (props) => {
           <AddGuestForm onClose={handleClose} />
         </Box>
       </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
     </>
   );
 };

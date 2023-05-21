@@ -11,9 +11,12 @@ import {
   NumberInput,
 } from "@mantine/core";
 import UserContext from "../../Store/user-context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const AddGuestForm = ({onClose}) => {
-  const {addGuest} = useContext(UserContext);
+const AddGuestForm = ({ onClose }) => {
+  const { addGuest } = useContext(UserContext);
+  // const notify = () => toast("Wow so easy!");
 
   const form = useForm({
     initialValues: {
@@ -29,21 +32,48 @@ const AddGuestForm = ({onClose}) => {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // event.preventDefault();
 
     const guest = form.values;
-    if(guest.attending>0){
-      guest.status="attending";
+    if (guest.attending > 0) {
+      guest.status = "attending";
+    } else {
+      guest.status = "notAttending";
     }
-    else{
-      guest.status="notAttending";
+
+    try{
+       await addGuest(guest);
+        toast.success('Add guest successfully!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
     }
+      catch(err){
+        toast.error('Add guest failed!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+
+      }
+
+      onClose();
+    }
+   
     
-     addGuest(guest);
-     onClose();
-    }
- 
+
 
   return (
     <div className={classes.addGuest}>
@@ -120,30 +150,32 @@ const AddGuestForm = ({onClose}) => {
             max={7}
             {...form.getInputProps("attending")}
           />
-
-        
         </Box>
         <Group position="center" mt="xl">
-            <Button type="submit" mt="md" color="grape" radius="xl"
-              styles={(theme) => ({
-                root: {
-                  backgroundColor: '#5f41d9',
-                  border: 0,
-                  '&:not([data-disabled])': theme.fn.hover({
-                    backgroundColor: theme.fn.darken('#8069db', 0.05),
-                  }),
-                },
-      
-                leftIcon: {
-                  marginRight: theme.spacing.md,
-                },
-              })}
-            
-            >
-              Add guest
-            </Button>
-          </Group>
+          <Button
+            type="submit"
+            mt="md"
+            color="grape"
+            radius="xl"
+            styles={(theme) => ({
+              root: {
+                backgroundColor: "#5f41d9",
+                border: 0,
+                "&:not([data-disabled])": theme.fn.hover({
+                  backgroundColor: theme.fn.darken("#8069db", 0.05),
+                }),
+              },
+
+              leftIcon: {
+                marginRight: theme.spacing.md,
+              },
+            })}
+          >
+            Add guest
+          </Button>
+        </Group>
       </form>
+  
     </div>
   );
 };

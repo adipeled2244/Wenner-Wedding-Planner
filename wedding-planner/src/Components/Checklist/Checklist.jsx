@@ -10,6 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from '@mui/material/Button';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import UserContext from "../../Store/user-context"; 
+import { ToastContainer, toast } from "react-toastify";
 
 const Checklist = (props) => {
   const {user:{
@@ -77,9 +78,35 @@ const Checklist = (props) => {
     setInternalCheckList([]);
     }  
 
-    const handleDone = (event) => {
+    const handleDone = async (event) => {
         //to do:  send update to backend to all tasks
-       updateChecklist(internalCheckList)
+        try{
+          await updateChecklist(internalCheckList)
+          toast.success('Checklist updated successfully!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+       }
+         catch(err){
+           toast.error('Add guest failed!', {
+             position: "top-right",
+             autoClose: 5000,
+             hideProgressBar: false,
+             closeOnClick: true,
+             pauseOnHover: true,
+             draggable: true,
+             progress: undefined,
+             theme: "light",
+             });
+   
+         }
+
 
     }
   return (
