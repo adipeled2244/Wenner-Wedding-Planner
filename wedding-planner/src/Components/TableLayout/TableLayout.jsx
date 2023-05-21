@@ -392,22 +392,6 @@ function EnhancedTable({rowsAfterFilter}) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowsAfterFilter.length) : 0;
 
  
-  //   //call from filter component
-  // const filterChange= (filtersMap)=>{
-  //   let filteredRows=[]
-  //   filteredRows= rows.filter(row=>{
-  //     if(((row.attending == filtersMap.get('attending')) || filtersMap.get('attending')== "all")&&
-  //       ((row.group == filtersMap.get('group')) || filtersMap.get('group')== "all") &&
-  //       ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all")
-  //     ){
-  //       return true
-  //     }
-  //     return false;
-
-  // })
-  // setRowsAfterFilter(filteredRows)
-  // }
-
   //change table sort ,order, page
   const visibleRows = React.useMemo(
     () =>
@@ -420,8 +404,6 @@ function EnhancedTable({rowsAfterFilter}) {
     },
     [order, orderBy, page, rowsPerPage,rowsAfterFilter]
   );
-
-
 
   return (
     <Box sx={{ width: "100%" }}>

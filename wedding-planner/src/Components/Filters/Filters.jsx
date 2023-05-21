@@ -10,12 +10,15 @@ const Filters = ({ onFilterChange }) => {
   const [attending, setAttending] = useState("all");
   const [side, setSide] = useState("all");
   const [group, setGroup] = useState("all");
+  const [search, setSearch] = useState("");
 
   const handleAttendingChange = (value) => {
     const filtersMap = new Map([
       ["attending", value],
       ["side", side],
       ["group", group],
+      ["search", search]
+
     ]);
     onFilterChange(filtersMap);
     setAttending(value);
@@ -25,6 +28,8 @@ const Filters = ({ onFilterChange }) => {
       ["attending", attending],
       ["side", value],
       ["group", group],
+      ["search", search]
+
     ]);
     onFilterChange(filtersMap);
     setSide(value);
@@ -34,6 +39,8 @@ const Filters = ({ onFilterChange }) => {
       ["attending", attending],
       ["side", side],
       ["group", value],
+      ["search", search],
+
     ]);
     onFilterChange(filtersMap);
     setGroup(value);
@@ -44,13 +51,28 @@ const Filters = ({ onFilterChange }) => {
       ["attending", "all"],
       ["side", "all"],
       ["group", "all"],
+      ["search", ""],
+
     ]);
     onFilterChange(filtersMap);
     setAttending("all");
     setSide("all");
     setGroup("all");
+    setSearch("");
   };
-  
+
+  const handleSearchChange = (event) => {
+    const filtersMap = new Map([
+      ["attending", attending],
+      ["side", side],
+      ["group", group],
+      ["search", event.target.value],
+    ]);
+    onFilterChange(filtersMap);
+    setSearch(event.target.value);
+  };
+
+
   return (
     <div className={classes.filtering}>
       <div className={classes.filterMainTitle}>
@@ -153,6 +175,7 @@ const Filters = ({ onFilterChange }) => {
             radius="xl"
             placeholder="Search"
             icon={<SearchIcon size={14} />}
+            value={search} onChange={handleSearchChange}
           />
         </div>
         <div className={classes.input+ " " +classes.clearBtn}>

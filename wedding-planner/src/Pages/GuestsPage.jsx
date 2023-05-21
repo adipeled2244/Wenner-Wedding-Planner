@@ -94,10 +94,14 @@ const GuestPage = (props) => {
     //call from filter component
     const filterChange= (filtersMap)=>{
       let filteredRows=[]
+     
+
       filteredRows= guests.filter(row=>{
+      
         if(((row.attending == filtersMap.get('attending')) || filtersMap.get('attending')== "all")&&
           ((row.group == filtersMap.get('group')) || filtersMap.get('group')== "all") &&
-          ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all")
+          ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all") &&
+          ( !filtersMap.get('search') || row.name.toLowerCase().includes(filtersMap.get('search').toLowerCase()))
         ){
           return true
         }

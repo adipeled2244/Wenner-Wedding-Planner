@@ -1,8 +1,6 @@
 import React from "react";
 import classes from "./Head.module.css";
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import GetAppIcon from '@mui/icons-material/GetApp';
+
 const Head = (props) => {
 
   const { buttonsHeader, headerName } = props;

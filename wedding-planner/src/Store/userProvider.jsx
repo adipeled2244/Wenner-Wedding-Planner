@@ -32,6 +32,7 @@ function UserProvider(props) {
 
   async function addGuest(guest){
     const res=await addGuestToUser(user._id,{guest});
+    guest._id=res.data.guest._id;
     if(res.status===200){
       setUser({...user,guests:[...user.guests,guest]});
     }
