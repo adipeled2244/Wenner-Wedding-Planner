@@ -6,9 +6,16 @@ import Head from "../Components/Head/Head";
 
 const TablesPage=(props)=>{
 
+  const onDownload=()=>{
+    console.log("download");
+  }
+  const onAddTable=()=>{
+    console.log("add table");
+  }
+  
     const headerName = "Tables";
     const buttonsHeader = [
-      
+    
       <Button   variant="contained"  key="download" onClick={onDownload}  startIcon={<GetAppIcon />}  size="small" style={{
         borderRadius: 35,
         color: 'black',

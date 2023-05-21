@@ -3,8 +3,44 @@ import { Select } from "@mantine/core";
 import { TextInput } from '@mantine/core';
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
+import React,{useState} from "react";
 
-const Filters=()=>{
+const Filters=({onFilterChange})=>{
+  const [attending, setAttending] = useState('all');
+  const [side, setSide] = useState('all');
+  const [group, setGroup] = useState('all');
+
+  const handleAttendingChange = (value) => {
+    const filtersMap = new Map([
+      ['attending', value],
+      ['side', side],
+      ['group', group]
+    ]); 
+    onFilterChange(filtersMap)
+    setAttending(value);
+
+  };
+  const handleSideChange = (value) => {
+    const filtersMap = new Map([
+      ['attending', attending],
+      ['side', value],
+      ['group', group]
+    ]); 
+    onFilterChange(filtersMap)
+    setSide(value);
+
+  };
+  const handleGroupChange = (value) => {
+    const filtersMap = new Map([
+      ['attending', attending],
+      ['side', side],
+      ['group', value]
+    ]); 
+    onFilterChange(filtersMap)
+    setGroup(value);
+
+  };
+
     return <div className={classes.filtering}>
     <div className={classes.filterMainTitle}><TuneIcon /> <span>Filter by: </span></div>
     <div className={classes.inputs}>
@@ -18,7 +54,8 @@ const Filters=()=>{
           }}
           radius="xl"
           size="xs"
-          required
+          value={attending} 
+          onChange={handleAttendingChange}
           // value={form.values.edgeType}
           // onChange={(value) =>
           // //   form.setFieldValue("edgeType", value.toLowerCase())
@@ -49,7 +86,8 @@ const Filters=()=>{
           }}
           radius="xl"
           size="xs"
-          required
+          
+          value={side} onChange={handleSideChange}
           // value={form.values.edgeType}
           // onChange={(value) =>
           // //   form.setFieldValue("edgeType", value.toLowerCase())
@@ -77,7 +115,8 @@ const Filters=()=>{
           }}
           radius="xl"
           size="xs"
-          required
+          
+          value={group} onChange={handleGroupChange}
           // value={form.values.edgeType}
           // onChange={(value) =>
           // //   form.setFieldValue("edgeType", value.toLowerCase())

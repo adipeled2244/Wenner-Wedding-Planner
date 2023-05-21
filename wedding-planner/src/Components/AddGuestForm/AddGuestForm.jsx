@@ -39,7 +39,7 @@ const AddGuestForm = ({onClose}) => {
     else{
       guest.status="notAttending";
     }
-    console.log(guest)
+    
      addGuest(guest);
      onClose();
     }

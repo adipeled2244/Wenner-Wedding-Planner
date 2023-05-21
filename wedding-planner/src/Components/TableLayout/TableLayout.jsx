@@ -310,20 +310,24 @@ EnhancedTableToolbar.propTypes = {
 
 // main table
 function EnhancedTable() {
-  console.log("rendering table")
     const {user:{
       guests
     }}=useContext(UserContext)
-    console.log(guests)
 
   const rows= guests;
+  console.log(rows)
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("name");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [rowsAfterFilter, setRowsAfterFilter] = React.useState(rows);
 
+
+  useEffect(() => {
+    setRowsAfterFilter(rows)
+  }, [rows])
 
 
   const handleRequestSort = (event, property) => {
@@ -380,42 +384,42 @@ function EnhancedTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+ 
+    //call from filter component
+  const filterChange= (filtersMap)=>{
+    let filteredRows=[]
+    filteredRows= rows.filter(row=>{
+      if(((row.attending == filtersMap.get('attending')) || filtersMap.get('attending')== "all")&&
+        ((row.group == filtersMap.get('group')) || filtersMap.get('group')== "all") &&
+        ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all")
+      ){
+        return true
+      }
+      return false;
 
+  })
+  setRowsAfterFilter(filteredRows)
+  }
 
-    const rowsAfterFilter=React.useMemo(()=>{
-
-      const filtersMap = new Map([
-        ['attending', 'all'],
-        ['side', 'all'],
-        ['group', 'all']
-      ]);    
-      return rows.filter(row=>{
-        if(row.attending === filtersMap.get('attending') || filtersMap.get('attending')=== "all"){
-          return true
-        }
-        if(row.group === filtersMap.get('group') || filtersMap.get('group')=== "all"){
-          return true
-        }
-        if(row.side === filtersMap.get('side') || filtersMap.get('side')=== "all"){
-          return true
-        }
-        return false;
-        // to ad:: filter 
-      })},[rows])
-
+  //change table sort ,order, page
   const visibleRows = React.useMemo(
     () =>
     //changerows to rowsafterfilter
-      stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
+    {
+      console.log("inside")
+      console.log(rowsAfterFilter)
+      return stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage,rows]
+      )
+    },
+    [order, orderBy, page, rowsPerPage,rows,rowsAfterFilter,guests]
   );
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <Filters/>
+        <Filters onFilterChange={filterChange} />
         <EnhancedTableToolbar numSelected={selected.length} totalGuests={rows.length} />
         <TableContainer>
           <Table
