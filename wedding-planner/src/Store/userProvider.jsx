@@ -62,6 +62,14 @@ function UserProvider(props) {
     setUser({ ...user, guests: finalGuests });
   }
 
+  async function updateTables(tables){
+    const res=await updateUser(user._id,{tables});
+    if(res.status===200){
+      setUser({...user,tables});
+    }
+   
+  }
+
 
   useEffect(()=>{
     async function fetchData(){
@@ -83,7 +91,8 @@ function UserProvider(props) {
     setUser,
     updateChecklist,
     addGuest,
-    updateGuests
+    updateGuests,
+    updateTables
   };
 
   return (

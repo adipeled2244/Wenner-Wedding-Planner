@@ -94,7 +94,7 @@ const Checklist = (props) => {
             });
        }
          catch(err){
-           toast.error('Add guest failed!', {
+           toast.error('Checklist updating failed!', {
              position: "top-right",
              autoClose: 5000,
              hideProgressBar: false,
