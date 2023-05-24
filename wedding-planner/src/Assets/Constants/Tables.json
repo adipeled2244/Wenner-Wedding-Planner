@@ -1,0 +1,36 @@
+{
+    "tables":[
+        {
+            "id"    : 1,
+            "size": "large",
+            "shape":"circle",
+            "maxPeople":"9",
+            "sizeDetails":"120''"
+        },
+        {
+            "id"    : 2,
+            "size": "large",
+            "shape":"rectangle",
+            "maxPeople":"8",
+            "sizeDetails":"140''X72''"
+        },{
+            "id"    : 3,
+            "size": "large",
+            "shape":"elipsis",
+            "maxPeople":"10",
+            "sizeDetails":"140''X72''"
+        },{
+            "id"    : 4,
+            "size": "large",
+            "shape":"elipsis",
+            "maxPeople":"10",
+            "sizeDetails":"140''X72''"
+        },{
+            "id"    :5,
+            "size": "large",
+            "shape":"elipsis",
+            "maxPeople":"10",
+            "sizeDetails":"140''X72''"
+        }
+    ]
+}

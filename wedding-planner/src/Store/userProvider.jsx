@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import UserContext from "./user-context";
-import {updateUser, addGuestToUser,getUser,updateUserGuest} from "../ServerApi/userApi";
+import {updateUser, addGuestToUser,getUser,updateUserGuest,addTableToUser} from "../ServerApi/userApi";
 // import { debounce } from "lodash";
 
 function UserProvider(props) {
@@ -35,6 +35,20 @@ function UserProvider(props) {
     guest._id=res.data.guest._id;
     if(res.status===200){
       setUser({...user,guests:[...user.guests,guest]});
+    }
+  }
+
+  async function addTable(table){
+   const tableNumber=user.tables.length ?user.tables[user.tables.length-1].tableNumber +1 :1;
+   table.tableNumber=tableNumber;
+   table.x=0;
+   table.y=0;
+   table.selectedMaxSeats=Number(table.tableMaxPeople);
+    const res=await addTableToUser(user._id,{table});
+    table._id=res.data.table._id; 
+
+    if(res.status===200){
+      setUser({...user,tables:[...user.tables,table]});
     }
   }
 
@@ -92,7 +106,8 @@ function UserProvider(props) {
     updateChecklist,
     addGuest,
     updateGuests,
-    updateTables
+    updateTables,
+    addTable
   };
 
   return (

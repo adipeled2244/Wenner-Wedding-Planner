@@ -18,6 +18,15 @@ export const updateUser = async (userId, body) => {
     return res;
   };
 
+
+  export const addTableToUser = async (userId, body) => {
+    console.log(body)
+    const res = await serverApi.post(`/users/${userId}/tables`, body);
+    console.log(res)
+    return res;
+  };
+  
+
   export const updateUserGuest = async (userId,guestId, body) => {
     const res = await serverApi.update(`/users/${userId}/guests/${guestId}`, body);
     return res;

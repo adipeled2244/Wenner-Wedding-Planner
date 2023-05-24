@@ -7,23 +7,41 @@ import Head from "../Components/Head/Head";
 import Table from "../Components/UI/Table";
 import classes from "./TablesPage.module.css";
 import UserContext from "../Store/user-context";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import  Draggable  from "react-draggable";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import AddTableForm from "../Components/AddTableForm/AddTableForm";
+import data from '../Assets/Constants/Tables'
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 606,
+  bgcolor: "background.paper",
+  boxShadow: 15,
+  p: 4,
+};
 
 const TablesPage = (props) => {
   const {
     user: { tables },
     updateTables,
   } = useContext(UserContext);
+  console.log("render")
   const onDownload = () => {
     console.log("download");
   };
-  const onAddTable = () => {
-    console.log("add table");
-  };
+
+  //modal
+  const [open, setOpen] =  useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
 
   const headerName = "Tables";
   const buttonsHeader = [
@@ -55,7 +73,7 @@ const TablesPage = (props) => {
       }}
       variant="contained"
       key="add"
-      onClick={onAddTable}
+      onClick={handleOpen}
       startIcon={<AddIcon />}
       size="small"
     >
@@ -63,14 +81,26 @@ const TablesPage = (props) => {
     </Button>,
   ];
 
-  const [tablesState, setTablesState] = useState(tables);
-  const eventHandler = (e, data) => {
-    console.log('Event Type', e.type);
-    console.log({e, data});
-    console.log(data.node.id)
-    console.log(data.lastX)
-    console.log(data.lastY)
+  const tablePrepare=()=>{
+    const tablesDB=tables;
+    
+    tablesDB.forEach((table) => {
+      const jsonTable = data.tables.find((tJ) => tJ.id === table.tableTypeId);
+      if (jsonTable) {
+        table.shape = jsonTable.shape;
+        table.size = jsonTable.size;
+      }
+    });
+    return tablesDB
 
+  }
+
+  const [tablesState, setTablesState] = useState(tablePrepare());
+  useEffect(() => {
+    setTablesState(tablePrepare());
+  }, [tables]);
+
+  const eventHandler = (e, data) => {
     const tableIndex = tablesState.findIndex((table) => table._id === data.node.id);
     const table = tablesState[tableIndex];
     table.x = data.lastX;
@@ -78,11 +108,10 @@ const TablesPage = (props) => {
     const newTables = [...tablesState];
     newTables[tableIndex] = table;
     setTablesState(newTables);
-    console.log(newTables)
   }
 
   const DraggableCard = ({shape,size,id,tableNumber,x,y}) => {
-    console.log(x,y)
+    // console.log(x,y)
     return (
       <Draggable  onStop={eventHandler} defaultPosition={{x: x, y:y}} >
         <div style={{display:'inline-block', margin:'15px'}} id={id} >
@@ -97,7 +126,7 @@ const TablesPage = (props) => {
     );
   };
   const allTables = tablesState.map((table,i) => {
-    console.log(table)
+    // console.log(table)
     return (
       <DraggableCard
         key={i}
@@ -112,7 +141,7 @@ const TablesPage = (props) => {
     
     ;
   });
-  console.log(allTables)
+  // console.log(allTables)
 
 
   const saveHandler = async () => {
@@ -141,6 +170,10 @@ const TablesPage = (props) => {
       });
     }
   };
+
+  
+
+
   return (
     <>
       <Head buttonsHeader={buttonsHeader} headerName={headerName} />
@@ -163,12 +196,22 @@ const TablesPage = (props) => {
             // overflowX:  "inherit",
           }}
         >
-          Save changes{" "}
+          Save positions{" "}
         </Button>
         <div className={classes.tablesContainer}>{allTables}</div>
 
       </div>
-     
+          
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        <AddTableForm onClose={handleClose}/>
+        </Box>
+      </Modal>
       <ToastContainer
         position="top-right"
         autoClose={5000}
