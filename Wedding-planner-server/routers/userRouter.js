@@ -5,8 +5,10 @@ const userRouter = new Router();
 userRouter.get('/', userController.getUsers);
 userRouter.get('/:userId', userController.getUser);
 userRouter.post('/', userController.addUser);
+userRouter.patch('/:userId/guests/:guestId', userController.updateUserGuest);
+userRouter.post('/:userId/tables', userController.addTableToUser);
 userRouter.patch('/:userId', userController.updateUser);
-userRouter.post('/:userId', userController.addGuestToUser);
+userRouter.post('/:userId', userController.addGuestToUser); //to do: change to:userid/guest
 
 
 // more to tables 

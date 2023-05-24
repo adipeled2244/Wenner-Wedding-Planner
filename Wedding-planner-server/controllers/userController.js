@@ -1,6 +1,7 @@
 const userService = require("../services/userService");
 const path = require("path");
 const logger = require("../helpers/winston");
+const User = require("../models/user");
 
 exports.userController = {
   async getUsers(req, res) {
@@ -65,6 +66,8 @@ exports.userController = {
     console.log(userIdParam)
 
     let updateResult;
+
+
     try {
       updateResult = await userService.updateUser(userIdParam, userParams);
         return res.status(200).json({ message: "User updated" });
@@ -86,14 +89,17 @@ exports.userController = {
       try {
       const user= await userService.getUser(userIdParam);
       const existingGuest = user.guests.find((guest) => guest.email === userParams.guest.email);
-      console.log("existingGuest result:")
-      console.log(existingGuest)
+      // console.log("existingGuest result:")
+      // console.log(existingGuest)
       if(existingGuest){
         console.log("Guest already exist")
         return res.status(200).json({ message: "Guest already exist" });
       }
        const updatedUser =await   userService.addGuestToUser(userIdParam, userParams);
-        return res.status(200).json({ message: "Guest added" ,user: updatedUser });
+      //  console.log(updatedUser) 
+       const newGuest= user.guests[user.guests.length - 1]
+     
+        return res.status(200).json({ message: "Guest added" ,guest: newGuest });
       
     } catch (err) {
       res
@@ -102,4 +108,52 @@ exports.userController = {
       return;
     }
   },
+
+  async addTableToUser  (req, res) {
+    logger.info(`[addTableToUser] - ${path.basename(__filename)}`);
+    const userIdParam = req.params.userId;
+    // console.log("adi")
+    // console.log(userIdParam)
+    const userParams = req.body;
+      try {
+       const updatedUser =await userService.addTableToUser(userIdParam, userParams);
+      //  console.log(updatedUser) 
+       const newTable= updatedUser.tables[updatedUser.tables.length - 1]
+        return res.status(200).json({ message: "Table added" ,table: newTable });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ error: `Error add table to ${userIdParam} : ${err}` });
+      return;
+    }
+  },
+
+
+  //update invitation status to true
+  async updateUserGuest(req, res) {
+    const { userId, guestId } = req.params;
+    
+    let user;
+    try {
+      user = await userService.getUser(userId);
+      if (user) {
+        const guest = user.guests.id(guestId);
+
+        if (!guest) {
+          return res.status(404).json({ message: 'Guest not found' });
+        }
+    
+        guest.invitation = true;
+         await user.save();
+    
+        res.status(200).json({ message: 'Guest updated successfully' });
+      } else {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
 };

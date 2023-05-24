@@ -61,6 +61,16 @@ const userSchema = new Schema(
       }
 
     ],
+    tables: [
+      {
+      tableNumber: {type: Number},
+      x : {type: Number,default: 0 },
+      y : {type: Number,default: 0 },
+      tableTypeId: {type: Number},
+      selectedMaxSeats : {type: Number},
+      // location : {type: String},
+    }]
+
       
   },
   { collection: "users" }

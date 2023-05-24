@@ -8,7 +8,8 @@ module.exports = {
   updateUser,
   getUser,
   getUsers,
-  addGuestToUser
+  addGuestToUser,
+  addTableToUser
 };
 
 
@@ -33,6 +34,13 @@ async function addUser(params) {
     logger.info(`[addGuestToUser] - ${path.basename(__filename)}`);
     const user = await User.findById(id);
     user.guests.push(params.guest);
+    return await user.save();
+  }
+
+  async function addTableToUser(id, params) {
+    logger.info(`[addGuestToUser] - ${path.basename(__filename)}`);
+    const user = await User.findById(id);
+    user.tables.push(params.table);
     return await user.save();
   }
 
