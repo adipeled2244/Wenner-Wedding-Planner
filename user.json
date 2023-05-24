@@ -1,38 +1,105 @@
-{"_id":{"$oid":"6463f4b5954d0fa53015acdd"},
-    "name": "adi peled",
-    "email": "adipeled224@gmail.com",
-    "phone": "054-1234567",
-    "address": "tel aviv",
-    "weddingDate": "2021-10-10",
-    "weddingLocation": "tel aviv",
-    "weddingTime": "20:00pm",
-    "weddingVenue": "Amare",
-    "weddingVenueAddress": "rishon lezion",
-    "groomName": "Shay",
-    "brideName": "Adi",
-    "checklist": [
-    {"label": "DG", "checked": true },
-    {"label": "Hair", "checked": true },
-    {"label": "Dress", "checked": true },
-    { "label": "Food tasting", "checked": false },
-    { "label": "Alcohol", "checked": false },
-    { "label": "DG", "checked": true }
-    ],
-    "guests": [
-      {
-        "id": 1,
-        "name": "arnon peled",
-        "email": "a@gmail.com",
-        "phone": "239383883",
-        "address": "dfdfdfd",
-       "status": "notReplied", //attending, notAttending, notReplied
-        "table": 1,
-        "seat": 1,
-        "side": "bride",
-        "group": "family",
-        "attending": 3
-      }
-    ]
-    
+{
+  "user": {
+      "invitation": false,
+      "_id": "6463f4b5954d0fa53015acdd",
+      "name": "adi peled",
+      "email": "adipeled224@gmail.com",
+      "phone": "054-1234567",
+      "address": "tel aviv",
+      "weddingDate": "2024-10-10T00:00:00.000Z",
+      "weddingLocation": "tel aviv",
+      "weddingTime": "20:00pm",
+      "weddingVenue": "Amare",
+      "weddingVenueAddress": "rishon lezion",
+      "groomName": "Shay",
+      "brideName": "Adi",
+      "checklist": [
+          {
+              "label": "DG",
+              "checked": true,
+              "_id": "6464cada5cd13fe86b9c8ac2"
+          },
+          {
+              "label": "Hair",
+              "checked": true,
+              "_id": "6464cada5cd13fe86b9c8ac3"
+          },
+          {
+              "label": "Dress",
+              "checked": true,
+              "_id": "6464cada5cd13fe86b9c8ac4"
+          },
+          {
+              "label": "Food tasting",
+              "checked": true,
+              "_id": "6464cada5cd13fe86b9c8ac5"
+          },
+          {
+              "label": "Alcohol",
+              "checked": true,
+              "_id": "6464cada5cd13fe86b9c8ac6"
+          },
+          {
+              "label": "Makeup",
+              "checked": true,
+              "_id": "6464cada5cd13fe86b9c8ac7"
+          },
+          {
+              "label": "Chairs",
+              "checked": true,
+              "_id": "6464cd4e5cd13fe86b9c8be2"
+          },
+          {
+              "label": "Desert",
+              "checked": true,
+              "_id": "6465309b53d27c46ae1e2000"
+          }
+      ],
+      "guests": [
+          {
+              "id": 1,
+              "name": "arnon peled",
+              "email": "a@gmail.com",
+              "phone": "239383883",
+              "address": "dfdfdfd",
+              "invitation": true,
+              "table": 1,
+              "seat": 1,
+              "side": "bride",
+              "group": "family",
+              "attending": 4,
+              "status": "attending"
+          },
+          {
+              "id": 2,
+              "name": "Yossi Cohen",
+              "email": "a@gmail.com",
+              "phone": "239383883",
+              "address": "dfdfdfd",
+              "invitation": true,
+              "table": 1,
+              "seat": 1,
+              "side": "groom",
+              "group": "family",
+              "attending": 0,
+              "status": "notReplied"
+          },
+          {
+              "id": 3,
+              "name": "Sivan Cohen",
+              "email": "v@gmail.com",
+              "phone": "111111",
+              "address": "dddd",
+              "invitation": true,
+              "table": 2,
+              "seat": 2,
+              "side": "groom",
+              "group": "family",
+              "attending": 0,
+              "status": "notAttending"
+          }
+      ],
+      "img": "https://i.insider.com/5eac8da748d92c3d275bb2de?width=700",
+      "status": "attending"
+  }
 }
-

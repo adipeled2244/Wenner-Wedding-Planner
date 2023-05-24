@@ -1,11 +1,11 @@
 .tablePage{
 background-color: #F3F3F5;
 height: 100vh;
-padding-top: 40px;
+/* padding-top: 40px; */
 position: relative; 
 /* height: 100vh; */
-/* overflow: hidden;
-
+/* /* overflow: hidden; */
+overflow: hidden;
 
 /* flex: 1 1;
 justify-content: center;
@@ -20,7 +20,7 @@ justify-content: center;
 
 .tablesContainer{
 margin: 0 auto;
-width: 1000px;
+max-width: 1000px;
 
 }
 /* .my3{

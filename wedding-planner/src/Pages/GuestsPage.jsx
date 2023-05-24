@@ -9,6 +9,7 @@ import EnhancedTable from "../Components/TableLayout/TableLayout";
 import { CSVLink, CSVDownload } from "react-csv";
 import UserContext from "../Store/user-context";
 import Filters from "../Components/Filters/Filters";  
+import {ToCsv} from '../Utils/utils'
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -26,16 +27,6 @@ import AddGuestForm from "../Components/AddGuestForm/AddGuestForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ToCsv = (data) => {
-  let dataToCsv = [];
-  let headArr = Object.keys(data[0]);
-  dataToCsv.push(headArr);
-  data.forEach((row) => {
-    const arr = Object.values(row).map(String);
-    dataToCsv.push(arr);
-  });
-  return dataToCsv;
-};
 
 const GuestPage = (props) => {
   const {
@@ -46,7 +37,21 @@ const GuestPage = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   
-  let dataToCsv = ToCsv(guests);
+  let dataToCsv = ToCsv(guests.map((guest)=>{
+    return {
+      name:guest.name,
+      email:guest.email,
+      phone:guest.phone,
+      side:guest.side,
+      invitation:guest.invitation ? "Sent" : "not send yet",
+      status:guest.status==='notAttending' ? "Not Attending" : guest.status==='attending' ? 'Attending' : 'Not Replied' ,
+      attending:guest.attending,
+      group:guest.group,
+      table:guest.table ==0 ? '' : guest.table
+      
+    }
+  }));
+
   const headerName = "Guests";
   const buttonsHeader = [
     <CSVLink data={dataToCsv} filename={"guests.csv"}>

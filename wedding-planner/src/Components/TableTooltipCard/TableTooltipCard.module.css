@@ -1,0 +1,29 @@
+.tableTooltipCard{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    /* height: 300px; */
+    /* justify-content:center;
+    align-items:center; */
+    padding: 10px;
+    color:black;
+}
+
+h1{
+    font-size: 20px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+    padding: 4px;
+}
+
+.details{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    background-color: #F5F7FA;
+    padding: 10px;
+
+}

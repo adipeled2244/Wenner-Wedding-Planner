@@ -33,6 +33,7 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import Filters from "../Filters/Filters";
 import { useEffect } from "react";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 // const rows = [
 //   {
@@ -470,7 +471,7 @@ function EnhancedTable({rowsAfterFilter}) {
                     <TableCell align="left">{row.group}</TableCell>
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">{row.phone}</TableCell>
-                    <TableCell align="left">{row.table}</TableCell>
+                    <TableCell align="left">{row.table===0? '' :row.table}</TableCell>
                     <TableCell align="left">
                       {" "}
                       {row.invitation && (
@@ -507,7 +508,10 @@ function EnhancedTable({rowsAfterFilter}) {
                         </span>
                       </div>}
                        {row.attending===0 &&<div className={classes.invitation}>
-                          {row.status ==="notAttending" ? "Not Attending" : "Not Replied"}
+                          {row.status ==="notAttending" ? <HighlightOffIcon sx={{
+                            color:  "#cf142b",
+                          }}
+                          fontSize="small" /> : "Not Replied"}
                       </div>}
                     </TableCell>
                     <TableCell align="left">
