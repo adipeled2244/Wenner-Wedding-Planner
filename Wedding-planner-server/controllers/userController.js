@@ -83,6 +83,7 @@ exports.userController = {
 
   async   addGuestToUser  (req, res) {
     logger.info(`[addGuestToUser] - ${path.basename(__filename)}`);
+    console.log("addGuestToUser")
     const userIdParam = req.params.userId;
     console.log(userIdParam)
     const userParams = req.body;

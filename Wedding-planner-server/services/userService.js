@@ -12,7 +12,6 @@ module.exports = {
   addTableToUser
 };
 
-
 async function getUsers(id, params) {
     logger.info(`[getUser] - ${path.basename(__filename)}`);
     return await User.find({});
@@ -46,6 +45,5 @@ async function addUser(params) {
 
   async function getUser(id) {
     logger.info(`[getUser] - ${path.basename(__filename)}`);
-  
     return await User.findOne({ _id: id });
   }

@@ -13,7 +13,7 @@ export const updateUser = async (userId, body) => {
 
 
   export const addGuestToUser = async (userId, body) => {
-    const res = await serverApi.post(`/users/${userId}`, body);
+    const res = await serverApi.post(`/users/${userId}/guests`, body);
     console.log(res)
     return res;
   };
