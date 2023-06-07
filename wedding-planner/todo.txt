@@ -1,0 +1,7 @@
+1. alg to devide guests to tables - groups sits together. 
+
+2. drag and drop screen limits and fix page hight.
+
+3. page recomentation - AI- chat gpt. 
+
+4. seats status - fix

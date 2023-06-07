@@ -95,7 +95,6 @@ const TablesPage = (props) => {
           padding: "3px 14px",
           boxShadow: "none",
           border: "1px solid #E7E7EB",
-          // overflowX:  "inherit",
         }}
       >
         Download CSV{" "}

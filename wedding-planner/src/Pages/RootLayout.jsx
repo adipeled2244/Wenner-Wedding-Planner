@@ -13,7 +13,6 @@ const RootLayout=(props)=>{
 
 export default RootLayout;
 
-
 //get user
 export const loader=()=>{
 
