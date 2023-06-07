@@ -1,38 +1,35 @@
-.inputs{
-    display: flex;
-    gap:15px;
+.inputs {
+  display: flex;
+  gap: 15px;
 }
 
-.input{
-    display: flex;
-    justify-content:flex-start;
-    align-items: center;
+.input {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
-.inputTitle{
-    font-size: 14px;
-    color: #61656C;
-    margin-right: 7px;
-    /* margin-left: 20px; */
+.inputTitle {
+  font-size: 14px;
+  color: #61656c;
+  margin-right: 7px;
 }
-.filtering{
-    padding: 10px;
-    padding-left: 20px;
-    display: flex;
-    justify-content:flex-start;
-    align-items: center;
-    gap:18px;
-    background-color:#F5F7FA;
-    margin-top: 20px;
-    margin-bottom: 50px;
-}
-
-
-
-.filterMainTitle{
-    display: flex;
-    gap:3px
+.filtering {
+  padding: 10px;
+  padding-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 18px;
+  background-color: #f5f7fa;
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 
-.clearBtn{
-    margin-left: 10px;
+.filterMainTitle {
+  display: flex;
+  gap: 3px;
+}
+
+.clearBtn {
+  margin-left: 10px;
 }

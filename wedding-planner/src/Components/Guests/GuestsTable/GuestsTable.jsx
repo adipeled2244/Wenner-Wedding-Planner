@@ -1,6 +1,9 @@
+import classes from "./GuestsTable.module.css";
 import * as React from "react";
+import { useContext } from "react";
+import UserContext from "../../../Store/user-context";
+
 import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,105 +13,29 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
-import classes from "./TableLayout.module.css";
-import LocalPostOfficeOutlinedIcon from "@mui/icons-material/LocalPostOfficeOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import Filters from "../Filters/Filters";
-import { useEffect } from "react";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-
-// const rows = [
-//   {
-//     name: "adi",
-//     side: "groom",
-//     group: "family",
-//     email: "adipeeld224@gmail.com",
-//     phone: "0626861776",
-//     table: 1,
-//     invitation: true,
-//     attending: 4,
-//   },
-//   {
-//     name: "Nofar",
-//     side: "Bride",
-//     group: "work",
-//     email: "adipeeld224@gmail.com",
-//     phone: "0626861776",
-//     table: 2,
-//     invitation: true,
-//     attending: 4,
-//   },  {
-//     name: "nana",
-//     side: "Bride",
-//     group: "friends",
-//     email: "adipeeld224@gmail.com",
-//     phone: "0626861776",
-//     table: 2,
-//     invitation: true,
-//     attending: 4,
-//   },
-// ];
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const headCells = [
   {
     id: "name",
     numeric: false,
     disablePadding: true,
-    label: "Name", //was 'Dessert (100g serving)'
+    label: "Name",
   },
   {
     id: "side",
-    numeric: false, //was true
+    numeric: false,
     disablePadding: false,
     label: "Side",
   },
@@ -157,12 +84,35 @@ const headCells = [
   },
 ];
 
-// first line in table
-import { useContext } from "react";
-import UserContext from "../../../Store/user-context";
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
 
-function EnhancedTableHead(props) {
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
 
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
+    }
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
+const TableHeader = (props) => {
   const {
     onSelectAllClick,
     order,
@@ -171,6 +121,7 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
   } = props;
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -180,13 +131,9 @@ function EnhancedTableHead(props) {
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
-            // color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all names", //was 'select all desserts'
-            }}
             checkedIcon={<IndeterminateCheckBoxOutlinedIcon />}
             sx={{
               "&.Mui-checked": {
@@ -196,24 +143,15 @@ function EnhancedTableHead(props) {
                 color: "#9077F6",
               },
             }}
-            // icon={<CheckBoxOutlinedIcon />}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             className={classes.cell}
             key={headCell.id}
-            align={"left"} //was {headCell.numeric ? 'right' : 'left'}
+            align={"left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
-            // sx={{
-            //     "&.MuiTableCell-root": {
-            //       padding: "5",
-            //     },
-            //     "& .MuiSvgIcon-root": {
-            //       color: "#9077F6",
-            //     },
-            //   }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -232,9 +170,9 @@ function EnhancedTableHead(props) {
       </TableRow>
     </TableHead>
   );
-}
+};
 
-EnhancedTableHead.propTypes = {
+TableHeader.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -243,33 +181,17 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-// line for slected
-function EnhancedTableToolbar(props) {
 
-  const { numSelected,totalGuests ,selected,sendInvitations} = props;
-
+function TableTitleToolbar(props) {
+  const { numSelected, totalGuests, sendInvitations } = props;
 
   return (
-    // <Toolbar
-    //   sx={{
-    //     pl: { sm: 2 },
-    //     pr: { xs: 1, sm: 1 },
-    //     ...(numSelected > 0 && {
-    //       bgcolor: (theme) =>
-    //         alpha(
-    //           theme.palette.primary.main,
-    //           theme.palette.action.activatedOpacity
-    //         ),
-    //     }),
-    //   }}
-    // >
-    // <div className={classes.tableTitle}>
-
-    <div className={classes.tableTitle}>
+    <div className={classes.tableToolbar}>
       <div className={classes.title}>
         {" "}
-        {numSelected} <span className={classes.miniTitle}>out of {totalGuests}</span>{" "}
-        Guests selected
+        {numSelected}{" "}
+        <span className={classes.miniTitle}>out of {totalGuests}</span> Guests
+        selected
       </div>
       <Button
         variant="contained"
@@ -288,55 +210,28 @@ function EnhancedTableToolbar(props) {
         Send invitation{" "}
       </Button>
     </div>
-
-    // </div>
-    //   {/*
-    //   {numSelected > 0 ? (
-    //     <Tooltip title="Delete">
-    //       <IconButton>
-    //         <DeleteIcon />
-    //       </IconButton>
-    //     </Tooltip>
-    //   ) : (
-    //     <Tooltip title="Filter list">
-    //       <IconButton>
-    //         <FilterListIcon />
-    //       </IconButton>
-    //     </Tooltip>
-    //   )} */}
-    // </Toolbar>
   );
 }
 
-EnhancedTableToolbar.propTypes = {
+TableTitleToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-// main table
-function EnhancedTable({rowsAfterFilter}) {
-    const {updateGuests}=useContext(UserContext)
 
+
+function GuestsTable({ rowsAfterFilter }) {
+  const { updateGuests } = useContext(UserContext);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("name");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
-  // const [rowsAfterFilter, setRowsAfterFilter] = React.useState(rows);
 
-
-  // useEffect(() => {
-  //   setRowsAfterFilter(rows)
-  // }, [rows])
-
-  const sendInvitations= ()=>{
-    console.log("send invitations")
-    console.log(selected)
-    updateGuests(selected,{invitation:true})
-    
-    setSelected([])
-   
-  }
+  const sendInvitations = () => {
+    updateGuests(selected, { invitation: true });
+    setSelected([]);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -353,7 +248,7 @@ function EnhancedTable({rowsAfterFilter}) {
     setSelected([]);
   };
 
-  const handleClick = (event, _id) => {
+  const handleCheckboxClick = (event, _id) => {
     const selectedIndex = selected.indexOf(_id);
     let newSelected = [];
 
@@ -382,42 +277,40 @@ function EnhancedTable({rowsAfterFilter}) {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
   const isSelected = (_id) => selected.indexOf(_id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowsAfterFilter.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - rowsAfterFilter.length)
+      : 0;
 
- 
   //change table sort ,order, page
-  const visibleRows = React.useMemo(
-    () =>
+  const visibleRows = React.useMemo(() =>
     //changerows to rowsafterfilter
     {
       return stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
-      )
-    },
-    [order, orderBy, page, rowsPerPage,rowsAfterFilter]
-  );
+      );
+    }, [order, orderBy, page, rowsPerPage, rowsAfterFilter]);
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        {/* <Filters onFilterChange={filterChange} /> */}
-        <EnhancedTableToolbar numSelected={selected.length} totalGuests={rowsAfterFilter.length} selected={selected} sendInvitations={sendInvitations} />
+        <TableTitleToolbar
+          numSelected={selected.length}
+          totalGuests={rowsAfterFilter.length}
+          selected={selected}
+          sendInvitations={sendInvitations}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750, marginTop: "5px" }}
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
           >
-            <EnhancedTableHead
+            <TableHeader
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -429,21 +322,17 @@ function EnhancedTable({rowsAfterFilter}) {
               {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
-                
+
                 return (
                   <TableRow
-                    // hover
-                    // onClick={(event) => handleClick(event, row.name)}
-                    // role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={index}
                     selected={isItemSelected}
-                    // sx={{ cursor: "pointer" }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        onClick={(event) => handleClick(event, row._id)}
+                        onClick={(event) => handleCheckboxClick(event, row._id)}
                         checkedIcon={<CheckBoxOutlinedIcon />}
                         sx={{
                           "&.Mui-checked": {
@@ -471,7 +360,9 @@ function EnhancedTable({rowsAfterFilter}) {
                     <TableCell align="left">{row.group}</TableCell>
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">{row.phone}</TableCell>
-                    <TableCell align="left">{row.table===0? '' :row.table}</TableCell>
+                    <TableCell align="left">
+                      {row.table === 0 ? "" : row.table}
+                    </TableCell>
                     <TableCell align="left">
                       {" "}
                       {row.invitation && (
@@ -481,7 +372,7 @@ function EnhancedTable({rowsAfterFilter}) {
                           <span>sent</span>
                         </div>
                       )}
-                        {!row.invitation && (
+                      {!row.invitation && (
                         <div className={classes.invitation}>
                           {" "}
                           {/* <CheckCircleOutlineOutlinedIcon fontSize="small" />{" "} */}
@@ -490,29 +381,38 @@ function EnhancedTable({rowsAfterFilter}) {
                       )}
                     </TableCell>
                     <TableCell align="left">
-                      {row.attending!==0 &&<div className={classes.invitation}>
-                        {" "}
-                        <CheckCircleOutlineOutlinedIcon
-                          sx={{
-                            color:  "#009317",
-                          }}
-                          fontSize="small"
-                        />{" "}
-                        <span 
-                          style={{
-                            color: "#009317",
-  
-                          }}
-                        >
-                          {row.attending}
-                        </span>
-                      </div>}
-                       {row.attending===0 &&<div className={classes.invitation}>
-                          {row.status ==="notAttending" ? <HighlightOffIcon sx={{
-                            color:  "#cf142b",
-                          }}
-                          fontSize="small" /> : "Not Replied"}
-                      </div>}
+                      {row.attending !== 0 && (
+                        <div className={classes.invitation}>
+                          {" "}
+                          <CheckCircleOutlineOutlinedIcon
+                            sx={{
+                              color: "#009317",
+                            }}
+                            fontSize="small"
+                          />{" "}
+                          <span
+                            style={{
+                              color: "#009317",
+                            }}
+                          >
+                            {row.attending}
+                          </span>
+                        </div>
+                      )}
+                      {row.attending === 0 && (
+                        <div className={classes.invitation}>
+                          {row.status === "notAttending" ? (
+                            <HighlightOffIcon
+                              sx={{
+                                color: "#cf142b",
+                              }}
+                              fontSize="small"
+                            />
+                          ) : (
+                            "Not Replied"
+                          )}
+                        </div>
+                      )}
                     </TableCell>
                     <TableCell align="left">
                       {" "}
@@ -529,7 +429,7 @@ function EnhancedTable({rowsAfterFilter}) {
                             fontSize="small"
                             sx={{ cursor: "pointer" }}
                             onClick={() => {
-                              console.log("delte");
+                              console.log("delete");
                             }}
                           />
                         </Tooltip>
@@ -551,7 +451,7 @@ function EnhancedTable({rowsAfterFilter}) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[25, 50, 100]} //5 10 25
+          rowsPerPageOptions={[25, 50, 100]}  
           component="div"
           count={rowsAfterFilter.length}
           rowsPerPage={rowsPerPage}
@@ -560,12 +460,8 @@ function EnhancedTable({rowsAfterFilter}) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
     </Box>
   );
 }
 
-export default EnhancedTable;
+export default GuestsTable;

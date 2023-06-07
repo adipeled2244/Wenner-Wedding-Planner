@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
 import classes from "./AddGuestForm.module.css";
+import React, { useContext } from "react";
+import UserContext from "../../../Store/user-context";
 
 import { useForm } from "@mantine/form";
 import {
@@ -10,13 +11,11 @@ import {
   Select,
   NumberInput,
 } from "@mantine/core";
-import UserContext from "../../../Store/user-context";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { toastConfig } from "../../../Utils/constants";
 const AddGuestForm = ({ onClose }) => {
   const { addGuest } = useContext(UserContext);
-  // const notify = () => toast("Wow so easy!");
 
   const form = useForm({
     initialValues: {
@@ -33,8 +32,6 @@ const AddGuestForm = ({ onClose }) => {
   });
 
   const handleSubmit = async () => {
-    // event.preventDefault();
-
     const guest = form.values;
     if (guest.attending > 0) {
       guest.status = "attending";
@@ -42,116 +39,100 @@ const AddGuestForm = ({ onClose }) => {
       guest.status = "notAttending";
     }
 
-    try{
-       await addGuest(guest);
-        toast.success('Add guest successfully!', {
-          position: "top-right",
-          autoClose: 1400,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          });
+    try {
+      await addGuest(guest);
+      toast.success("Add guest successfully!", toastConfig);
+    } catch (err) {
+      toast.error("Add guest failed!", toastConfig);
     }
-      catch(err){
-        toast.error('Add guest failed!', {
-          position: "top-right",
-          autoClose: 1400,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          });
+    onClose();
+  };
 
+  const nameInput = (
+    <TextInput
+      label="Name"
+      required
+      placeholder="Name"
+      {...form.getInputProps("name")}
+      onChange={(event) =>
+        form.setFieldValue(`name`, event.currentTarget.value)
       }
+    />
+  );
 
-      onClose();
-    }
-   
-    
+  const emailInput = (
+    <TextInput
+      mt="md"
+      required
+      label="Email"
+      placeholder="Email"
+      {...form.getInputProps("email")}
+      onChange={(event) =>
+        form.setFieldValue(`email`, event.currentTarget.value)
+      }
+    />
+  );
+  const phoneInput = (
+    <TextInput
+      mt="md"
+      required
+      label="Phone"
+      placeholder="Phone"
+      {...form.getInputProps("phone")}
+      onChange={(event) =>
+        form.setFieldValue(`phone`, event.currentTarget.value)
+      }
+    />
+  );
 
+  const sideInput = (
+    <Select
+      label="Side"
+      placeholder="Select Side"
+      mt="10px"
+      size="sm"
+      required
+      w="100%"
+      onChange={(value) => form.setFieldValue("side", value)}
+      data={[
+        { label: "Bride and Groom", value: "brideAndGroom" },
+        { label: "Bride", value: "bride" },
+        { label: "Groom", value: "groom" },
+      ]}
+    />
+  );
 
-  return (
-    <div className={classes.addGuest}>
-      <div className={classes.title}> Add Guest</div>
-      <form className={classes.form} onSubmit={form.onSubmit(handleSubmit)}>
-        <Box maw={500} mx="auto" bg="#F5F7FA" p="25px 30px" mt="10px">
-          <TextInput
-            label="Name"
-            required
-            placeholder="Name"
-            {...form.getInputProps("name")}
-            onChange={(event) =>
-              form.setFieldValue(`name`, event.currentTarget.value)
-            }
-          />
-          <TextInput
-            mt="md"
-            required
-            label="Email"
-            placeholder="Email"
-            {...form.getInputProps("email")}
-            onChange={(event) =>
-              form.setFieldValue(`email`, event.currentTarget.value)
-            }
-          />
-          <TextInput
-            mt="md"
-            required
-            label="Phone"
-            placeholder="Phone"
-            {...form.getInputProps("phone")}
-            onChange={(event) =>
-              form.setFieldValue(`phone`, event.currentTarget.value)
-            }
-          />
+  const groupInput = (
+    <Select
+      label="Group"
+      placeholder="Select Group"
+      mt="10px"
+      size="sm"
+      required
+      w="100%"
+      onChange={(value) => form.setFieldValue("group", value)}
+      data={[
+        { label: "Family", value: "family" },
+        { label: "Friends", value: "friends" },
+        { label: "Work", value: "work" },
+        { label: "Military", value: "military" },
+      ]}
+    />
+  );
 
-          <Select
-            label="Side"
-            placeholder="Select Side"
-            mt="10px"
-            size="sm"
-            required
-            w="100%"
-            onChange={(value) => form.setFieldValue("side", value)}
-            data={[
-              { label: "Bride and Groom", value: "brideAndGroom" },
-              { label: "Bride", value: "bride" },
-              { label: "Groom", value: "groom" },
-            ]}
-          />
+  const attendingInput = (
+    <NumberInput
+      mt="sm"
+      required
+      label="Attending"
+      placeholder="Attending"
+      min={0}
+      max={7}
+      {...form.getInputProps("attending")}
+    />
+  );
 
-          <Select
-            label="Group"
-            placeholder="Select Group"
-            mt="10px"
-            size="sm"
-            required
-            w="100%"
-            onChange={(value) => form.setFieldValue("group", value)}
-            data={[
-              { label: "Family", value: "family" },
-              { label: "Friends", value: "friends" },
-              { label: "Work", value: "work" },
-              { label: "Military", value: "military" },
-            ]}
-          />
-
-          <NumberInput
-            mt="sm"
-            required
-            label="Attending"
-            placeholder="Attending"
-            min={0}
-            max={7}
-            {...form.getInputProps("attending")}
-          />
-        </Box>
-        <Group position="center" mt="xl">
+  const submitButton =  <Group position="center" mt="xl">
           <Button
             type="submit"
             mt="md"
@@ -174,8 +155,22 @@ const AddGuestForm = ({ onClose }) => {
             Add guest
           </Button>
         </Group>
+
+  return (
+    <div className={classes.addGuest}>
+      <div className={classes.title}> Add Guest</div>
+      <form className={classes.form} onSubmit={form.onSubmit(handleSubmit)}>
+        <Box maw={500} mx="auto" bg="#F5F7FA" p="25px 30px" mt="10px">
+          {nameInput}
+          {emailInput}
+          {phoneInput}
+          {sideInput}
+          {groupInput}
+          {attendingInput}
+          {submitButton}
+        </Box>
+       
       </form>
-  
     </div>
   );
 };

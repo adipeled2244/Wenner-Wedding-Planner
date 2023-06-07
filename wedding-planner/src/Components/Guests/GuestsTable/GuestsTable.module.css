@@ -1,0 +1,40 @@
+.title {
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.miniTitle {
+  font-size: 12px;
+}
+
+.invitation {
+  display: flex;
+  align-items: center;
+}
+
+.invitation span {
+  margin-left: 5px;
+  font-family: IBMPlexSans;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.numberGreen {
+  color: "#009317";
+}
+.titleUpTable {
+  color: #909192;
+  padding: 0;
+  margin: 0;
+}
+
+.tableToolbar {
+  display: flex;
+  justify-content: flex-start;
+  width:100%;
+  gap: 20px;
+}
