@@ -23,7 +23,7 @@ const style = {
   boxShadow: 15,
   p: 4,
 };
-import AddGuestForm from "../Components/AddGuestForm/AddGuestForm";
+import AddGuestForm from "../Components/Guests/AddGuestForm/AddGuestForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

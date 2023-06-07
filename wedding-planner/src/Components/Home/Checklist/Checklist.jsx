@@ -1,30 +1,19 @@
 import React, { useEffect } from "react";
-import Card from "../Card/Card";
+import Card from "../../Card/Card";
 import classes from "./Checklist.module.css";
-import { purple } from "@mui/material/colors";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from '@mui/material/Button';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
-import UserContext from "../../Store/user-context"; 
+import UserContext from "../../../Store/user-context"; 
 import { ToastContainer, toast } from "react-toastify";
 
 const Checklist = (props) => {
   const {user:{
     checklist,
   },    updateChecklist}=React.useContext(UserContext);
-
-  // const CHECKLIST = [
-  //   { label: "DG", checked: true },
-  //   { label: "Hair", checked: true },
-  //   { label: "Dress", checked: true },
-  //   { label: "Food tasting", checked: false },
-  //   { label: "Alcohol", checked: false },
-  //   { label: "DG", checked: true },
-  // ];
 
   const [internalCheckList, setInternalCheckList] = useState( []);
 

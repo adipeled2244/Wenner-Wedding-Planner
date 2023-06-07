@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './TableTooltipCard.module.css';
-import Card from '../Card/Card';
 
 const TableTooltipCard=({tableNumber,guests})=>{
 let data=[]

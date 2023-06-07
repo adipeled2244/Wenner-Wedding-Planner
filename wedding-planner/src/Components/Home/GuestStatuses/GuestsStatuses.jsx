@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import classes from './GuestsStatuses.module.css';
 import PieChartCmp from '../PieChartCmp/PieChartCmp';
-import Card from '../Card/Card';
+import Card from '../../Card/Card';
 import StatusAttending from '../StatusAttending/StatusAttending';
 import {Link} from 'react-router-dom';
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ReactDOMServer from 'react-dom/server';
-import UserContext from '../../Store/user-context';
+import UserContext from '../../../Store/user-context';
 const GuestsStatuses=()=>{
   const {user}=React.useContext(UserContext);
   const {guests}= user

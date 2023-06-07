@@ -10,7 +10,7 @@ import {
   Select,
   NumberInput,
 } from "@mantine/core";
-import UserContext from "../../Store/user-context";
+import UserContext from "../../../Store/user-context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

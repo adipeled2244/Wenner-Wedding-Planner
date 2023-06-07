@@ -13,12 +13,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Draggable from "react-draggable";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import AddTableForm from "../Components/AddTableForm/AddTableForm";
+import AddTableForm from "../Components/Tables/AddTableForm/AddTableForm";
 import data from "../Assets/Constants/Tables";
 import { CSVLink, CSVDownload } from "react-csv";
 import { ToCsv } from "../Utils/utils";
 import { Tooltip } from "@mantine/core";
-import TableTooltipCard from "../Components/TableTooltipCard/TableTooltipCard";
+import TableTooltipCard from "../Components/Tables/TableTooltipCard/TableTooltipCard";
 import GroupsIcon from '@mui/icons-material/Groups';
 const style = {
   position: "absolute",

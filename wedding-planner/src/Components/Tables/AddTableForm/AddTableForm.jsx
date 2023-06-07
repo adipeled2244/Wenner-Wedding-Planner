@@ -1,22 +1,20 @@
 import { Carousel } from "@mantine/carousel";
-import data from "../../Assets/Constants/Tables";
+import data from "../../../Assets/Constants/Tables";
 import TableOption from "../TableOption/TableOption";
-import Card from "../Card/Card";
 import classes from "./AddTableForm.module.css";
 import { useForm } from '@mantine/form';
 import { useState } from "react";
-import { QuantityInput } from '../UI/QuantityInput/QuantityInput';
+import { QuantityInput } from '../../UI/QuantityInput/QuantityInput';
 import {
   Button,
 } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import { useContext } from "react";
-import UserContext from "../../Store/user-context";
+import UserContext from "../../../Store/user-context";
 import { useEffect } from "react";
 const AddTableForm = ({onClose}) => {
   const { addTable } = useContext(UserContext);
 
-  // console.log(data);
   const [selectedTable, setSelectedTable] = useState(0)
   const [selectedNumber, setSelectedNumber] = useState(0)
   const form = useForm({

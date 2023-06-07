@@ -1,7 +1,7 @@
 import classes from "./WeddingIssues.module.css";
-import '../../GlobalStyle/style'
+import '../../../GlobalStyle/style'
 import React from "react";
-import UserContext from "../../Store/user-context";
+import UserContext from "../../../Store/user-context";
 
 const WeddingIssues = () => {
 // const userCtx=React.useContext(UserContext);

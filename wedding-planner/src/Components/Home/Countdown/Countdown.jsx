@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import classes from "./Countdown.module.css";
-import UserContext from "../../Store/user-context";
+import UserContext from "../../../Store/user-context";
 
 const Countdown = (props) => {
   const { user: { weddingDate } } = React.useContext(UserContext);

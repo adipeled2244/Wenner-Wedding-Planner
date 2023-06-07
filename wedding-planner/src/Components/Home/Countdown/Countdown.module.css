@@ -34,7 +34,7 @@
 }
 
 .rightLeaf{
-background-image: url('../../Assets/images/leafRight.png');
+background-image: url('../../../Assets/images/leafRight.png');
 width: 90px;
 height: 60px;
 background-repeat: no-repeat;
@@ -42,7 +42,7 @@ background-size: contain;
 }
 
 .leftLeaf{
-    background-image: url('../../Assets/images/leafLeft.png');
+    background-image: url('../../../Assets/images/leafLeft.png');
     width: 90px;
     height: 60px;
     background-repeat: no-repeat;
