@@ -46,11 +46,11 @@ const AddGuestForm = ({ onClose }) => {
        await addGuest(guest);
         toast.success('Add guest successfully!', {
           position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
+          autoClose: 1400,
+          hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
-          draggable: true,
+          draggable: false,
           progress: undefined,
           theme: "light",
           });
@@ -58,11 +58,11 @@ const AddGuestForm = ({ onClose }) => {
       catch(err){
         toast.error('Add guest failed!', {
           position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
+          autoClose: 1400,
+          hideProgressBar: true,
           closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+          pauseOnHover: false,
+          draggable: false,
           progress: undefined,
           theme: "light",
           });

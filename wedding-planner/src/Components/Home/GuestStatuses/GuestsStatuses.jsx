@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import classes from './GuestsStatuses.module.css';
 import PieChartCmp from '../PieChartCmp/PieChartCmp';
-import Card from '../../Card/Card';
+import Card from '../../UI/Card/Card';
 import StatusAttending from '../StatusAttending/StatusAttending';
 import {Link} from 'react-router-dom';
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";

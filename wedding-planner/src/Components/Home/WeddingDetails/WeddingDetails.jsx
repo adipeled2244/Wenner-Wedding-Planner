@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Card from '../../Card/Card';
+import Card from '../../UI/Card/Card';
 import Countdown from '../Countdown/Countdown';
 import classes from './WeddingDetails.module.css';
 import WeddingIssues from '../WeddingIssues/WeddingIssues';

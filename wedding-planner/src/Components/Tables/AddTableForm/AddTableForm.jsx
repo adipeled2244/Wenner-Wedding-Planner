@@ -56,11 +56,11 @@ const AddTableForm = ({onClose}) => {
       await addTable(table);
        toast.success('Add table successfully!', {
          position: "top-right",
-         autoClose: 5000,
-         hideProgressBar: false,
+         autoClose: 1400,
+         hideProgressBar: true,
          closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
+         pauseOnHover: false,
+         draggable: false,
          progress: undefined,
          theme: "light",
          });
@@ -68,11 +68,11 @@ const AddTableForm = ({onClose}) => {
      catch(err){
        toast.error('Add table failed!', {
          position: "top-right",
-         autoClose: 5000,
-         hideProgressBar: false,
+         autoClose: 1400,
+         hideProgressBar: true,
          closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
+         pauseOnHover: false,
+         draggable: false,
          progress: undefined,
          theme: "light",
          });

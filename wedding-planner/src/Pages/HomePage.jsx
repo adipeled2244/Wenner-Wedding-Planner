@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "../Components/Global/Head/Head";
 import WeddingDetails from "../Components/Home/WeddingDetails/WeddingDetails";
-import PieChart from "../Components/PieChartCmp/PieChartCmp";
+import PieChart from "../Components/Home/PieChartCmp/PieChartCmp";
 import StatusAttending from "../Components/Home/StatusAttending/StatusAttending";
 // import GuestsStatuses from "../Components/GuestStatuses/GuestsStatuses";
 // import Seats from "../Components/Seats/Seats";
@@ -32,8 +32,8 @@ const HomePage = (props) => {
     </div>
     <ToastContainer
         position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
+        autoClose={2000}
+        hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
         rtl={false}

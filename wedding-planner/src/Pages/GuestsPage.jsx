@@ -5,10 +5,10 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import GetAppIcon from "@mui/icons-material/GetApp";
 // import classes from "./GuestsPage.module.css";
-import EnhancedTable from "../Components/TableLayout/TableLayout";
+import EnhancedTable from "../Components/Guests/TableLayout/TableLayout";
 import { CSVLink, CSVDownload } from "react-csv";
 import UserContext from "../Store/user-context";
-import Filters from "../Components/Filters/Filters";  
+import Filters from "../Components/Guests/Filters/Filters";  
 import {ToCsv} from '../Utils/utils'
 
 import Box from "@mui/material/Box";
@@ -134,7 +134,7 @@ const GuestPage = (props) => {
       <ToastContainer
         position="top-right"
         autoClose={5000}
-        hideProgressBar={false}
+        hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
         rtl={false}

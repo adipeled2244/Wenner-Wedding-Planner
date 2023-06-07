@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./TableOption.module.css";
-import Card from "../../Card/Card";
+import Card from '../../UI/Card/Card';
 
 import Table from "../../UI/Table";
 

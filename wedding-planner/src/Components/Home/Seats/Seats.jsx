@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Seats.module.css";
 import { Link } from "react-router-dom";
 import PieChartCmp from "../PieChartCmp/PieChartCmp";
-import Card from "../Card/Card";
+import Card from "../../UI/Card/Card";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ReactDOMServer from 'react-dom/server';
 
