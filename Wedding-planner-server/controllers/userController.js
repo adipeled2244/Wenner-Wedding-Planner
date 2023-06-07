@@ -1,7 +1,6 @@
 const userService = require("../services/userService");
 const path = require("path");
 const logger = require("../helpers/winston");
-const User = require("../models/user");
 
 exports.userController = {
   async getUsers(req, res) {
@@ -15,9 +14,7 @@ exports.userController = {
         return res.status(404).json({ error: "Error get users" });
       }
     } catch (err) {
-      res
-        .status(500)
-        .send({ error: `Error get users : ${err}` });
+      res.status(500).send({ error: `Error get users : ${err}` });
       return;
     }
   },
@@ -43,7 +40,6 @@ exports.userController = {
   async addUser(req, res) {
     logger.info(`[addUser] - ${path.basename(__filename)}`);
     const userParams = req.body;
-
     if (!userParams) {
       res.status(400).send({ error: "invalid params" });
     }
@@ -57,21 +53,15 @@ exports.userController = {
     }
   },
 
-
   async updateUser(req, res) {
     logger.info(`[updateUserGuest] - ${path.basename(__filename)}`);
     const userIdParam = req.params.userId;
     const userParams = req.body;
-    console.log(userParams)
-    console.log(userIdParam)
-
     let updateResult;
-
 
     try {
       updateResult = await userService.updateUser(userIdParam, userParams);
-        return res.status(200).json({ message: "User updated" });
-      
+      return res.status(200).json({ message: "User updated" });
     } catch (err) {
       res
         .status(500)
@@ -79,29 +69,26 @@ exports.userController = {
       return;
     }
   },
-  
 
-  async   addGuestToUser  (req, res) {
+  async addGuestToUser(req, res) {
     logger.info(`[addGuestToUser] - ${path.basename(__filename)}`);
-    console.log("addGuestToUser")
+    console.log("addGuestToUser");
     const userIdParam = req.params.userId;
-    console.log(userIdParam)
     const userParams = req.body;
-      try {
-      const user= await userService.getUser(userIdParam);
-      const existingGuest = user.guests.find((guest) => guest.email === userParams.guest.email);
-      // console.log("existingGuest result:")
-      // console.log(existingGuest)
-      if(existingGuest){
-        console.log("Guest already exist")
+    try {
+      const user = await userService.getUser(userIdParam);
+      const existingGuest = user.guests.find(
+        (guest) => guest.email === userParams.guest.email
+      );
+      if (existingGuest) {
         return res.status(200).json({ message: "Guest already exist" });
       }
-       const updatedUser =await   userService.addGuestToUser(userIdParam, userParams);
-      //  console.log(updatedUser) 
-       const newGuest= user.guests[user.guests.length - 1]
-     
-        return res.status(200).json({ message: "Guest added" ,guest: newGuest });
-      
+      const updatedUser = await userService.addGuestToUser(
+        userIdParam,
+        userParams
+      );
+      const newGuest = user.guests[user.guests.length - 1];
+      return res.status(200).json({ message: "Guest added", guest: newGuest });
     } catch (err) {
       res
         .status(500)
@@ -110,17 +97,17 @@ exports.userController = {
     }
   },
 
-  async addTableToUser  (req, res) {
+  async addTableToUser(req, res) {
     logger.info(`[addTableToUser] - ${path.basename(__filename)}`);
     const userIdParam = req.params.userId;
-    // console.log("adi")
-    // console.log(userIdParam)
     const userParams = req.body;
-      try {
-       const updatedUser =await userService.addTableToUser(userIdParam, userParams);
-      //  console.log(updatedUser) 
-       const newTable= updatedUser.tables[updatedUser.tables.length - 1]
-        return res.status(200).json({ message: "Table added" ,table: newTable });
+    try {
+      const updatedUser = await userService.addTableToUser(
+        userIdParam,
+        userParams
+      );
+      const newTable = updatedUser.tables[updatedUser.tables.length - 1];
+      return res.status(200).json({ message: "Table added", table: newTable });
     } catch (err) {
       res
         .status(500)
@@ -129,11 +116,10 @@ exports.userController = {
     }
   },
 
-
-  //update invitation status to true
+  //update invitation status of guest to true
   async updateUserGuest(req, res) {
     const { userId, guestId } = req.params;
-    
+
     let user;
     try {
       user = await userService.getUser(userId);
@@ -141,20 +127,19 @@ exports.userController = {
         const guest = user.guests.id(guestId);
 
         if (!guest) {
-          return res.status(404).json({ message: 'Guest not found' });
+          return res.status(404).json({ message: "Guest not found" });
         }
-    
+
         guest.invitation = true;
-         await user.save();
-    
-        res.status(200).json({ message: 'Guest updated successfully' });
+        await user.save();
+
+        res.status(200).json({ message: "Guest updated successfully" });
       } else {
         return res.status(404).json({ error: "User not found" });
       }
-  
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+      res.status(500).json({ message: "Internal Server Error" });
     }
-  }
+  },
 };

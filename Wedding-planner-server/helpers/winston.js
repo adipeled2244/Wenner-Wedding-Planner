@@ -83,9 +83,6 @@ function getStackInfo(stackIndex) {
   }
 }
 
-// // A custom logger interface that wraps winston, making it easy to instrument
-// // code and still possible to replace winston in the future.
-
 module.exports.debug = module.exports.log = function () {
   logger.debug.apply(logger, formatLogArguments(arguments));
 };
