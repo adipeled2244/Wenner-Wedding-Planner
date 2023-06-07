@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import moment from "moment";
 import classes from "./Countdown.module.css";
+import React, { useEffect, useState ,useContext} from "react";
+import moment from "moment";
 import UserContext from "../../../Store/user-context";
 
 const Countdown = (props) => {
-  const { user: { weddingDate } } = React.useContext(UserContext);
-  const targetTime = moment(weddingDate);
+  const { user } =  useContext(UserContext);
+  const targetTime = moment(user.weddingDate);
 
   const [currentTime, setCurrentTime] = useState(moment());
   const timeBetween = moment.duration(targetTime.diff(currentTime));

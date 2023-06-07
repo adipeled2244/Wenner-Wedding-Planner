@@ -1,22 +1,12 @@
 import classes from "./WeddingIssues.module.css";
 import '../../../GlobalStyle/style'
-import React from "react";
+
+import React,{useContext} from "react";
 import UserContext from "../../../Store/user-context";
 
 const WeddingIssues = () => {
-// const userCtx=React.useContext(UserContext);
-const {user:{
-  brideName,
-  groomName,
-  weddingDate,
-  weddingTime,
-  img: imgWedding,
-
-  weddingVenue,
-  weddingVenueAddress,
-
-}
-} = React.useContext(UserContext);
+const {user} =  useContext(UserContext);
+const {brideName,groomName,weddingDate,weddingTime,img: imgWedding,weddingVenue, weddingVenueAddress} =user;
 
 const options = { 
   year: 'numeric', 
@@ -24,8 +14,6 @@ const options = {
   day: 'numeric' 
 };
 const weddingDateFormated=new Date(weddingDate).toLocaleDateString("en-US", options);
-// const weddingTime=userCtx.weddingTime;
-
 
   return (
     <div className={classes.Weddingissues}>

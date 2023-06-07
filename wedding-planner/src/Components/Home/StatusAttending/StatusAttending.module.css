@@ -14,7 +14,8 @@
     align-items: center;
     width:150px;
     margin-bottom: 20px;
-    height: 46px ;
+    max-height: 46px ;
+    height:100%
 
 }
 

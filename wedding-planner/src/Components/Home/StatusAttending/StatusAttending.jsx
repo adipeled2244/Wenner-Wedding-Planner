@@ -4,7 +4,6 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LoopTwoToneIcon from "@mui/icons-material/LoopTwoTone";
 
-//to do: out the box 
 const StatusAttending = ({data,total}) => {
 
   return (

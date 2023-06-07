@@ -1,6 +1,4 @@
-.first{
-    /* width: 50%; */
-}
+
 
 .WeddingDetails{
     display: flex;
@@ -9,7 +7,8 @@
     justify-content: center;
       justify-content: space-between;
       max-width: 670px;
-      height: 834px;
+      max-height: 800px;
+        height:100%;
       padding-top:70px;
       margin: 0 auto;
       /* margin-top: 20px; */

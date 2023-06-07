@@ -13,7 +13,6 @@ import { toastConfig } from "../../../Utils/constants";
 
 const Checklist = () => {
   const { user, updateChecklist } = useContext(UserContext);
-
   const checklist = user.checklist;
   const [internalCheckList, setInternalCheckList] = useState([]);
   const [newTask, setNewTask] = useState("");
