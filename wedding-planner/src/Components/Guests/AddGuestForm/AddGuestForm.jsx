@@ -14,6 +14,7 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastConfig } from "../../../Utils/constants";
+
 const AddGuestForm = ({ onClose }) => {
   const { addGuest } = useContext(UserContext);
 
@@ -132,29 +133,31 @@ const AddGuestForm = ({ onClose }) => {
     />
   );
 
-  const submitButton =  <Group position="center" mt="xl">
-          <Button
-            type="submit"
-            mt="md"
-            color="grape"
-            radius="xl"
-            styles={(theme) => ({
-              root: {
-                backgroundColor: "#5f41d9",
-                border: 0,
-                "&:not([data-disabled])": theme.fn.hover({
-                  backgroundColor: theme.fn.darken("#8069db", 0.05),
-                }),
-              },
+  const submitButton = (
+    <Group position="center" mt="xl">
+      <Button
+        type="submit"
+        mt="md"
+        color="grape"
+        radius="xl"
+        styles={(theme) => ({
+          root: {
+            backgroundColor: "#5f41d9",
+            border: 0,
+            "&:not([data-disabled])": theme.fn.hover({
+              backgroundColor: theme.fn.darken("#8069db", 0.05),
+            }),
+          },
 
-              leftIcon: {
-                marginRight: theme.spacing.md,
-              },
-            })}
-          >
-            Add guest
-          </Button>
-        </Group>
+          leftIcon: {
+            marginRight: theme.spacing.md,
+          },
+        })}
+      >
+        Add guest
+      </Button>
+    </Group>
+  );
 
   return (
     <div className={classes.addGuest}>
@@ -169,7 +172,6 @@ const AddGuestForm = ({ onClose }) => {
           {attendingInput}
           {submitButton}
         </Box>
-       
       </form>
     </div>
   );

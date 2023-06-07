@@ -101,6 +101,7 @@ exports.userController = {
     logger.info(`[addTableToUser] - ${path.basename(__filename)}`);
     const userIdParam = req.params.userId;
     const userParams = req.body;
+    console.log(userParams)
     try {
       const updatedUser = await userService.addTableToUser(
         userIdParam,

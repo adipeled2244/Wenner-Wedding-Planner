@@ -15,7 +15,6 @@ max-height: 24px;
 .imgTable{
     width:90px;
     height:90px;
-    /* background-color: rebeccapurple; */
    display: flex;
    justify-content:center;
     align-items:center;

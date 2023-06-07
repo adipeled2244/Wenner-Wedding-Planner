@@ -1,16 +1,12 @@
 .tablePage{
 background-color: #F3F3F5;
-height: 100vh;
+height: 800px;
 /* padding-top: 40px; */
 position: relative; 
 /* height: 100vh; */
 /* /* overflow: hidden; */
-overflow: hidden;
+/* overflow: hidden; */
 
-/* flex: 1 1;
-justify-content: center;
-/* gap:20px; */
-/* padding:50px; */
 
 }
 
@@ -23,8 +19,3 @@ margin: 0 auto;
 max-width: 1000px;
 
 }
-/* .my3{
-    flex: 1 1;
-    display: inline-block;
-
-} */

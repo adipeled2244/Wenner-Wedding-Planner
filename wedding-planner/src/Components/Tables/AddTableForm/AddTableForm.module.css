@@ -1,72 +1,60 @@
-.internalContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    padding-top:20px;
-    gap: 14px;
-    
-    max-width: 566px;
-    max-height: 370px;
-    
-    /* lb-blue-5 */
-    
-    background: #F5F7FA; 
-    
-
-  
+.internalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  padding-top: 20px;
+  gap: 14px;
+  max-width: 566px;
+  max-height: 370px;
+  background: #f5f7fa;
 }
 
-.title{
-    font-size: 24px;
-    margin-bottom: 20px;
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-
-.mantine-1v3yzoy{
-    position: absolute;
-    top: 0px;
-    right: -37px;
-    left: -37px;
+.mantine-1v3yzoy {
+  position: absolute;
+  top: 0px;
+  right: -37px;
+  left: -37px;
 }
 
-.tableCard{
-    cursor: pointer;
-
+.tableCard {
+  cursor: pointer;
 }
 
-
-.btnContainer{
-    display: flex;
-    justify-content: flex-end;
-    padding-left: 10;
+.btnContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 10;
 }
 
-.carousel{
-    max-width:440px;
+.carousel {
+  max-width: 440px;
 }
 
-.maxSeats{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap:10px;
+.maxSeats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.selected{
-    background-color: #ddd7d7;
-    cursor: pointer;
-
+.selected {
+  background-color: #ddd7d7;
+  cursor: pointer;
 }
 
-.unselected{
-    background-color: #fffafa;
-    cursor: pointer;
-
+.unselected {
+  background-color: #fffafa;
+  cursor: pointer;
 }
 
 .selected:hover,
-.unselected:hover{
-    background-color: #ddd7d7;
+.unselected:hover {
+  background-color: #ddd7d7;
 }

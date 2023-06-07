@@ -20,6 +20,8 @@ import { ToCsv } from "../Utils/utils";
 import { Tooltip } from "@mantine/core";
 import TableTooltipCard from "../Components/Tables/TableTooltipCard/TableTooltipCard";
 import GroupsIcon from '@mui/icons-material/Groups';
+const { toastConfig } = require("../Utils/constants");
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -54,27 +56,15 @@ const TablesPage = (props) => {
       if (jsonTable) {
         table.shape = jsonTable.shape;
         table.size = jsonTable.size;
+        table.tableMaxPeople= jsonTable.tableMaxPeople;
       }
     });
     return tablesDB;
   };
 
-  // const ToCsv = (data) => {
-  //   let dataToCsv = [];
-  //   let headArr = Object.keys(data[0]);
-  //   dataToCsv.push(headArr);
-  //   data.forEach((row) => {
-  //     const arr = Object.values(row).map(String);
-  //     dataToCsv.push(arr);
-  //   });
-  //   return dataToCsv;
-  // };
+
   const headerName = "Tables";
-  //   const headerName = <Tooltip
-  //   label={<AddTableForm onClose={handleClose}/>}
-  //   color="blue"
-  //   withArrow
-  // ><div> Tables </div></Tooltip>
+
   const createDataCsvGuestTables = () => {
     const sortedGuests = guests.sort((a, b) => a.table - b.table);
     let data = [];
@@ -133,6 +123,7 @@ const TablesPage = (props) => {
 
   const [tablesState, setTablesState] = useState(tablePrepare());
   useEffect(() => {
+    console.log(tables)
     setTablesState(tablePrepare());
   }, [tables]);
 
@@ -148,12 +139,11 @@ const TablesPage = (props) => {
     setTablesState(newTables);
   };
 
-  const DraggableCard = ({ shape, size, id, tableNumber, x, y ,selectedMaxSeats
+  const DraggableCard = ({ shape, size, id, tableNumber, x, y ,selectedMaxSeats,tableMaxPeople
   }) => {
     // console.log(x,y)
     const tableGuests= guests.filter((guest=>guest.table === tableNumber ))
-    console.log(tableGuests.length)
-    console.log(tableNumber,selectedMaxSeats)
+
     return (
       <div>
         <Draggable onStop={eventHandler} defaultPosition={{ x: x, y: y }}>
@@ -167,7 +157,7 @@ const TablesPage = (props) => {
             >
               <div style={{ display: "flex", justifyContent: "center",gap:"10px" }}>
                 <span>Table: {tableNumber}</span> |
-                <span style={{ display: "flex", justifyContent: "center" ,gap:"10px"}}><GroupsIcon/> {tableGuests.length}/{selectedMaxSeats}</span> 
+                <span style={{ display: "flex", justifyContent: "center" ,gap:"10px"}}><GroupsIcon/> {tableGuests.length|| 0}/{selectedMaxSeats}</span> 
               </div>
             </Tooltip>
             <Table key={id} shape={shape} size={size} place={"event"}></Table>
@@ -188,35 +178,17 @@ const TablesPage = (props) => {
         selectedMaxSeats={table.selectedMaxSeats}
         x={table.x}
         y={table.y}
+        tableMaxPeople={table.tableMaxPeople}
       ></DraggableCard>
     );
   });
-  // console.log(allTables)
-
+ 
   const saveHandler = async () => {
     try {
       await updateTables(tablesState);
-      toast.success("Tables updated successfully!", {
-        position: "top-right",
-        autoClose: 1400,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Tables updated successfully!", toastConfig);
     } catch (err) {
-      toast.error("Tables updated failed!", {
-        position: "top-right",
-        autoClose: 1400,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Tables updated failed!", toastConfig);
     }
   };
 

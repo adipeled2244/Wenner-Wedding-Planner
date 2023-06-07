@@ -1,106 +1,78 @@
-import { Carousel } from "@mantine/carousel";
-import data from "../../../Assets/Constants/Tables";
-import TableOption from "../TableOption/TableOption";
 import classes from "./AddTableForm.module.css";
+import { useContext,useEffect,useState } from "react";
+import UserContext from "../../../Store/user-context";
+import { toast } from "react-toastify";
+import data from "../../../Assets/Constants/Tables";
+
+import TableOption from "../TableOption/TableOption";
+import { Carousel } from "@mantine/carousel";
 import { useForm } from '@mantine/form';
-import { useState } from "react";
 import { QuantityInput } from '../../UI/QuantityInput/QuantityInput';
 import {
   Button,
 } from "@mantine/core";
-import { ToastContainer, toast } from "react-toastify";
-import { useContext } from "react";
-import UserContext from "../../../Store/user-context";
-import { useEffect } from "react";
+const { toastConfig } = require("../../../Utils/constants");
+
 const AddTableForm = ({onClose}) => {
   const { addTable } = useContext(UserContext);
-
   const [selectedTable, setSelectedTable] = useState(0)
   const [selectedNumber, setSelectedNumber] = useState(0)
   const form = useForm({
     initialValues: {
       tableTypeId: 1,
-      tableMaxPeople: 1,
+      selectedMaxSeats: 1,
     }})
 
     useEffect(() => {
-      handleChangeNumber(selectedTable.maxPeople)
+      handleChangeMaxTable(selectedTable.tableMaxPeople)
       
     }, [selectedTable])
 
-    const handleSelectTable=({tableId, maxPeople})=>{
-      // console.log(selectedTable)
-      console.log({tableId, maxPeople})
-      setSelectedTable({tableId, maxPeople})
+    const handleSelectTable=({tableId,  tableMaxPeople})=>{
+      setSelectedTable({tableId, tableMaxPeople})
       form.setFieldValue('tableTypeId',tableId)
     }
 
-    const handleChangeNumber=(value)=>{
+    const handleChangeMaxTable=(value)=>{
       setSelectedNumber(value)
-      form.setFieldValue('tableMaxPeople',value)
-      console.log(form.values)
+      form.setFieldValue('selectedMaxSeats',value)
     }
 
-  const handleSubmit = async () => {
-    // event.preventDefault();  
-    // console.log(form.values.tableMaxPeople)
-    // console.log(selectedTable.maxPeople)
-    // if(form.values.tableMaxPeople==1){
-    //   console.log("1")
-    //  handleChangeNumber(selectedTable.maxPeople)
-    // }
+  const handleSubmitAddTable = async () => {
     const table = form.values;
-    console.log(table)
     onClose();
     try{
       await addTable(table);
-       toast.success('Add table successfully!', {
-         position: "top-right",
-         autoClose: 1400,
-         hideProgressBar: true,
-         closeOnClick: true,
-         pauseOnHover: false,
-         draggable: false,
-         progress: undefined,
-         theme: "light",
-         });
+       toast.success('Add table successfully!', toastConfig);
    }
      catch(err){
-       toast.error('Add table failed!', {
-         position: "top-right",
-         autoClose: 1400,
-         hideProgressBar: true,
-         closeOnClick: true,
-         pauseOnHover: false,
-         draggable: false,
-         progress: undefined,
-         theme: "light",
-         });
-
+       toast.error('Add table failed!',toastConfig);
      }
 
   }
 
-  const carouselOptions = data.tables.map((table) => {
+  const carouselOptions = data.tables.map((table,index) => {
     const classSelected = selectedTable.tableId===table.id? classes.selected: classes.unselected
     return (
-      <div  >
+      <div key={index}  >
       <Carousel.Slide size={100} gap={20}  >
         <TableOption
           className={ classSelected}
-           onClick={() => handleSelectTable({tableId: table.id, maxPeople: table.maxPeople})}
+           onClick={() => handleSelectTable({tableId: table.id, tableMaxPeople: table.tableMaxPeople})}
           size={table.size}
           shape={table.shape}
-          maxPeople={table.maxPeople}
+          maxPeople={table.tableMaxPeople}
           sizeDetails={table.sizeDetails}
         />
       </Carousel.Slide></div>
     );
   });
+
+
   return (
     <div>
       <div className={classes.title}>Add Table</div>
-      <form onSubmit={form.onSubmit(handleSubmit)} >
+      <form onSubmit={form.onSubmit(handleSubmitAddTable)} >
       <div className={classes.internalContainer}>
         <div>Select table type:</div>
         <div className={classes.carousel}>
@@ -109,26 +81,16 @@ const AddTableForm = ({onClose}) => {
             sx={{maxWidth:400}}
             height={200}
             mx="auto"
-          //  style={{
-          //   control:{
-          //     '&[data-inactive]':{
-          //       opacity:0,
-          //       cursor:'default'
-          //     }
-          //   }
-          //  }}
             slideSize="33.333333%"
-            // slideGap="xs"
             controlsOffset="xs"
             loop={true}
             align="start"
             
           >
             {carouselOptions}
-            {/* ...other slides */}
           </Carousel>
         </div>
-        <div className={classes.maxSeats}> <div>Max Seats</div><QuantityInput  max={selectedTable.maxPeople} value={selectedNumber}  handleChange={handleChangeNumber}  /></div>
+        <div className={classes.maxSeats}> <div>Max Seats</div><QuantityInput  max={selectedTable.tableMaxPeople} value={selectedNumber}  handleChange={handleChangeMaxTable}  /></div>
       </div>
       <div className={classes.btnContainer}>
       <Button
