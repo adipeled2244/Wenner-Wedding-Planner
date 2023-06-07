@@ -1,25 +1,26 @@
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
-import AddIcon from "@mui/icons-material/Add";
-import GetAppIcon from "@mui/icons-material/GetApp";
-import Head from "../Components/Global/Head/Head";
-import Table from "../Components/UI/Table";
 import classes from "./TablesPage.module.css";
 import UserContext from "../Store/user-context";
 import { useContext, useEffect, useState } from "react";
+
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import GetAppIcon from "@mui/icons-material/GetApp";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import GroupsIcon from "@mui/icons-material/Groups";
+import { Tooltip } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Draggable from "react-draggable";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
+
+import Head from "../Components/Global/Head/Head";
+import Table from "../Components/UI/Table";
+
 import AddTableForm from "../Components/Tables/AddTableForm/AddTableForm";
 import data from "../Assets/Constants/Tables";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import { ToCsv } from "../Utils/utils";
-import { Tooltip } from "@mantine/core";
 import TableTooltipCard from "../Components/Tables/TableTooltipCard/TableTooltipCard";
-import GroupsIcon from '@mui/icons-material/Groups';
 const { toastConfig } = require("../Utils/constants");
 
 const style = {
@@ -34,36 +35,33 @@ const style = {
 };
 
 const TablesPage = (props) => {
-  const {
-    user: { tables, guests },
-    updateTables,
-  } = useContext(UserContext);
-  console.log("render");
+  const { user, updateTables } = useContext(UserContext);
+  const tables = user.tables;
+  const guests = user.guests;
+  const headerName = "Tables";
+
   const onDownload = () => {
     console.log("download");
   };
 
-  //modal
+  // modal
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const tablePrepare = () => {
+  const prepareTables = () => {
     const tablesDB = tables;
-
     tablesDB.forEach((table) => {
       const jsonTable = data.tables.find((tJ) => tJ.id === table.tableTypeId);
       if (jsonTable) {
         table.shape = jsonTable.shape;
         table.size = jsonTable.size;
-        table.tableMaxPeople= jsonTable.tableMaxPeople;
+        table.tableMaxPeople = jsonTable.tableMaxPeople;
       }
     });
     return tablesDB;
   };
-
-
-  const headerName = "Tables";
+  const [tablesState, setTablesState] = useState(prepareTables());
 
   const createDataCsvGuestTables = () => {
     const sortedGuests = guests.sort((a, b) => a.table - b.table);
@@ -121,13 +119,11 @@ const TablesPage = (props) => {
     </Button>,
   ];
 
-  const [tablesState, setTablesState] = useState(tablePrepare());
   useEffect(() => {
-    console.log(tables)
-    setTablesState(tablePrepare());
+    setTablesState(prepareTables());
   }, [tables]);
 
-  const eventHandler = (e, data) => {
+  const handleDragTable = (e, data) => {
     const tableIndex = tablesState.findIndex(
       (table) => table._id === data.node.id
     );
@@ -139,25 +135,56 @@ const TablesPage = (props) => {
     setTablesState(newTables);
   };
 
-  const DraggableCard = ({ shape, size, id, tableNumber, x, y ,selectedMaxSeats,tableMaxPeople
+  const DraggableTable = ({
+    shape,
+    size,
+    id,
+    tableNumber,
+    x,
+    y,
+    selectedMaxSeats,
+    tableMaxPeople,
   }) => {
-    // console.log(x,y)
-    const tableGuests= guests.filter((guest=>guest.table === tableNumber ))
+    const tableGuests = guests.filter((guest) => guest.table === tableNumber);
 
     return (
       <div>
-        <Draggable onStop={eventHandler} defaultPosition={{ x: x, y: y }}>
-          <div style={{ display: "inline-block", margin: "15px", cursor:'pointer' }} id={id}>
+        <Draggable onStop={handleDragTable} defaultPosition={{ x: x, y: y }}>
+          <div
+            style={{
+              display: "inline-block",
+              margin: "15px",
+              cursor: "pointer",
+            }}
+            id={id}
+          >
             <Tooltip
               label={
-                <TableTooltipCard tableNumber={tableNumber} guests={tableGuests} />
+                <TableTooltipCard
+                  tableNumber={tableNumber}
+                  guests={tableGuests}
+                />
               }
               withArrow
               color="white"
             >
-              <div style={{ display: "flex", justifyContent: "center",gap:"10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "10px",
+                }}
+              >
                 <span>Table: {tableNumber}</span> |
-                <span style={{ display: "flex", justifyContent: "center" ,gap:"10px"}}><GroupsIcon/> {tableGuests.length|| 0}/{selectedMaxSeats}</span> 
+                <span
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <GroupsIcon /> {tableGuests.length || 0}/{selectedMaxSeats}
+                </span>
               </div>
             </Tooltip>
             <Table key={id} shape={shape} size={size} place={"event"}></Table>
@@ -166,10 +193,10 @@ const TablesPage = (props) => {
       </div>
     );
   };
+
   const allTables = tablesState.map((table, i) => {
-    console.log(table)
     return (
-      <DraggableCard
+      <DraggableTable
         key={i}
         id={table._id}
         shape={table.shape}
@@ -179,11 +206,11 @@ const TablesPage = (props) => {
         x={table.x}
         y={table.y}
         tableMaxPeople={table.tableMaxPeople}
-      ></DraggableCard>
+      ></DraggableTable>
     );
   });
- 
-  const saveHandler = async () => {
+
+  const handleSavePositions = async () => {
     try {
       await updateTables(tablesState);
       toast.success("Tables updated successfully!", toastConfig);
@@ -199,7 +226,7 @@ const TablesPage = (props) => {
         <Button
           variant="contained"
           key="download"
-          onClick={saveHandler}
+          onClick={handleSavePositions}
           size="small"
           style={{
             borderRadius: 35,
@@ -211,7 +238,6 @@ const TablesPage = (props) => {
             position: "absolute",
             top: "10px",
             right: "10px",
-            // overflowX:  "inherit",
           }}
         >
           Save positions{" "}

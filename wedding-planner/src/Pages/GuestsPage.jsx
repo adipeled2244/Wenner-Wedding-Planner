@@ -1,19 +1,22 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect,useState} from "react";
 
 import Head from "../Components/Global/Head/Head";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import GetAppIcon from "@mui/icons-material/GetApp";
-// import classes from "./GuestsPage.module.css";
-import EnhancedTable from "../Components/Guests/GuestsTable/GuestsTable";
-import { CSVLink, CSVDownload } from "react-csv";
+import GuestsTable from "../Components/Guests/GuestsTable/GuestsTable";
+import { CSVLink } from "react-csv";
 import UserContext from "../Store/user-context";
 import Filters from "../Components/Guests/Filters/Filters";  
 import {ToCsv} from '../Utils/utils'
+import AddGuestForm from "../Components/Guests/AddGuestForm/AddGuestForm";
 
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import GetAppIcon from "@mui/icons-material/GetApp";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-const style = {
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const formAddGuestStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -23,20 +26,15 @@ const style = {
   boxShadow: 15,
   p: 4,
 };
-import AddGuestForm from "../Components/Guests/AddGuestForm/AddGuestForm";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 
 const GuestPage = (props) => {
-  const {
-    user: { guests },
-  } = useContext(UserContext);
-
-  const [open, setOpen] = React.useState(false);
+  const {user} = useContext(UserContext);
+  const {guests} = user;
+  const [open, setOpen] = useState(false);
+  const [rowsAfterFilter, setRowsAfterFilter] = useState(guests);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
   let dataToCsv = ToCsv(guests.map((guest)=>{
     return {
       name:guest.name,
@@ -51,7 +49,7 @@ const GuestPage = (props) => {
       
     }
   }));
-
+  
   const headerName = "Guests";
   const buttonsHeader = [
     <CSVLink data={dataToCsv} filename={"guests.csv"}>
@@ -89,19 +87,14 @@ const GuestPage = (props) => {
       Add Guest{" "}
     </Button>,
   ];
-  const [rowsAfterFilter, setRowsAfterFilter] = React.useState(guests);
 
   useEffect(() => {
     setRowsAfterFilter(guests)
   }, [guests])
 
-    //call from filter component
-    const filterChange= (filtersMap)=>{
-      let filteredRows=[]
-     
-
-      filteredRows= guests.filter(row=>{
-      
+  const filterChange= (filtersMap)=>{
+    let filteredRows=[]
+    filteredRows= guests.filter(row=>{
         if(((row.attending == filtersMap.get('attending')) || filtersMap.get('attending')== "all")&&
           ((row.group == filtersMap.get('group')) || filtersMap.get('group')== "all") &&
           ((row.side == filtersMap.get('side')) || filtersMap.get('side')== "all") &&
@@ -113,21 +106,21 @@ const GuestPage = (props) => {
   
     })
     setRowsAfterFilter(filteredRows)
-    }
+  }
 
 
   return (
     <>
       <Head buttonsHeader={buttonsHeader} headerName={headerName} />
       <Filters onFilterChange={filterChange}  />
-      <EnhancedTable rowsAfterFilter={rowsAfterFilter } />
+      <GuestsTable rowsAfterFilter={rowsAfterFilter } />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={formAddGuestStyle}>
           <AddGuestForm onClose={handleClose} />
         </Box>
       </Modal>
@@ -143,7 +136,6 @@ const GuestPage = (props) => {
         pauseOnHover
         theme="light"
       />
-      {/* Same as */}
       <ToastContainer />
     </>
   );

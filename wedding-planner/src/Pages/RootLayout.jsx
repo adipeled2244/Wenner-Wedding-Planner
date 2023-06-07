@@ -14,7 +14,7 @@ const RootLayout=(props)=>{
 export default RootLayout;
 
 
-//geet user
+//get user
 export const loader=()=>{
 
   const User={
