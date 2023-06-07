@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 
-import Head from "../Components/Head/Head";
+import Head from "../Components/Global/Head/Head";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import GetAppIcon from "@mui/icons-material/GetApp";

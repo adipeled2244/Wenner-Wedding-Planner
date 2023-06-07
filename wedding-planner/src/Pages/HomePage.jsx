@@ -1,5 +1,5 @@
 import React from "react";
-import Head from "../Components/Head/Head";
+import Head from "../Components/Global/Head/Head";
 import WeddingDetails from "../Components/Home/WeddingDetails/WeddingDetails";
 import PieChart from "../Components/PieChartCmp/PieChartCmp";
 import StatusAttending from "../Components/Home/StatusAttending/StatusAttending";

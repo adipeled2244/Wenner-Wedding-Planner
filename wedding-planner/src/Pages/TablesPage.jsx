@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import GetAppIcon from "@mui/icons-material/GetApp";
-import Head from "../Components/Head/Head";
+import Head from "../Components/Global/Head/Head";
 import Table from "../Components/UI/Table";
 import classes from "./TablesPage.module.css";
 import UserContext from "../Store/user-context";
