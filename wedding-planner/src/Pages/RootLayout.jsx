@@ -2,8 +2,11 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import MainNavigation from '../Components/Global/MainNavigation/MainNavigation';
 
+// get window height in pixels
+
 const RootLayout=(props)=>{
-    return <>
+
+  return <>
     <MainNavigation/>
     <main>
         <Outlet/>

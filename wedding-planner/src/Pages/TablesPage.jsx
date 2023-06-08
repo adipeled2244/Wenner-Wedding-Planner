@@ -7,21 +7,17 @@ import AddIcon from "@mui/icons-material/Add";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import GroupsIcon from "@mui/icons-material/Groups";
-import { Tooltip } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Draggable from "react-draggable";
 
 import Head from "../Components/Global/Head/Head";
-import Table from "../Components/UI/Table";
 
 import AddTableForm from "../Components/Tables/AddTableForm/AddTableForm";
 import data from "../Assets/Constants/Tables";
 import { CSVLink } from "react-csv";
 import { ToCsv } from "../Utils/utils";
-import TableTooltipCard from "../Components/Tables/TableTooltipCard/TableTooltipCard";
 const { toastConfig } = require("../Utils/constants");
+import DraggableTable from "../Components/Tables/DraggableTable/DraggableTable";
 
 const style = {
   position: "absolute",
@@ -35,10 +31,10 @@ const style = {
 };
 
 const TablesPage = (props) => {
+  const headerName = "Tables";
   const { user, updateTables } = useContext(UserContext);
   const tables = user.tables;
   const guests = user.guests;
-  const headerName = "Tables";
 
   const onDownload = () => {
     console.log("download");
@@ -51,7 +47,7 @@ const TablesPage = (props) => {
 
   const prepareTables = () => {
     const tablesDB = tables;
-    tablesDB.forEach((table) => {
+    tablesDB&& tablesDB.forEach((table) => {
       const jsonTable = data.tables.find((tJ) => tJ.id === table.tableTypeId);
       if (jsonTable) {
         table.shape = jsonTable.shape;
@@ -61,9 +57,9 @@ const TablesPage = (props) => {
     });
     return tablesDB;
   };
-  const [tablesState, setTablesState] = useState(prepareTables());
+  const [preparedTables, setPreparedTables] = useState(prepareTables());
 
-  const createDataCsvGuestTables = () => {
+  const createDataCsvGuestsTables = () => {
     const sortedGuests = guests.sort((a, b) => a.table - b.table);
     let data = [];
     sortedGuests.forEach((guest) => {
@@ -78,8 +74,16 @@ const TablesPage = (props) => {
     return data;
   };
 
-  let dataToCsv = ToCsv(createDataCsvGuestTables());
+  let dataToCsv = ToCsv(createDataCsvGuestsTables());
 
+  const handleSavePositions = async () => {
+    try {
+      await updateTables(preparedTables);
+      toast.success("Tables updated successfully!", toastConfig);
+    } catch (err) {
+      toast.error("Tables updated failed!", toastConfig);
+    }
+  };
   const buttonsHeader = [
     <CSVLink data={dataToCsv} filename={"tables.csv"}>
       <Button
@@ -116,92 +120,42 @@ const TablesPage = (props) => {
     >
       Add table{" "}
     </Button>,
+      <Button
+      variant="contained"
+      key="download"
+      onClick={handleSavePositions}
+      size="small"
+      style={{
+        borderRadius: 35,
+        color: "black",
+        backgroundColor: "white",
+        padding: "3px 14px",
+        boxShadow: "none",
+        border: "2px solid #E7E7EB",
+   
+      }}
+    >
+      Save positions{" "}
+    </Button>
   ];
 
   useEffect(() => {
-    setTablesState(prepareTables());
+    setPreparedTables(prepareTables());
   }, [tables]);
 
   const handleDragTable = (e, data) => {
-    const tableIndex = tablesState.findIndex(
+    const tableIndex = preparedTables.findIndex(
       (table) => table._id === data.node.id
     );
-    const table = tablesState[tableIndex];
+    const table = preparedTables[tableIndex];
     table.x = data.lastX;
     table.y = data.lastY;
-    const newTables = [...tablesState];
+    const newTables = [...preparedTables];
     newTables[tableIndex] = table;
-    setTablesState(newTables);
+    setPreparedTables(newTables);
   };
 
-  const DraggableTable = ({
-    shape,
-    size,
-    id,
-    tableNumber,
-    x,
-    y,
-    selectedMaxSeats,
-    tableMaxPeople,
-  }) => {
-    const tableGuests = guests.filter((guest) => guest.table === tableNumber);
-
-    return (
-      <div
-      style  = {{
-        position: "absolute",
-        top: "0",
-        left: "0",
-        width: "0",
-        height: "0",
-      }}
-      >
-        <Draggable onStop={handleDragTable} defaultPosition={{ x: x, y: y }}>
-          <div
-            style={{
-              display: "inline-block",
-              margin: "15px",
-              cursor: "pointer",
-            }}
-            id={id}
-          >
-            <Tooltip
-              label={
-                <TableTooltipCard
-                  tableNumber={tableNumber}
-                  guests={tableGuests}
-                />
-              }
-              withArrow
-              color="white"
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "10px",
-                }}
-              >
-                <span>Table: {tableNumber}</span> |
-                <span
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <GroupsIcon /> {tableGuests.length || 0}/{selectedMaxSeats}
-                </span>
-              </div>
-            </Tooltip>
-            <Table key={id} shape={shape} size={size} place={"event"}></Table>
-          </div>
-        </Draggable>{" "}
-      </div>
-    );
-  };
-
-  const allTables = tablesState.map((table, i) => {
+  const allTables = preparedTables.map((table, i) => {
     return (
       <DraggableTable
         key={i}
@@ -213,43 +167,21 @@ const TablesPage = (props) => {
         x={table.x}
         y={table.y}
         tableMaxPeople={table.tableMaxPeople}
+        guests={guests}
+        handleDragTable={handleDragTable}
       ></DraggableTable>
     );
   });
 
-  const handleSavePositions = async () => {
-    try {
-      await updateTables(tablesState);
-      toast.success("Tables updated successfully!", toastConfig);
-    } catch (err) {
-      toast.error("Tables updated failed!", toastConfig);
-    }
-  };
+
+
+  const vh = window.innerHeight - 70 - 60 - 1; // minus header and head
 
   return (
     <>
       <Head buttonsHeader={buttonsHeader} headerName={headerName} />
-      <div className={classes.tablePage}>
-        <Button
-          variant="contained"
-          key="download"
-          onClick={handleSavePositions}
-          size="small"
-          style={{
-            borderRadius: 35,
-            color: "black",
-            backgroundColor: "white",
-            padding: "3px 14px",
-            boxShadow: "none",
-            border: "2px solid #E7E7EB",
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-          }}
-        >
-          Save positions{" "}
-        </Button>
-        <div className={classes.tablesContainer}>{allTables}</div>
+      <div className={classes.tablePage} style={{ height: vh }}>
+              {allTables}
       </div>
 
       <Modal
