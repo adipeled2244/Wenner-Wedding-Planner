@@ -23,8 +23,8 @@ const PieChartCmp = ({ id, colors, data, total, internalTitle }) => {
     const graphInternalText= `
     <div style="display:flex;flex-direction: column;  align-items:center;">
       <span style="font-size: 20px; color: black;"><span style="font-weight: bold;">${
-        data.attending ? data.attending : data.takenSeats
-      }</span>${data.attending ? " " : slashTotal}</span>
+        data.attending ? data.attending : data.attendingWithSeats
+      }</span></span>
      
       <span style="font-size: 12px;margin-top:3px; text-align: center;">
         
@@ -79,7 +79,7 @@ const PieChartCmp = ({ id, colors, data, total, internalTitle }) => {
     }
 
     chart = Highcharts.chart(`container-${id}`, graphConfig );
-  }, [data.attending, data.attending, data.takenSits, data.notTakenSits]);
+  }, [data.attending, data.attending, data.attendingWithSeats]);
 
 
   return (
