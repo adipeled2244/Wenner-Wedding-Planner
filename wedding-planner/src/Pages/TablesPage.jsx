@@ -147,7 +147,15 @@ const TablesPage = (props) => {
     const tableGuests = guests.filter((guest) => guest.table === tableNumber);
 
     return (
-      <div>
+      <div
+      style  = {{
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "0",
+        height: "0",
+      }}
+      >
         <Draggable onStop={handleDragTable} defaultPosition={{ x: x, y: y }}>
           <div
             style={{
