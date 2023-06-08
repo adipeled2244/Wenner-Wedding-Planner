@@ -19,17 +19,6 @@ import { ToCsv } from "../Utils/utils";
 const { toastConfig } = require("../Utils/constants");
 import DraggableTable from "../Components/Tables/DraggableTable/DraggableTable";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 606,
-  bgcolor: "background.paper",
-  boxShadow: 15,
-  p: 4,
-};
-
 const TablesPage = (props) => {
   const headerName = "Tables";
   const { user, updateTables } = useContext(UserContext);
@@ -44,6 +33,17 @@ const TablesPage = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const modalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 606,
+    bgcolor: "background.paper",
+    boxShadow: 15,
+    p: 4,
+  };
+  const vh = window.innerHeight - 70 - 60 - 1; // minus header and head
 
   const prepareTables = () => {
     const tablesDB = tables;
@@ -175,8 +175,6 @@ const TablesPage = (props) => {
 
 
 
-  const vh = window.innerHeight - 70 - 60 - 1; // minus header and head
-
   return (
     <>
       <Head buttonsHeader={buttonsHeader} headerName={headerName} />
@@ -190,7 +188,7 @@ const TablesPage = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <AddTableForm onClose={handleClose} />
         </Box>
       </Modal>
