@@ -125,10 +125,10 @@ const Checklist = () => {
               </span>
             )}
           </header>
-          <main className={classes.list}>
+          <div className={classes.list}>
             {renderChecklist}
             {inputNewChecklistElement}
-          </main>
+          </div>
           <footer className={classes.actions}>
             <button onClick={handleClearChecklist}>Clear tasks</button>
             <button onClick={handleSaveChangesChecklist}>Save changes</button>
