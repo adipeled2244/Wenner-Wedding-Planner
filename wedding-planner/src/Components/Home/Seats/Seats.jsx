@@ -1,12 +1,10 @@
 import classes from "./Seats.module.css";
 import React,{useContext, useEffect} from "react";
 import { Link } from "react-router-dom";
-import ReactDOMServer from "react-dom/server";
 import UserContext from "../../../Store/user-context";
 
 import PieChartCmp from "../PieChartCmp/PieChartCmp";
 import Card from "../../UI/Card/Card";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 const Seats = () => {
   const { user } =  useContext(UserContext);
@@ -23,9 +21,8 @@ useEffect(() => {
 }, [guests])
 
   const colors = ["#5CEB73", "#E7E7EB"];
-
   const data = {
-    attendingWithSeats:attendingWithSeats
+    attendingWithSeats
   };
 
   return (

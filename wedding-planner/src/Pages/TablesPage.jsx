@@ -1,6 +1,6 @@
 import classes from "./TablesPage.module.css";
 import UserContext from "../Store/user-context";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, createRef } from "react";
 
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,12 +18,28 @@ import { CSVLink } from "react-csv";
 import { ToCsv } from "../Utils/utils";
 const { toastConfig } = require("../Utils/constants");
 import DraggableTable from "../Components/Tables/DraggableTable/DraggableTable";
+import ChairAltIcon from "@mui/icons-material/ChairAlt";
+
+import { useScreenshot, createFileName } from "use-react-screenshot";
 
 const TablesPage = (props) => {
   const headerName = "Tables";
   const { user, updateTables } = useContext(UserContext);
   const tables = user.tables;
   const guests = user.guests;
+  const ref = createRef(null);
+  const [image, takeScreenShot] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+  });
+
+  const download = (image, { name = "img", extension = "jpg" } = {}) => {
+    const a = document.createElement("a");
+    a.href = image;
+    a.download = createFileName(extension, name);
+    a.click();
+  };
+  const downloadScreenshot = () => takeScreenShot(ref.current).then(download);
 
   const onDownload = () => {
     console.log("download");
@@ -47,14 +63,15 @@ const TablesPage = (props) => {
 
   const prepareTables = () => {
     const tablesDB = tables;
-    tablesDB&& tablesDB.forEach((table) => {
-      const jsonTable = data.tables.find((tJ) => tJ.id === table.tableTypeId);
-      if (jsonTable) {
-        table.shape = jsonTable.shape;
-        table.size = jsonTable.size;
-        table.tableMaxPeople = jsonTable.tableMaxPeople;
-      }
-    });
+    tablesDB &&
+      tablesDB.forEach((table) => {
+        const jsonTable = data.tables.find((tJ) => tJ.id === table.tableTypeId);
+        if (jsonTable) {
+          table.shape = jsonTable.shape;
+          table.size = jsonTable.size;
+          table.tableMaxPeople = jsonTable.tableMaxPeople;
+        }
+      });
     return tablesDB;
   };
   const [preparedTables, setPreparedTables] = useState(prepareTables());
@@ -105,6 +122,57 @@ const TablesPage = (props) => {
       </Button>
     </CSVLink>,
     <Button
+      variant="contained"
+      key="savePositions"
+      onClick={handleSavePositions}
+      size="small"
+      style={{
+        borderRadius: 35,
+        color: "black",
+        backgroundColor: "white",
+        padding: "3px 14px",
+        boxShadow: "none",
+        border: "2px solid #E7E7EB",
+      }}
+    >
+      Save positions{" "}
+    </Button>,
+    <Button
+      variant="contained"
+      key="exportPositions"
+      onClick={downloadScreenshot}
+      size="small"
+      style={{
+        borderRadius: 35,
+        color: "black",
+        backgroundColor: "white",
+        padding: "3px 14px",
+        boxShadow: "none",
+        border: "2px solid #E7E7EB",
+      }}
+    >
+      Export positions{" "}
+    </Button>,
+    <Button
+      style={{
+        borderRadius: 35,
+        color: "white",
+        backgroundColor: "#5F41D9",
+        padding: "3px 14px",
+        boxShadow: "none",
+      }}
+      variant="contained"
+      key="generateSeats"
+      onClick={() => {
+        console.log("generate seats");
+      }}
+      startIcon={<ChairAltIcon />}
+      size="small"
+    >
+      Generate Seats{" "}
+    </Button>,
+
+    <Button
       style={{
         borderRadius: 35,
         color: "white",
@@ -120,23 +188,6 @@ const TablesPage = (props) => {
     >
       Add table{" "}
     </Button>,
-      <Button
-      variant="contained"
-      key="download"
-      onClick={handleSavePositions}
-      size="small"
-      style={{
-        borderRadius: 35,
-        color: "black",
-        backgroundColor: "white",
-        padding: "3px 14px",
-        boxShadow: "none",
-        border: "2px solid #E7E7EB",
-   
-      }}
-    >
-      Save positions{" "}
-    </Button>
   ];
 
   useEffect(() => {
@@ -173,13 +224,11 @@ const TablesPage = (props) => {
     );
   });
 
-
-
   return (
     <>
       <Head buttonsHeader={buttonsHeader} headerName={headerName} />
-      <div className={classes.tablePage} style={{ height: vh }}>
-              {allTables}
+      <div className={classes.tablePage} style={{ height: vh }} ref={ref}>
+        {allTables}
       </div>
 
       <Modal

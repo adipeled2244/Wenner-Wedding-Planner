@@ -115,7 +115,7 @@ const Checklist = () => {
 
   return (
     <div className={classes.third}>
-      {checkedNumber > 0 && (
+      { (
         <Card className={classes.checklist}>
           <header className={classes.title}>
             Checklist{" "}

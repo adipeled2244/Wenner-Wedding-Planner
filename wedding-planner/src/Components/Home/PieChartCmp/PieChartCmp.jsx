@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import "./Pie.css";
 import Highcharts from "highcharts";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import ReactDOMServer from "react-dom/server";
-import { ClassNames } from "@emotion/react";
 
 const PieChartCmp = ({ id, colors, data, total, internalTitle }) => {
 
