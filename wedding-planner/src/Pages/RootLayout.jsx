@@ -8,9 +8,8 @@ const RootLayout=(props)=>{
 
   return <>
     <MainNavigation/>
-    <main>
         <Outlet/>
-    </main>
+    
   </>
 }
 

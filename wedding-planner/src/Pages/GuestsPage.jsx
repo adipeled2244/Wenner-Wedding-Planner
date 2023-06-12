@@ -16,6 +16,8 @@ import Modal from "@mui/material/Modal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import {GuestsButtonsMenu} from '../Components/Guests/GuestsButtonsMenu/GuestsButtonsMenu'
+
 const formAddGuestStyle = {
   position: "absolute",
   top: "50%",
@@ -51,42 +53,6 @@ const GuestPage = (props) => {
   }));
   
   const headerName = "Guests";
-  const buttonsHeader = [
-    <CSVLink data={dataToCsv} filename={"guests.csv"}>
-      <Button
-        variant="contained"
-        size="small"
-        style={{
-          borderRadius: 35,
-          color: "black",
-          backgroundColor: "white",
-          padding: "3px 14px",
-          boxShadow: "none",
-          border: "1px solid #E7E7EB",
-        }}
-        key="download"
-        startIcon={<GetAppIcon />}
-      >
-        Download CSV
-      </Button>
-    </CSVLink>,
-    <Button
-      size="small"
-      variant="contained"
-      key="add"
-      onClick={handleOpen}
-      startIcon={<AddIcon />}
-      style={{
-        borderRadius: 35,
-        color: "white",
-        backgroundColor: "#5F41D9",
-        padding: "3px 14px",
-        boxShadow: "none",
-      }}
-    >
-      Add Guest{" "}
-    </Button>,
-  ];
 
   useEffect(() => {
     setRowsAfterFilter(guests)
@@ -111,7 +77,7 @@ const GuestPage = (props) => {
 
   return (
     <>
-      <Head buttonsHeader={buttonsHeader} headerName={headerName} />
+      <Head buttonsHeader={ <GuestsButtonsMenu  handleOpen={handleOpen} dataToCsv={dataToCsv}    />} headerName={headerName} />
       <Filters onFilterChange={filterChange}  />
       <GuestsTable rowsAfterFilter={rowsAfterFilter } />
       <Modal
