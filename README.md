@@ -7,6 +7,7 @@
 - REST API
 - Drand and Drop
 - Export to CSV 
+- Export as Jpeg
 
 ![image](https://github.com/adipeled2244/Wenner-Wedding-Planner/assets/66279141/d9e7ec1d-6eda-43f3-a0c9-296c7276e975)
 
