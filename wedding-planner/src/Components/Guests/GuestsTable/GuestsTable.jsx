@@ -25,6 +25,7 @@ import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlin
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import {Row} from './Row'
 
 const headCells = [
   {
@@ -225,7 +226,6 @@ function GuestsTable({ rowsAfterFilter }) {
   const [orderBy, setOrderBy] = React.useState("name");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
   const sendInvitations = () => {
@@ -308,7 +308,6 @@ function GuestsTable({ rowsAfterFilter }) {
           <Table
             sx={{ minWidth: 750, marginTop: "5px" }}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
           >
             <TableHeader
               numSelected={selected.length}
@@ -323,125 +322,13 @@ function GuestsTable({ rowsAfterFilter }) {
                 const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
-                return (
-                  <TableRow
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={index}
-                    selected={isItemSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        onClick={(event) => handleCheckboxClick(event, row._id)}
-                        checkedIcon={<CheckBoxOutlinedIcon />}
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#ffffff",
-                          },
-                          "& .MuiSvgIcon-root": {
-                            color: "#9077F6",
-                          },
-                        }}
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="left">{row.side}</TableCell>
-                    <TableCell align="left">{row.group}</TableCell>
-                    <TableCell align="left">{row.email}</TableCell>
-                    <TableCell align="left">{row.phone}</TableCell>
-                    <TableCell align="left">
-                      {row.table === 0 ? "" : row.table}
-                    </TableCell>
-                    <TableCell align="left">
-                      {" "}
-                      {row.invitation && (
-                        <div className={classes.invitation}>
-                          {" "}
-                          <CheckCircleOutlineOutlinedIcon fontSize="small" />{" "}
-                          <span>sent</span>
-                        </div>
-                      )}
-                      {!row.invitation && (
-                        <div className={classes.invitation}>
-                          {" "}
-                          {/* <CheckCircleOutlineOutlinedIcon fontSize="small" />{" "} */}
-                          <span>Not sent yet</span>
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell align="left">
-                      {row.attending !== 0 && (
-                        <div className={classes.invitation}>
-                          {" "}
-                          <CheckCircleOutlineOutlinedIcon
-                            sx={{
-                              color: "#009317",
-                            }}
-                            fontSize="small"
-                          />{" "}
-                          <span
-                            style={{
-                              color: "#009317",
-                            }}
-                          >
-                            {row.attending}
-                          </span>
-                        </div>
-                      )}
-                      {row.attending === 0 && (
-                        <div className={classes.invitation}>
-                          {row.status === "notAttending" ? (
-                            <HighlightOffIcon
-                              sx={{
-                                color: "#cf142b",
-                              }}
-                              fontSize="small"
-                            />
-                          ) : (
-                            "Not Replied"
-                          )}
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell align="left">
-                      {" "}
-                      <div className={classes.actions}>
-                        <Tooltip title="Send Invitation">
-                          <ForwardToInboxOutlinedIcon
-                            fontSize="small"
-                            sx={{ cursor: "pointer" }}
-                            onClick={() => {}}
-                          />
-                        </Tooltip>
-                        <Tooltip title="Delete">
-                          <DeleteOutlineOutlinedIcon
-                            fontSize="small"
-                            sx={{ cursor: "pointer" }}
-                            onClick={() => {
-                              console.log("delete");
-                            }}
-                          />
-                        </Tooltip>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
+                return  <Row row={row} index={index} isItemSelected={isItemSelected} handleCheckboxClick={handleCheckboxClick} labelId ={labelId } />                    
+
               })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height:53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />

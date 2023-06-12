@@ -7,21 +7,7 @@
   font-size: 12px;
 }
 
-.invitation {
-  display: flex;
-  align-items: center;
-}
 
-.invitation span {
-  margin-left: 5px;
-  font-family: IBMPlexSans;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
 
 .numberGreen {
   color: "#009317";
