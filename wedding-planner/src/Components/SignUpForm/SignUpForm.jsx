@@ -5,7 +5,6 @@ import Card from "./../UI/Card/Card";
 import classes from "./SignUpForm.module.css";
 import React, { useState, useRef } from "react";
 import { useForm } from "@mantine/form";
-import { DateInput } from '@mantine/dates';
 
 export const SignUpForm = () => {
   const [username, setUsername] = useState("");
@@ -104,12 +103,7 @@ export const SignUpForm = () => {
           />
         </div>
         {/* weddingDate time */}
-        <DateInput
-      label="Date input"
-      placeholder="Date input"
-      maw={400}
-      mx="auto"
-    />
+        
         <TextField
           label="Wedding Venue"
           onChange={(e) => setWeddingVenue(e.target.value)}

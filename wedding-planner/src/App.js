@@ -8,7 +8,7 @@ import TablesPage from "./Pages/TablesPage";
 import { loader as getUserLoader } from "./Pages/RootLayout";
 import UserProvider from "./Store/userProvider";
 import {SignUpForm} from "./Components/SignUpForm/SignUpForm"
-
+import {LoginForm} from "./Components/LoginForm/LoginForm"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +20,7 @@ const router = createBrowserRouter([
       { path: "/guests", element: <GuestsPage /> },
       { path: "/tables", element: <TablesPage /> },
       { path: "/signup", element: <SignUpForm /> },
+      { path: "/login", element: <LoginForm /> },
 
     ],
   },
