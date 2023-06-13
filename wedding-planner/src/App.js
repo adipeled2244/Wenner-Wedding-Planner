@@ -7,6 +7,7 @@ import GuestsPage from "./Pages/GuestsPage";
 import TablesPage from "./Pages/TablesPage";
 import { loader as getUserLoader } from "./Pages/RootLayout";
 import UserProvider from "./Store/userProvider";
+import {SignUpForm} from "./Components/SignUpForm/SignUpForm"
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/guests", element: <GuestsPage /> },
       { path: "/tables", element: <TablesPage /> },
+      { path: "/signup", element: <SignUpForm /> },
 
     ],
   },
