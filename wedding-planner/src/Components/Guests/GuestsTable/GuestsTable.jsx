@@ -1,89 +1,21 @@
 import classes from "./GuestsTable.module.css";
-import * as React from "react";
+import  React, {useState} from "react";
 import { useContext } from "react";
 import UserContext from "../../../Store/user-context";
 
-import PropTypes from "prop-types";
+import { Row } from "./Row";
+import { TableHeader } from "./TableHeader";
+import { TableTitleToolbar } from "./TableTitleToolbar";
+
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import Tooltip from "@mui/material/Tooltip";
-import { visuallyHidden } from "@mui/utils";
-import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
-import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
-import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import {Row} from './Row'
 
-const headCells = [
-  {
-    id: "name",
-    numeric: false,
-    disablePadding: true,
-    label: "Name",
-  },
-  {
-    id: "side",
-    numeric: false,
-    disablePadding: false,
-    label: "Side",
-  },
-  {
-    id: "group",
-    numeric: false,
-    disablePadding: false,
-    label: "Group",
-  },
-  {
-    id: "email",
-    numeric: false,
-    disablePadding: false,
-    label: "Email",
-  },
-  {
-    id: "phone",
-    numeric: false,
-    disablePadding: false,
-    label: "Phone",
-  },
-  {
-    id: "table",
-    numeric: true,
-    disablePadding: false,
-    label: "Table",
-  },
-  {
-    id: "invitation",
-    numeric: false,
-    disablePadding: false,
-    label: "Invitaition",
-  },
-  {
-    id: "attending",
-    numeric: false,
-    disablePadding: false,
-    label: "Attending",
-  },
-  ,
-  {
-    id: "actions",
-    numeric: false,
-    disablePadding: false,
-    label: "",
-  },
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -113,120 +45,14 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const TableHeader = (props) => {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            checkedIcon={<IndeterminateCheckBoxOutlinedIcon />}
-            sx={{
-              "&.Mui-checked": {
-                color: "#ffffff",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#9077F6",
-              },
-            }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            className={classes.cell}
-            key={headCell.id}
-            align={"left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              <div className={classes.titleUpTable}>{headCell.label}</div>
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-};
-
-TableHeader.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
-
-function TableTitleToolbar(props) {
-  const { numSelected, totalGuests, sendInvitations } = props;
-
-  return (
-    <div className={classes.tableToolbar}>
-      <div className={classes.title}>
-        {" "}
-        {numSelected}{" "}
-        <span className={classes.miniTitle}>out of {totalGuests}</span> Guests
-        selected
-      </div>
-      <Button
-        variant="contained"
-        size="small"
-        key="send"
-        onClick={sendInvitations}
-        startIcon={<SendIcon />}
-        style={{
-          borderRadius: 35,
-          color: "black",
-          backgroundColor: "white",
-          boxShadow: "none",
-          border: "1px solid #E7E7EB",
-        }}
-      >
-        Send invitation{" "}
-      </Button>
-    </div>
-  );
-}
-
-TableTitleToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
-
 
 function GuestsTable({ rowsAfterFilter }) {
   const { updateGuests } = useContext(UserContext);
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("name");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("name");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] =useState(25);
 
   const sendInvitations = () => {
     updateGuests(selected, { invitation: true });
@@ -322,13 +148,20 @@ function GuestsTable({ rowsAfterFilter }) {
                 const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
-                return  <Row row={row} index={index} isItemSelected={isItemSelected} handleCheckboxClick={handleCheckboxClick} labelId ={labelId } />                    
-
+                return (
+                  <Row
+                    row={row}
+                    index={index}
+                    isItemSelected={isItemSelected}
+                    handleCheckboxClick={handleCheckboxClick}
+                    labelId={labelId}
+                  />
+                );
               })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height:53 * emptyRows,
+                    height: 53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -338,7 +171,7 @@ function GuestsTable({ rowsAfterFilter }) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[25, 50, 100]}  
+          rowsPerPageOptions={[25, 50, 100]}
           component="div"
           count={rowsAfterFilter.length}
           rowsPerPage={rowsPerPage}

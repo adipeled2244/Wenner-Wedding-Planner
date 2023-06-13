@@ -9,3 +9,15 @@ export const toastConfig = {
     progress: undefined,
     theme: "light",
   }
+
+  export const toastContainerConfig={
+    position:"top-right",
+    autoClose:5000,
+    hideProgressBar:true,
+    newestOnTop:false,
+    closeOnClick:true,
+    rtl:false,
+    pauseOnFocusLoss:true,
+     theme:"light",
+
+  }

@@ -1,0 +1,16 @@
+
+.tableToolbar {
+    display: flex;
+    justify-content: flex-start;
+    width:100%;
+    gap: 20px;
+  }
+  .title {
+    font-size: 18px;
+    margin-left: 20px;
+  }
+  
+  .miniTitle {
+    font-size: 12px;
+  }
+  
