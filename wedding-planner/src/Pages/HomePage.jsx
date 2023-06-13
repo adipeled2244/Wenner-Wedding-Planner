@@ -16,7 +16,6 @@ const HomePage = (props) => {
   return (
     <>
       <Head headerName={`${user.brideName} and ${user.groomName} wedding`} />
-
       <div className={classes.container}>
         <WeddingDetails />
         <Statuses />
@@ -25,7 +24,6 @@ const HomePage = (props) => {
       <ToastContainer
         { ...toastContainerConfig }
       />
-      <ToastContainer />
     </>
   );
 };

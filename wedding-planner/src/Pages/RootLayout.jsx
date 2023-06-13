@@ -30,27 +30,9 @@ export const loader=()=>{
     weddingVenueAddress: "rishon lezion",
     groomName: "Shay",
     brideName: "Adi",
-    checklist:[
-      { label: "DG", checked: true },
-    { label: "Hair", checked: true },
-    { label: "Dress", checked: true },
-    { label: "Food tasting", checked: false },
-    { label: "Alcohol", checked: false },
-    { label: "DG", checked: true }],
+    checklist:[],
     guests: [
-      {
-        id: 1,
-        name: "adi peled",
-        email: "",
-        phone: "",
-        address: "",
-        status: "confirmed",
-        table: 1,
-        seat: 1,
-        side: "bride",
-        group: "family",
-        attending: 2
-      }
+      
     ]
   }
   return {User};

@@ -114,8 +114,6 @@ const Checklist = () => {
   );
 
   return (
-    <div className={classes.third}>
-      { (
         <Card className={classes.checklist}>
           <header className={classes.title}>
             Checklist{" "}
@@ -134,8 +132,6 @@ const Checklist = () => {
             <button onClick={handleSaveChangesChecklist}>Save changes</button>
           </footer>
         </Card>
-      )}
-    </div>
   );
 };
 

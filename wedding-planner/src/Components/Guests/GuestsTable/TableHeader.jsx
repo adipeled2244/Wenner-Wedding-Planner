@@ -15,7 +15,7 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
 import classes from "./TableHeader.module.css";
-import {headCells} from '../../../Assets/Constants/TableConfig'
+import {headCells} from '../../../Utils/Constants/TableConfig'
 
 export const TableHeader = (props) => {
     const {

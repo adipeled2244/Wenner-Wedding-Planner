@@ -6,5 +6,7 @@
     width: 100%;
     padding:20px;
     overflow-x: hidden;
-    flex-wrap: wrap;
+    height:100vh;
+    overflow-y: hidden;
+    /* flex-wrap: wrap; */
 }
