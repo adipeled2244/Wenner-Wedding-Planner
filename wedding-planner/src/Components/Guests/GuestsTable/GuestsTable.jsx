@@ -151,6 +151,7 @@ function GuestsTable({ rowsAfterFilter }) {
                 return (
                   <Row
                     row={row}
+                    key={index}
                     index={index}
                     isItemSelected={isItemSelected}
                     handleCheckboxClick={handleCheckboxClick}

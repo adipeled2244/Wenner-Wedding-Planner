@@ -30,12 +30,12 @@ const weddingDateFormated=new Date(weddingDate).toLocaleDateString("en-US", opti
           </div>
           <div className={classes.down}>{groomName}</div>
         </div>
-        <p className={classes.details}>
+        <div className={classes.details}>
           <div className={classes.bold}>{weddingDateFormated}</div>
           <div className={classes.bold}>{weddingTime}</div>
           <div className={classes.bold}>{weddingVenue}</div>
           <div className={classes.little} >{weddingVenueAddress}</div>
-        </p>
+        </div>
       </div>
     </div>
   );
