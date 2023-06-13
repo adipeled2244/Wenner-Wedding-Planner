@@ -9,7 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import { toast } from "react-toastify";
-import { toastConfig } from "../../../Utils/constants";
+import { toastConfig } from "../../../Utils/Constants/toastConfig";
 
 const Checklist = () => {
   const { user, updateChecklist } = useContext(UserContext);

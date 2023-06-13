@@ -1,4 +1,5 @@
 const baseUrl = "http://localhost:3500/api";
+
 // get post patch delete with auth
 export const get = async (url) => {
   const res= await fetch(`${baseUrl}${url}`, {

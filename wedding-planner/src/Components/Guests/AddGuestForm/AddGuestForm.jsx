@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { toastConfig } from "../../../Utils/constants";
+import { toastConfig } from "../../../Utils/Constants/toastConfig";
 
 const AddGuestForm = ({ onClose }) => {
   const { addGuest } = useContext(UserContext);

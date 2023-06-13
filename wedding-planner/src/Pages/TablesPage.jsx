@@ -9,14 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Head from "../Components/Global/Head/Head";
 import AddTableForm from "../Components/Tables/AddTableForm/AddTableForm";
-import data from "../Assets/Constants/Tables";
+import data from "../Utils/Constants/Tables";
 import { ToCsv } from "../Utils/utils";
-import { toastConfig } from "../Utils/constants";
+import { toastConfig } from "../Utils/Constants/toastConfig";
 import { TablesButtonsMenu } from "../Components/Tables/TablesButtonsMenu/TablesButtonsMenu";
 
 import { useScreenshot, createFileName } from "use-react-screenshot";
 import {DragTables} from "../Components/Tables/DragTables/DragTables";
-import {toastContainerConfig} from "../Utils/constants";
+import {toastContainerConfig} from "../Utils/Constants/toastConfig";
 
 const TablesPage = (props) => {
   const { user, updateTables } = useContext(UserContext);

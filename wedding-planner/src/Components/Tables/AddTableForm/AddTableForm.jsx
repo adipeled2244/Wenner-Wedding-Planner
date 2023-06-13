@@ -2,7 +2,7 @@ import classes from "./AddTableForm.module.css";
 import { useContext,useEffect,useState } from "react";
 import UserContext from "../../../Store/user-context";
 import { toast } from "react-toastify";
-import data from "../../../Assets/Constants/Tables";
+import data from "../../../Utils/Constants/Tables";
 
 import TableOption from "../TableOption/TableOption";
 import { Carousel } from "@mantine/carousel";
@@ -11,7 +11,7 @@ import { QuantityInput } from '../../UI/QuantityInput/QuantityInput';
 import {
   Button,
 } from "@mantine/core";
-const { toastConfig } = require("../../../Utils/constants");
+const { toastConfig } = require("../../../Utils/Constants/toastConfig");
 
 const AddTableForm = ({onClose}) => {
   const { addTable } = useContext(UserContext);

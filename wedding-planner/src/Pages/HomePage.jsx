@@ -8,7 +8,7 @@ import { useContext } from "react";
 import UserContext from "../Store/user-context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { toastContainerConfig } from "../Utils/constants";
+import { toastContainerConfig } from "../Utils/Constants/toastConfig";
 
 const HomePage = (props) => {
   const { user } = useContext(UserContext);
