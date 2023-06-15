@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import UserContext from "./user-context";
 import {
   updateUser,
@@ -6,7 +7,10 @@ import {
   getUser,
   updateUserGuest,
   addTableToUser,
+  signup,
+  login,
 } from "../ServerApi/userApi";
+import { toast } from "react-toastify";
 // import { debounce } from "lodash";
 
 function UserProvider(props) {
@@ -28,7 +32,53 @@ function UserProvider(props) {
     guests: [],
   });
 
+  async function handleSignup(user) {
+
+    try{
+      const res = await signup(user);
+    if (res.status === 200) {
+      const token = res.data.token;
+      const user = res.data.user;
+      setUser(user);
+      localStorage.setItem("token", token)
+      return { status: 200, message: "login success" } // need redieect
+    }
+    else{
+
+    }
+    }catch(err){
+      return { status: err.response.status, message: err.response.data.error };
+    }
+    
+
+  
+    //toaster error
+  }
+
+  async function handleLogin(name, password) {
+    console.log(name, password);
+    let res;
+    try {
+      res = await login({ name, password }); // why nit going to else?? only to catach if status!=200
+      console.log(res)
+      if (res.status === 200) {
+        const token = res.data.token;
+        const user = res.data.user;
+        setUser(user);
+        localStorage.setItem("token", token);
+        return { status: 200, message: "login success" };
+      } else {
+        return { status: 400, message: "login not success" };
+      }
+    } catch (err) {
+      return { status: err.response.status, message: err.response.data.error };
+    }
+
+    //toaster error
+  }
+
   async function updateChecklist(checklist) {
+    console.log("in provider")
     const res = await updateUser(user._id, { checklist });
     if (res.status === 200) {
       setUser({ ...user, checklist });
@@ -94,17 +144,17 @@ function UserProvider(props) {
     }
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      const res = await getUser("6463f4b5954d0fa53015acdd");
-      if (res.status === 200) {
-        setUser(res.data.user);
-      }
-    }
-    //TODO:  init user from server
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const res = await getUser("6463f4b5954d0fa53015acdd");
+  //     if (res.status === 200) {
+  //       setUser(res.data.user);
+  //     }
+  //   }
+  //   //TODO:  init user from server
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const userContext = {
     user,
@@ -114,6 +164,8 @@ function UserProvider(props) {
     updateGuests,
     updateTables,
     addTable,
+    handleSignup,
+    handleLogin,
   };
 
   return (

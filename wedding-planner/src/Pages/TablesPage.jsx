@@ -88,7 +88,7 @@ const TablesPage = (props) => {
     return data;
   };
 
-  let dataToCsv = ToCsv(createDataCsvGuestsTables());
+  let dataToCsv = guests.length>0 ? ToCsv(createDataCsvGuestsTables()) :[]
 
   const handleSavePositions = async () => {
     try {

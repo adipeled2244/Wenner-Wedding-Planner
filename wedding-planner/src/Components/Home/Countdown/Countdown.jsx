@@ -10,6 +10,7 @@ const Countdown = (props) => {
   const [currentTime, setCurrentTime] = useState(moment());
   const timeBetween = moment.duration(targetTime.diff(currentTime));
   const [isToday, setIsToday] = useState(false);
+  const [weddingEnd, setWeddingEnd] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,6 +23,9 @@ const Countdown = (props) => {
   useEffect(() => {
     if (timeBetween.days() === 0) {
       setIsToday(true);
+    }
+    if (timeBetween.days()  < 0) {
+      setWeddingEnd(true);
     }
   }, [timeBetween.days()]);
 
@@ -38,7 +42,8 @@ const Countdown = (props) => {
     <div className={classes.countdown}>
       <div className={classes.leftLeaf}></div>
       {isToday && <div className={classes.today}>Today</div>}
-      {!isToday && timeBetween.isValid() && (
+      {weddingEnd && <div  className={classes.over}>The wedding is over ! hope hou enjoy </div>}
+      {!isToday && timeBetween.isValid() && !weddingEnd && (
         <>
           {renderCountdownElement(timeBetween.months(), "Months")}
           {renderCountdownElement(timeBetween.days(), "Days")}

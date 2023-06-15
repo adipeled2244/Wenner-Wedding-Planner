@@ -3,24 +3,40 @@ import { Link } from "react-router-dom";
 
 import Card from "../UI/Card/Card";
 import classes from "./LoginForm.module.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+import UserContext from "../../Store/user-context";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
+import { toastContainerConfig } from "../../Utils/Constants/toastConfig";
 
 export const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-
-  const handleSignUpSubmit = () => {};
-
-
+  const { handleLogin } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    const res= await handleLogin(username, password);
+    console.log(res)
+   if(res.status===200){
+    navigate("/home")
+   }
+   else{
+    console.log(res.message)
+    toast.error(res.message)
+   }
+    //set token
+  };
 
   return (
+    <>
     <Card className={classes.signupForm}>
       <div className={classes.title}> Login</div>
-      <form onSubmit={handleSignUpSubmit} action={<Link to="/" />}>
-
-        
+      <form>
         <TextField
           label="Username"
           onChange={(e) => setUsername(e.target.value)}
@@ -31,8 +47,6 @@ export const LoginForm = () => {
           sx={{ mb: 2, backgroundColor: "white", border: "white" }}
           size="small"
           fullWidth
-
-          //   variant="filled"
         />
         <TextField
           label="Password"
@@ -46,8 +60,12 @@ export const LoginForm = () => {
           size="small"
           sx={{ mb: 2, backgroundColor: "white", border: 0 }}
         />
-      
-        <Button variant="contained" color="secondary" type="submit">
+
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={(e) => handleLoginSubmit(e)}
+        >
           Login
         </Button>
       </form>
@@ -55,5 +73,10 @@ export const LoginForm = () => {
         Doesn't have an account? <Link to="/signup">Signup</Link>
       </small>
     </Card>
+    <ToastContainer
+       {...toastContainerConfig}
+      />
+      <ToastContainer />
+  </>
   );
 };

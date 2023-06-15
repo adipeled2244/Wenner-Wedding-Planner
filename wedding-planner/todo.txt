@@ -1,4 +1,7 @@
 1. alg to devide guests to tables - groups sits together. 
 
-3. page recomentation - AI- chat gpt. 
+2. page recomentation - AI- chat gpt. 
 
+3. auth:
+* in every call to backend
+* לטפל בזה שאין עדין אורחיפ ושולחנות

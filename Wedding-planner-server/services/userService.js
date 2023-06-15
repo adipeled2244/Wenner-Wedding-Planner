@@ -9,13 +9,20 @@ module.exports = {
   getUser,
   getUsers,
   addGuestToUser,
-  addTableToUser
+  addTableToUser,
+  getUserByName
 };
 
 async function getUser(id) {
   logger.info(`[getUser] - ${path.basename(__filename)}`);
   return await User.findOne({ _id: id });
 }
+
+async function getUserByName(name) {
+  logger.info(`[getUserByName] - ${path.basename(__filename)}`);
+  return await User.findOne({ name: name });
+}
+
 
 async function getUsers(id, params) {
     logger.info(`[getUser] - ${path.basename(__filename)}`);

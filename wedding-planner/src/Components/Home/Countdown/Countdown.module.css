@@ -64,3 +64,19 @@ background-size: contain;
     font-weight: 100;
     margin-left: 10px;
 }
+
+.over{
+    background-color: #201256;
+    color: white;
+    width: 300px;
+    height: 71px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 15px;
+    font-weight: 100;
+    margin-left: 10px;
+}

@@ -11,26 +11,28 @@ const GuestsStatus = () => {
   const { user } = React.useContext(UserContext);
   const { guests } = user;
 
-  const attending = guests.reduce(
+
+  const attending = guests?.reduce(
     (accumulator, currentValue) => accumulator + currentValue.attending,
     0
   );
-  const notAttending = guests.filter(
+  const notAttending = guests?.filter(
     (guest) => guest.status === "notAttending"
   ).length;
-  const notReplied = guests.filter(
+  const notReplied = guests?.filter(
     (guest) => guest.status === "notReplied"
   ).length;
-  const total = guests.length;
+  const total = guests?.length ;
   const colors = ["#5CEB73", "#FF9800", "#E7E7EB"];
   const graphData = {
     attending: attending,
     notAttending: notAttending,
   };
+ 
   const data = {
-    attending,
-    notAttending,
-    notReplied,
+    attending:attending|| 0,
+    notAttending:notAttending ||0,
+    notReplied:notReplied ||0,
   };
 
   return (
@@ -40,7 +42,7 @@ const GuestsStatus = () => {
         id="2"
         data={graphData}
         colors={colors}
-        total={total}
+        total={total }
         internalTitle={"Attending"}
       />
       <StatusAttending data={data} total={total} />

@@ -33,33 +33,38 @@ const GuestPage = (props) => {
   const [rowsAfterFilter, setRowsAfterFilter] = useState(guests);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  let dataToCsv = ToCsv(
-    guests.map((guest) => {
-      return {
-        name: guest.name,
-        email: guest.email,
-        phone: guest.phone,
-        side: guest.side,
-        invitation: guest.invitation ? "Sent" : "not send yet",
-        status:
-          guest.status === "notAttending"
-            ? "Not Attending"
-            : guest.status === "attending"
-            ? "Attending"
-            : "Not Replied",
-        attending: guest.attending,
-        group: guest.group,
-        table: guest.table == 0 ? "" : guest.table,
-      };
-    })
-  );
+
+ 
+let dataToCsv =  guests.length > 0 ?  ToCsv(
+  guests.map((guest) => {
+    return {
+      name: guest.name,
+      email: guest.email,
+      phone: guest.phone,
+      side: guest.side,
+      invitation: guest.invitation ? "Sent" : "not send yet",
+      status:
+        guest.status === "notAttending"
+          ? "Not Attending"
+          : guest.status === "attending"
+          ? "Attending"
+          : "Not Replied",
+      attending: guest.attending,
+      group: guest.group,
+      table: guest.table == 0 ? "" : guest.table,
+    };
+  })
+): []; 
 
   useEffect(() => {
     setRowsAfterFilter(guests);
+   
   }, [guests]);
 
   const filterChange = (filtersMap) => {
     let filteredRows = [];
+    console.log(guests.length)
+  if(guests.length===0) return filteredRows;
     filteredRows = guests.filter((row) => {
       if (
         (row.attending == filtersMap.get("attending") ||
@@ -89,7 +94,8 @@ const GuestPage = (props) => {
         headerName={"Guests"}
       />
       <Filters onFilterChange={filterChange} />
-      <GuestsTable rowsAfterFilter={rowsAfterFilter} />
+      {guests.length>0 && <GuestsTable rowsAfterFilter={rowsAfterFilter} />}
+      {guests.length===0 &&  <div style={{marginLeft:"30px"}} >No guests yet</div>}
       <Modal
         open={open}
         onClose={handleClose}

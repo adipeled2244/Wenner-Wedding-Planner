@@ -13,6 +13,15 @@ const PieChartCmp = ({ id, colors, data, total, internalTitle }) => {
 
     return [output[0], output];
   }
+let content=0;
+  if(!data.attending && !data.attendingWithSeats) {
+ content=0;
+  }
+  else if (data.attending){
+    content=data.attending;
+  } else{
+    content=data.attendingWithSeats;
+  }
 
   useEffect(() => {
     let chart;
@@ -20,7 +29,7 @@ const PieChartCmp = ({ id, colors, data, total, internalTitle }) => {
     const graphInternalText= `
     <div style="display:flex;flex-direction: column;  align-items:center;">
       <span style="font-size: 20px; color: black;"><span style="font-weight: bold;">${
-        data.attending ? data.attending : data.attendingWithSeats
+        content
       }</span></span>
      
       <span style="font-size: 12px;margin-top:3px; text-align: center;">

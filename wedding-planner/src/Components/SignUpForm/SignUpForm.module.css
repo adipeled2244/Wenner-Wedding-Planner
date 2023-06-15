@@ -1,11 +1,13 @@
 
  .signupForm{
-         width:500px;
-         background: #F5F7FA;
+   width:fit-content;
+   margin: 0 auto;         
+   background: #F5F7FA;
          display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            margin: 0 auto;
      }
     
      .names{
@@ -54,4 +56,28 @@
         padding: 5px;
         border-radius: 5px;
         box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
+     }
+
+     .date{
+        background-color: #ffffff !important;
+        padding: 8px;
+        /* position: absolute; */
+        /* transform: translate(-50%,-50%); */
+        /* top: 50%;
+        left: 50%; */
+        font-family: "Roboto Mono",monospace;
+        color: #7e7a7a;
+        font-size: 18px;
+        border: 1px solid #b8b6b6;
+        /* border: none; */
+        outline: #7441d3;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        width:45.5%;
+     }
+
+     .datetime{
+        display:flex;
+        justify-content: space-between;
+
      }

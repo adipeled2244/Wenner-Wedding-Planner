@@ -2,6 +2,8 @@ const express = require('express');
 const app= express();
 const port = process.env.PORT || 3000;
 const { userRouter } = require("./routers/userRouter");
+const { authRouter } = require("./routers/authRouter");
+const { checkAuth } = require("./utils/auth");
 
 app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +18,10 @@ app.use((req, res, next) => {
     
     next();
   });
+
+  app.use("/api/auth", authRouter);
+  app.use(checkAuth)
+
 
 app.use("/api/users", userRouter);
 

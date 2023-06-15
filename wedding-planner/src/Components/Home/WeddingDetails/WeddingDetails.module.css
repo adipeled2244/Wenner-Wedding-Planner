@@ -7,9 +7,10 @@
     justify-content: center;
       justify-content: space-between;
       max-width: 670px;
-      max-height: 800px;
+      /* max-height: 800px; */
         height:100%;
-      padding-top:70px;
+      padding :20px;
+      position: relative;
       /* margin: 0 auto; */
       /* margin-top: 20px; */
 }
