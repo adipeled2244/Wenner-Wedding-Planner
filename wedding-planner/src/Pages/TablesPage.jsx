@@ -99,9 +99,7 @@ const TablesPage = (props) => {
     }
   };
 
-  useEffect(() => {
-    setPreparedTables(prepareTables());
-  }, [tables]);
+
 
   const handleDragTable = (e, data) => {
     const tableIndex = preparedTables.findIndex(

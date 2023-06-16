@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import Card from "../UI/Card/Card";
 import classes from "./LoginForm.module.css";
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../../Store/user-context";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -26,11 +26,11 @@ export const LoginForm = () => {
     navigate("/home")
    }
    else{
-    console.log(res.message)
     toast.error(res.message)
    }
-    //set token
+  
   };
+
 
   return (
     <>

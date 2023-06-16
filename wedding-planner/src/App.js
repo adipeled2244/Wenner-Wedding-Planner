@@ -9,6 +9,12 @@ import TablesPage from "./Pages/TablesPage";
 import UserProvider from "./Store/userProvider";
 import {SignUpForm} from "./Components/SignUpForm/SignUpForm"
 import {LoginForm} from "./Components/LoginForm/LoginForm"
+import { Redirect } from "react-router-dom";
+
+
+function App() {
+
+  const isLoggedIn = localStorage.getItem("token") ? true : false;
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,14 +25,14 @@ const router = createBrowserRouter([
       { path: "/home", element: <HomePage /> },
       { path: "/guests", element: <GuestsPage /> },
       { path: "/tables", element: <TablesPage /> },
-      { path: "/signup", element: <SignUpForm /> },
-      { path: "/", element: <LoginForm /> },
+      { path: "/signup",element: isLoggedIn ? <HomePage />  : <SignUpForm /> },
+    
+      { path: "/", element: isLoggedIn ? <HomePage />  : <LoginForm /> },
 
     ],
   },
 ]);
 
-function App() {
   return (
     <UserProvider>
       <RouterProvider router={router} />

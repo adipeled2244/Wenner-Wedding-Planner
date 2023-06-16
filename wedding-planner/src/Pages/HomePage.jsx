@@ -12,8 +12,7 @@ import { toastContainerConfig } from "../Utils/Constants/toastConfig";
 
 const HomePage = (props) => {
   const { user } = useContext(UserContext);
-
-  return (
+   return (
     <>
       <Head headerName={`${user.brideName} and ${user.groomName} wedding`} />
       <div className={classes.container}>

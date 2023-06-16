@@ -10,6 +10,7 @@ const MainNavigation = () => {
   
   const handleLogout=()=>{
     localStorage.removeItem("token");
+    localStorage.removeItem("userContext");
     navigate("/")
   }
 

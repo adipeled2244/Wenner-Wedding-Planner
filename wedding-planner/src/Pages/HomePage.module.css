@@ -3,10 +3,11 @@
     justify-content:center;
     gap:10px;
     background: #F3F3F5;
-    width: 100%;
-    padding:20px;
+    
+    padding-top:20px;
     overflow-x: hidden;
     height:100vh;
     overflow-y: hidden;
+    /* padding-bottom: 500px; */
     /* flex-wrap: wrap; */
 }

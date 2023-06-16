@@ -16,9 +16,7 @@ const Checklist = () => {
   const checklist = user.checklist;
   const [internalCheckList, setInternalCheckList] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [checkedNumber, setCheckedNumber] = useState(
-    internalCheckList.filter((item) => item.checked).length
-  );
+  const [checkedNumber, setCheckedNumber] = useState(0);
 
   // initizlize checklist from store.
   useEffect(() => {

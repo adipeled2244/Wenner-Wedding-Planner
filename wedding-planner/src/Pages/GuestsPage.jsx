@@ -56,10 +56,6 @@ let dataToCsv =  guests.length > 0 ?  ToCsv(
   })
 ): []; 
 
-  useEffect(() => {
-    setRowsAfterFilter(guests);
-   
-  }, [guests]);
 
   const filterChange = (filtersMap) => {
     let filteredRows = [];

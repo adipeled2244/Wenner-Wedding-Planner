@@ -64,8 +64,11 @@ function UserProvider(props) {
       if (res.status === 200) {
         const token = res.data.token;
         const user = res.data.user;
+        console.log(res.data.user)
         setUser(user);
         localStorage.setItem("token", token);
+        localStorage.setItem("userContext", JSON.stringify(user));
+
         return { status: 200, message: "login success" };
       } else {
         return { status: 400, message: "login not success" };
@@ -76,6 +79,8 @@ function UserProvider(props) {
 
     //toaster error
   }
+
+ 
 
   async function updateChecklist(checklist) {
     console.log("in provider")
@@ -144,18 +149,6 @@ function UserProvider(props) {
     }
   }
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await getUser("6463f4b5954d0fa53015acdd");
-  //     if (res.status === 200) {
-  //       setUser(res.data.user);
-  //     }
-  //   }
-  //   //TODO:  init user from server
-
-  //   fetchData();
-  // }, []);
-
   const userContext = {
     user,
     setUser,
@@ -167,6 +160,13 @@ function UserProvider(props) {
     handleSignup,
     handleLogin,
   };
+
+  // IN REFRESH INITALIZE THE CONTEXT
+  useEffect(() => {
+    if(localStorage.getItem("userContext")){
+      setUser(JSON.parse(localStorage.getItem("userContext")))
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={userContext}>
