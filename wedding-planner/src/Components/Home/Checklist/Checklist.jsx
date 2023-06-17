@@ -70,7 +70,7 @@ const Checklist = () => {
 
   const renderChecklist = (
     <FormGroup>
-      {internalCheckList.map((task, index) => {
+      { internalCheckList.map((task, index) => {
         return (
           <FormControlLabel
             key={index}

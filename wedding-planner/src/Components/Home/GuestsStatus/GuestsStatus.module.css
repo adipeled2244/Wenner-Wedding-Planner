@@ -1,5 +1,8 @@
 .guestsStatusess {
   max-width: 315px;
+  max-height:500px;
+  height:100%;
+  position:relative;
   /* max-height: 460px; */
   /* height:fit-content; */
   /* overflow-y: hidden;
@@ -17,12 +20,14 @@
   margin-bottom: 20px;
 }
 
-.linkList {
-    text-decoration: none;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
+
+.viewList{
+  text-decoration: none;
+  color: #5f41d9;
+  font-size: 16px;
   line-height: 150%;
   letter-spacing: 0.2px;
-  color: #5f41d9;
+  position: absolute;
+  bottom: 15px;
+  left:15px;
 }

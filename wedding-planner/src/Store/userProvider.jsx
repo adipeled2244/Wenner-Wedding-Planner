@@ -105,7 +105,7 @@ function UserProvider(props) {
     table.tableNumber = tableNumber;
     table.x = 0;
     table.y = 0;
-
+    
     const res = await addTableToUser(user._id, { table });
     table._id = res.data.table._id;
 

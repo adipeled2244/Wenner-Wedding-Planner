@@ -22,9 +22,9 @@ const Seats = () => {
   const [attendingWithSeats, setAttendingWithSeats] =  useState(calculateGuestsWithTable());
 
 
-  // useEffect(() => {
-  //   calculateGuestsWithTable();
-  // }, [guests])
+  useEffect(() => {
+    calculateGuestsWithTable();
+  }, [guests])
 
 // useEffect(() => {
 //   const guestsWithTable=guests.filter((guest) =>guest?.table)
@@ -52,10 +52,7 @@ const Seats = () => {
       <div style={{ marginTop: "43px" }}>
         <Link
           to="/tables"
-          style={{
-            textDecoration: "none",
-            color: "#5F41D9",
-          }}
+         className={classes.viewList}
         >
           View list
         </Link>

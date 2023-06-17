@@ -46,7 +46,7 @@ const GuestsStatus = () => {
         internalTitle={"Attending"}
       />
       <StatusAttending data={data} total={total} />
-      <Link to="/guests" style={{ textDecoration: "none", color: "#5F41D9" }}>
+      <Link to="/guests" className={classes.viewList} >
         View list
       </Link>
     </Card>
