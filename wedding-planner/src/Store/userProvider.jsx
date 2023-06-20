@@ -110,7 +110,7 @@ function UserProvider(props) {
     table._id = res.data.table._id;
 
     if (res.status === 200) {
-      setUser({ ...user, tables: [...user.tables, table] });
+      setUser({ ...user, tables: [...user.tables,table] });
     }
   }
 

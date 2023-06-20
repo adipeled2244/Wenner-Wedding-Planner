@@ -28,39 +28,54 @@ const formAddGuestStyle = {
 
 const GuestPage = (props) => {
   const { user } = useContext(UserContext);
-  const { guests } = user;
+  // const { guests } = user;
+  const [guests, setGuests] = useState([]);
   const [open, setOpen] = useState(false);
   const [rowsAfterFilter, setRowsAfterFilter] = useState(guests);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
- 
-let dataToCsv =  guests.length > 0 ?  ToCsv(
-  guests.map((guest) => {
-    return {
-      name: guest.name,
-      email: guest.email,
-      phone: guest.phone,
-      side: guest.side,
-      invitation: guest.invitation ? "Sent" : "not send yet",
-      status:
-        guest.status === "notAttending"
-          ? "Not Attending"
-          : guest.status === "attending"
-          ? "Attending"
-          : "Not Replied",
-      attending: guest.attending,
-      group: guest.group,
-      table: guest.table == 0 ? "" : guest.table,
-    };
-  })
-): []; 
+  useEffect(() => {
+    console.log("guests:", guests);
+    setRowsAfterFilter(guests);
+  }, [guests]);
 
+  useEffect(() => {
+    console.log("user updated");
+    const { guests } = user;
+    console.log("guests updated:", guests);
+    setGuests(guests);
+    setRowsAfterFilter(guests);
+  }, [user]);
+
+  let dataToCsv =
+    guests.length > 0
+      ? ToCsv(
+          guests.map((guest) => {
+            return {
+              name: guest.name,
+              email: guest.email,
+              phone: guest.phone,
+              side: guest.side,
+              invitation: guest.invitation ? "Sent" : "not send yet",
+              status:
+                guest.status === "notAttending"
+                  ? "Not Attending"
+                  : guest.status === "attending"
+                  ? "Attending"
+                  : "Not Replied",
+              attending: guest.attending,
+              group: guest.group,
+              table: guest.table == 0 ? "" : guest.table,
+            };
+          })
+        )
+      : [];
 
   const filterChange = (filtersMap) => {
     let filteredRows = [];
-    console.log(guests.length)
-  if(guests.length===0) return filteredRows;
+    console.log(guests.length);
+    if (guests.length === 0) return filteredRows;
     filteredRows = guests.filter((row) => {
       if (
         (row.attending == filtersMap.get("attending") ||
@@ -90,8 +105,10 @@ let dataToCsv =  guests.length > 0 ?  ToCsv(
         headerName={"Guests"}
       />
       <Filters onFilterChange={filterChange} />
-      {guests.length>0 && <GuestsTable rowsAfterFilter={rowsAfterFilter} />}
-      {guests.length===0 &&  <div style={{marginLeft:"30px"}} >No guests yet</div>}
+      {guests.length > 0 && <GuestsTable rowsAfterFilter={rowsAfterFilter} />}
+      {guests.length === 0 && (
+        <div style={{ marginLeft: "30px" }}>No guests yet</div>
+      )}
       <Modal
         open={open}
         onClose={handleClose}

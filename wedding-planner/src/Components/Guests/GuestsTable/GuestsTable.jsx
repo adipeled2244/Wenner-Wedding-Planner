@@ -1,5 +1,5 @@
 import classes from "./GuestsTable.module.css";
-import  React, {useState} from "react";
+import  React, {useState,useEffect} from "react";
 import { useContext } from "react";
 import UserContext from "../../../Store/user-context";
 
@@ -47,6 +47,7 @@ function stableSort(array, comparator) {
 
 
 function GuestsTable({ rowsAfterFilter }) {
+  console.log(rowsAfterFilter)
   const { updateGuests } = useContext(UserContext);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
@@ -111,16 +112,21 @@ function GuestsTable({ rowsAfterFilter }) {
       ? Math.max(0, (1 + page) * rowsPerPage - rowsAfterFilter.length)
       : 0;
 
+      
+      console.log(rowsAfterFilter)
+
   //change table sort ,order, page
-  const visibleRows = React.useMemo(() =>
-    //changerows to rowsafterfilter
-    {
-      return stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
+  // let visibleRows=rowsAfterFilter;
+  const [visibleRows, setVisibleRows] = useState(rowsAfterFilter);
+    useEffect(() => {
+      console.log("rowsAfterFilter:",rowsAfterFilter)
+      // visibleRows= stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
+        setVisibleRows(stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
-      );
-    }, [order, orderBy, page, rowsPerPage, rowsAfterFilter]);
-
+      ));
+    }, [order, orderBy, page, rowsPerPage, rowsAfterFilter])
+ 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>

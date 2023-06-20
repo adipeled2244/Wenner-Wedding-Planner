@@ -87,7 +87,7 @@ exports.userController = {
         userIdParam,
         userParams
       );
-      const newGuest = user.guests[user.guests.length - 1];
+      const newGuest = updatedUser.guests[updatedUser.guests.length - 1];
       return res.status(200).json({ message: "Guest added", guest: newGuest });
     } catch (err) {
       res

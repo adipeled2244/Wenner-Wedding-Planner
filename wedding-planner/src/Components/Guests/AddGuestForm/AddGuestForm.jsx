@@ -41,6 +41,7 @@ const AddGuestForm = ({ onClose }) => {
     }
 
     try {
+      guest.invitation = false;
       await addGuest(guest);
       toast.success("Add guest successfully!", toastConfig);
     } catch (err) {
