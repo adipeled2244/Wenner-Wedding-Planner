@@ -56,7 +56,7 @@ const GuestPage = (props) => {
               name: guest.name,
               email: guest.email,
               phone: guest.phone,
-              side: guest.side,
+              side: guest.side==="brideAndGroom" ? "bride and groom" : guest.side,
               invitation: guest.invitation ? "Sent" : "not send yet",
               status:
                 guest.status === "notAttending"
@@ -64,9 +64,9 @@ const GuestPage = (props) => {
                   : guest.status === "attending"
                   ? "Attending"
                   : "Not Replied",
-              attending: guest.attending,
+              attending: guest.attending === null ? "" : guest.attending,
               group: guest.group,
-              table: guest.table == 0 ? "" : guest.table,
+              table: guest.table == undefined ? "Not assign yet" : guest.table,
             };
           })
         )
