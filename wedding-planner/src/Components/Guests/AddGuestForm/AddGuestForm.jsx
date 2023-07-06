@@ -34,14 +34,18 @@ const AddGuestForm = ({ onClose }) => {
 
   const handleSubmit = async () => {
     const guest = form.values;
+    console.log(guest)
+    guest.invitation = true;
     if (guest.attending > 0) {
       guest.status = "attending";
-    } else {
+    } else if (guest.attending == "") {
+      guest.status = "notReplied";
+    } else{
+      guest.invitation = false;
       guest.status = "notAttending";
     }
 
     try {
-      guest.invitation = false;
       await addGuest(guest);
       toast.success("Add guest successfully!", toastConfig);
     } catch (err) {
@@ -125,7 +129,6 @@ const AddGuestForm = ({ onClose }) => {
   const attendingInput = (
     <NumberInput
       mt="sm"
-      required
       label="Attending"
       placeholder="Attending"
       min={0}

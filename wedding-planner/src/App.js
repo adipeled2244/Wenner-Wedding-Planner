@@ -14,7 +14,7 @@ import { Redirect } from "react-router-dom";
 
 function App() {
 
-  const isLoggedIn = localStorage.getItem("token") ? true : false;
+const isLoggedIn = localStorage.getItem("token") ? true : false;
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,8 +26,7 @@ const router = createBrowserRouter([
       { path: "/guests", element: <GuestsPage /> },
       { path: "/tables", element: <TablesPage /> },
       { path: "/signup",element: isLoggedIn ? <HomePage />  : <SignUpForm /> },
-    
-      { path: "/", element: isLoggedIn ? <HomePage />  : <LoginForm /> },
+        { path: "/", element: isLoggedIn ? <HomePage />  : <LoginForm /> },
 
     ],
   },

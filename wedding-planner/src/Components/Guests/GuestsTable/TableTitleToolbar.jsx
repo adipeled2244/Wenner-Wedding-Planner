@@ -22,7 +22,7 @@ export const TableTitleToolbar = (props) => {
           <SendIcon />
         )}
       >
-        Send invitation{" "}
+       Send arrival confirmation 
       </Button>
     </div>
   );

@@ -1,5 +1,4 @@
-import classes from "./GuestsTable.module.css";
-import  React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import UserContext from "../../../Store/user-context";
 
@@ -10,12 +9,9 @@ import { TableTitleToolbar } from "./TableTitleToolbar";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -27,12 +23,15 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-function getComparator(order, orderBy) {
+
+// generate a comparator function based on the order and orderBy parameters. 
+function getComparatorFunction(order, orderBy) {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+//stable sorting operation on the array using the provided comparator function
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -45,15 +44,14 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-
 function GuestsTable({ rowsAfterFilter }) {
-  console.log(rowsAfterFilter)
-  const { updateGuests } = useContext(UserContext);
+   const { updateGuests } = useContext(UserContext);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] =useState(25);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
+  const [visibleRows, setVisibleRows] = useState(rowsAfterFilter);
 
   const sendInvitations = () => {
     updateGuests(selected, { invitation: true });
@@ -107,26 +105,21 @@ function GuestsTable({ rowsAfterFilter }) {
   const isSelected = (_id) => selected.indexOf(_id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - rowsAfterFilter.length)
-      : 0;
+  // const emptyRows =
+  //   page > 0
+  //     ? Math.max(0, (1 + page) * rowsPerPage - rowsAfterFilter.length)
+  //     : 0;
 
-      
-      console.log(rowsAfterFilter)
 
-  //change table sort ,order, page
-  // let visibleRows=rowsAfterFilter;
-  const [visibleRows, setVisibleRows] = useState(rowsAfterFilter);
-    useEffect(() => {
-      console.log("rowsAfterFilter:",rowsAfterFilter)
-      // visibleRows= stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
-        setVisibleRows(stableSort(rowsAfterFilter, getComparator(order, orderBy)).slice(
+  useEffect(() => {
+    setVisibleRows(
+      stableSort(rowsAfterFilter, getComparatorFunction(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
-      ));
-    }, [order, orderBy, page, rowsPerPage, rowsAfterFilter])
- 
+      )
+    );
+  }, [order, orderBy, page, rowsPerPage, rowsAfterFilter]); // recalculates visible rows when any of these change
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -165,7 +158,7 @@ function GuestsTable({ rowsAfterFilter }) {
                   />
                 );
               })}
-              {emptyRows > 0 && (
+              {/* {emptyRows > 0 && (
                 <TableRow
                   style={{
                     height: 53 * emptyRows,
@@ -173,7 +166,7 @@ function GuestsTable({ rowsAfterFilter }) {
                 >
                   <TableCell colSpan={6} />
                 </TableRow>
-              )}
+              )} */}
             </TableBody>
           </Table>
         </TableContainer>

@@ -3,8 +3,6 @@ import "./Pie.css";
 import Highcharts from "highcharts";
 
 const PieChartCmp = ({ id, colors, data, total, internalTitle }) => {
-
-
   function getData(year) {
     const output = Object.entries(data).map((entry) => {
       const [category, value] = entry;
@@ -13,24 +11,21 @@ const PieChartCmp = ({ id, colors, data, total, internalTitle }) => {
 
     return [output[0], output];
   }
-let content=0;
-  if(!data.attending && !data.attendingWithSeats) {
- content=0;
-  }
-  else if (data.attending){
-    content=data.attending;
-  } else{
-    content=data.attendingWithSeats;
+  let content = 0;
+  if (!data.attending && !data.attendingWithSeats) {
+    content = 0;
+  } else if (data.attending) {
+    content = data.attending;
+  } else {
+    content = data.attendingWithSeats;
   }
 
   useEffect(() => {
     let chart;
     const slashTotal = `/${total}`;
-    const graphInternalText= `
+    const graphInternalText = `
     <div style="display:flex;flex-direction: column;  align-items:center;">
-      <span style="font-size: 20px; color: black;"><span style="font-weight: bold;">${
-        content
-      }</span></span>
+      <span style="font-size: 20px; color: black;"><span style="font-weight: bold;">${content}</span></span>
      
       <span style="font-size: 12px;margin-top:3px; text-align: center;">
         
@@ -40,14 +35,14 @@ let content=0;
 
     // create the chart
 
-    const graphConfig= {
+    const graphConfig = {
       title: {
         text: "",
         align: "center",
       },
       subtitle: {
         useHTML: true,
-        text:graphInternalText,
+        text: graphInternalText,
         floating: true,
         verticalAlign: "middle",
         y: 12,
@@ -82,11 +77,10 @@ let content=0;
           data: getData()[1],
         },
       ],
-    }
+    };
 
-    chart = Highcharts.chart(`container-${id}`, graphConfig );
+    chart = Highcharts.chart(`container-${id}`, graphConfig);
   }, [data.attending, data.attending, data.attendingWithSeats]);
-
 
   return (
     <figure className="highcharts-figure">

@@ -44,7 +44,7 @@ const Seats = () => {
     <Card className={classes.seats}>
       <div className={classes.title}>Seats</div>
       <PieChartCmp
-        id="1"
+        id="seats"
         colors={colors}
         data={data}
         internalTitle={"Taken Seats"}

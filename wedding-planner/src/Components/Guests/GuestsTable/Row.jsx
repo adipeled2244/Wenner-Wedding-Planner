@@ -45,7 +45,7 @@ const { row, index, isItemSelected, handleCheckboxClick,labelId  } = props;
     >
       {row.name}
     </TableCell>
-    <TableCell align="left">{row.side}</TableCell>
+    <TableCell align="left">{row.side==="brideAndGroom"? "bride And groom" :row.side }</TableCell>
     <TableCell align="left">{row.group}</TableCell>
     <TableCell align="left">{row.email}</TableCell>
     <TableCell align="left">{row.phone}</TableCell>
@@ -70,7 +70,7 @@ const { row, index, isItemSelected, handleCheckboxClick,labelId  } = props;
       )}
     </TableCell>
     <TableCell align="left">
-      {row.attending !== 0 && (
+      {row.status =="attending" && (
         <div className={classes.invitation}>
           {" "}
           <CheckCircleOutlineOutlinedIcon
@@ -88,18 +88,23 @@ const { row, index, isItemSelected, handleCheckboxClick,labelId  } = props;
           </span>
         </div>
       )}
-      {row.attending === 0 && (
+      {row.status =="notAttending"  && (
         <div className={classes.invitation}>
-          {row.status === "notAttending" ? (
+         
             <HighlightOffIcon
               sx={{
                 color: "#cf142b",
               }}
               fontSize="small"
             />
-          ) : (
-            "Not Replied"
-          )}
+         
+        </div>
+      )}
+       {row.status =="notReplied"  && (
+        <div className={classes.invitation}>
+         
+           Not Replied
+          
         </div>
       )}
     </TableCell>
