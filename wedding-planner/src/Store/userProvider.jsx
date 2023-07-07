@@ -9,6 +9,7 @@ import {
   addTableToUser,
   signup,
   login,
+  generateSeats
 } from "../ServerApi/userApi";
 import { toast } from "react-toastify";
 // import { debounce } from "lodash";
@@ -56,15 +57,12 @@ function UserProvider(props) {
   }
 
   async function handleLogin(name, password) {
-    console.log(name, password);
-    let res;
+     let res;
     try {
       res = await login({ name, password }); // why nit going to else?? only to catach if status!=200
-      console.log(res)
       if (res.status === 200) {
         const token = res.data.token;
         const user = res.data.user;
-        console.log(res.data.user)
         setUser(user);
         localStorage.setItem("token", token);
         localStorage.setItem("userContext", JSON.stringify(user));
@@ -83,8 +81,7 @@ function UserProvider(props) {
  
 
   async function updateChecklist(checklist) {
-    console.log("in provider")
-    const res = await updateUser(user._id, { checklist });
+     const res = await updateUser(user._id, { checklist });
     if (res.status === 200) {
       setUser({ ...user, checklist });
     }
@@ -142,6 +139,14 @@ function UserProvider(props) {
     setUser({ ...user, guests: finalGuests });
   }
 
+  async function updateSeats() {
+    const res = await generateSeats(user._id );
+    if (res.status === 200) {
+        setUser({ ...user, guests: res.data.updatedGuests });
+    }
+    
+  }
+
   async function updateTables(tables) {
     const res = await updateUser(user._id, { tables });
     if (res.status === 200) {
@@ -159,6 +164,7 @@ function UserProvider(props) {
     addTable,
     handleSignup,
     handleLogin,
+    updateSeats
   };
 
   // IN REFRESH INITALIZE THE CONTEXT

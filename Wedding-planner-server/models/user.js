@@ -5,25 +5,24 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
-      
     },
-    name: { type: String},
+    name: { type: String },
     password: { type: String },
-    phone: { type: String},
-    address: { type: String},
-    weddingDate: { type: Date},
-    weddingLocation: { type: String},
-    weddingTime: { type: String},
-    weddingVenue: { type: String},
-    weddingVenueAddress: { type: String},
-    groomName: { type: String},
-    brideName: { type: String},
-    img: { type: String},
+    phone: { type: String },
+    address: { type: String },
+    weddingDate: { type: Date },
+    weddingLocation: { type: String },
+    weddingTime: { type: String },
+    weddingVenue: { type: String },
+    weddingVenueAddress: { type: String },
+    groomName: { type: String },
+    brideName: { type: String },
+    img: { type: String },
 
     checklist: [
       { label: { type: String }, checked: { type: Boolean, default: false } },
     ],
-    guests:[
+    guests: [
       {
         name: { type: String },
         email: { type: String },
@@ -34,21 +33,19 @@ const userSchema = new Schema(
         seat: { type: Number },
         side: { type: String },
         group: { type: String },
-        attending: { type: Number ,default: 0  },
+        attending: { type: Number, default: 0 },
         status: { type: String },
-      }
-      
+      },
     ],
     tables: [
       {
-      tableNumber: {type: Number},
-      x : {type: Number,default: 0 },
-      y : {type: Number,default: 0 },
-      tableTypeId: {type: Number},
-      selectedMaxSeats : {type: Number},
-    }]
-
-      
+        tableNumber: { type: Number },
+        x: { type: Number, default: 0 },
+        y: { type: Number, default: 0 },
+        tableTypeId: { type: Number },
+        selectedMaxSeats: { type: Number },
+      },
+    ],
   },
   { collection: "users" }
 );
@@ -56,7 +53,3 @@ const userSchema = new Schema(
 const User = model("User", userSchema);
 
 module.exports = User;
-
-       
-       
-       

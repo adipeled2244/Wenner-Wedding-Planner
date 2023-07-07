@@ -7,13 +7,11 @@ exports.authController = {
   async login(req, res) {
     const name = req.body.name;
   const password = req.body.password;
-console.log(name,password)
-  let user;
+   let user;
   try {
     user = await userService.getUserByName(name);
     if(user===null){
-      console.log("user null" )
-
+ 
       return res.status(400).json({
         error: 'User not exist',
       });
@@ -30,8 +28,7 @@ console.log(name,password)
     }
   
     const token = createJSONToken(name);
-    console.log(200)
-    res.status(200).json({ user,token });
+     res.status(200).json({ user,token });
 
     
   } catch (error) {
@@ -49,8 +46,7 @@ console.log(name,password)
   
       try {
         const existingUser =await userService.getUserByName(data.name);
-        console.log(existingUser)
-        if (existingUser) {
+         if (existingUser) {
           return res.status(400).json({
           error: 'Username exists already.',
          });
@@ -58,21 +54,11 @@ console.log(name,password)
       } catch (error) {}
     
       
-    // if (!isValidText(data.password, 8)) {
-    //   errors.password = 'Invalid password. Must be at least 8 characters long.';
-    // }
   
-    // if (Object.keys(errors).length > 0) {
-    //   return res.status(422).json({
-    //     message: 'User signup failed due to validation errors.',
-    //     errors,
-    //   });
-    // }
   
     try {
       const createdUser = await userService.addUser(data);
-      console.log(createdUser)
-      const authToken = createJSONToken(createdUser.name);
+       const authToken = createJSONToken(createdUser.name);
       res
         .status(200)
         .json({ message: 'User created.', user: createdUser, token: authToken });

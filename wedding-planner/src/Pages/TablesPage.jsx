@@ -19,9 +19,10 @@ import {DragTables} from "../Components/Tables/DragTables/DragTables";
 import {toastContainerConfig} from "../Utils/Constants/toastConfig";
 
 const TablesPage = (props) => {
-  const { user, updateTables } = useContext(UserContext);
+  const { user, updateTables,updateSeats } = useContext(UserContext);
   const tables = user.tables;
   const guests = user.guests;
+  console.log("guests table page", guests)
   const ref = createRef(null);
   const [image, takeScreenShot] = useScreenshot({
     type: "image/jpeg",
@@ -77,11 +78,13 @@ const TablesPage = (props) => {
     const sortedGuests = guests.sort((a, b) => a.table - b.table);
     let data = [];
     sortedGuests.forEach((guest) => {
-      const tableNumber = guest.table ? guest.table : "Not assigned";
+      const tableNumber = guest.table ? guest.table : "Not assigne yet";
       const row = {
-        table: tableNumber,
         name: guest.name,
-        attending: guest.attending,
+        group: guest.group,
+        table: tableNumber,
+        attending: guest.attending==null? " " :guest.attending,
+        
       };
       data.push(row);
     });
@@ -99,7 +102,15 @@ const TablesPage = (props) => {
     }
   };
 
+  const handleGenerateSeats = async () => {
+    try {
+      await updateSeats();
+      toast.success("Generate seats successfully!", toastConfig);
+    } catch (err) {
+      toast.error("Generate seats failed!", toastConfig);
+    }
 
+  }
 
   const handleDragTable = (e, data) => {
     const tableIndex = preparedTables.findIndex(
@@ -114,6 +125,7 @@ const TablesPage = (props) => {
   };
 
 
+  console.log("guests adika", guests)
   return (
     <>
       <Head
@@ -124,6 +136,7 @@ const TablesPage = (props) => {
             downloadScreenshot={downloadScreenshot}
             handleSavePositions={handleSavePositions}
             handleOpen={handleOpenModalAddTable}
+            handleGenerateSeats={ handleGenerateSeats}
           />
         }
         headerName="Tables"

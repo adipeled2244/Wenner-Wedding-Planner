@@ -8,6 +8,7 @@ userRouter.get('/:userId', userController.getUser);
 userRouter.post('/', userController.addUser);
 
 //guests
+userRouter.patch('/:userId/guests/tables', userController.assignUserGuestsToTables);
 userRouter.post('/:userId/guests', userController.addGuestToUser);
 userRouter.patch('/:userId/guests/:guestId', userController.updateUserGuest);
 

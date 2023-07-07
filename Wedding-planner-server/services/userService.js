@@ -2,6 +2,7 @@ const User = require("../models/user");
 const logger = require("../helpers/winston");
 const path = require("path");
 const ObjectId = require("mongoose").Types.ObjectId;
+const {assignSeatsToTablesForAll,createMapGuestandTable} = require ("../modules/tables");
 
 module.exports = {
   addUser,
@@ -10,7 +11,8 @@ module.exports = {
   getUsers,
   addGuestToUser,
   addTableToUser,
-  getUserByName
+  getUserByName,
+  assignUserGuestsToTables
 };
 
 async function getUser(id) {
@@ -54,4 +56,29 @@ async function addUser(params) {
     user.tables.push(params.table);
     return await user.save();
   }
+
+  async function assignUserGuestsToTables(id) {
+    const user = await User.findById(id);
+    const guests = user.guests;
+    const tables = user.tables;
+    
+    const assigns = JSON.stringify(assignSeatsToTablesForAll(guests, tables), null, 2)
+    const mapGuestAndTable = createMapGuestandTable(assigns);
+    console.log("mapGuestAndTable",mapGuestAndTable)
+    for (const guest of guests) {
+       const guestId = guest._id.toString();
+      const tableNumber = mapGuestAndTable.get(guestId);
+
+      guest.table=tableNumber;
+     }
+     
+     await User.findByIdAndUpdate(id, {...user, guests})
+
+     return guests ;
+     // return await User.updateOne(
+    //   { _id: id },
+    //   { guests }
+    // );
+
+   }
 

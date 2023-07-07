@@ -17,6 +17,13 @@ export const login = async (body) => {
    
 };
 
+export const generateSeats=async(userId)=>{
+  const res = await axios.patch(`${baseUrl}/users/${userId}/guests/tables`, {},
+  {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+    return res;
+  };
 
 export const updateUser = async (userId, body) => {
   // const  config = {

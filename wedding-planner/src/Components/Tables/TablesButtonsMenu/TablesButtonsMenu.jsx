@@ -8,7 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {getButtonConfig} from '../../../Utils/UIConfig/buttonsConfig'
 
 export  const TablesButtonsMenu=(props) =>{
-    const { dataToCsv,onDownload, downloadScreenshot ,handleSavePositions,handleOpen } = props;
+    const { dataToCsv,onDownload, downloadScreenshot ,handleSavePositions,handleOpen, handleGenerateSeats } = props;
 
   return (
     <>
@@ -31,7 +31,7 @@ export  const TablesButtonsMenu=(props) =>{
       Export positions{" "}
     </Button>
     <Button
-      {...getButtonConfig("purple", ()=>{}, "generateSeats", <ChairAltIcon/>)}
+      {...getButtonConfig("purple", handleGenerateSeats, "generateSeats", <ChairAltIcon/>)}
     >
       Generate Seats{" "}
     </Button>

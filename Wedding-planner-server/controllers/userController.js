@@ -143,4 +143,23 @@ exports.userController = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+
+
+  async assignUserGuestsToTables(req, res) {
+    const userIdParam = req.params.userId;
+     try {
+      const updatedGuests = await userService.assignUserGuestsToTables(
+        userIdParam,
+       );
+       console.log("adika this is the new user with guests",updatedGuests);
+
+      return res.status(200).json({ message: "Guests assigned to tables", updatedGuests });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ error: `Error assign guests to tables : ${err}` });
+      return;
+    }
+
+  }
 };
