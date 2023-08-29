@@ -26,10 +26,7 @@ export const generateSeats=async(userId)=>{
   };
 
 export const updateUser = async (userId, body) => {
-  // const  config = {
-  //   headers: { Authorization: `Bearer ${localStorage.get("token")}` }
-  // };
-  // axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.get("token")}`}
+  
   const res = await axios.patch(`${baseUrl}/users/${userId}`, body,
   {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }

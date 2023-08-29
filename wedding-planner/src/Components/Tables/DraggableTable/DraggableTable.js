@@ -23,15 +23,7 @@ const DraggableTable = ({
     const tableGuests = guests.filter((guest) => guest.table === tableNumber);
     
     return (
-    //   <div
-    //   style  = {{
-    //     position: "absolute",
-    //     top: "0",
-    //     left: "0",
-    //     width: "0",
-    //     height: "0",
-    //   }}
-    //   >
+
     <>
         <Draggable onStop={handleDragTable} defaultPosition={{ x: x, y: y }}  
             // bounds={{left: 0, top: 0, right:"100%", bottom:0 }}

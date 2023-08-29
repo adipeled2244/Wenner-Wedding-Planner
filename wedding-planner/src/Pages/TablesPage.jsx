@@ -15,14 +15,13 @@ import { toastConfig } from "../Utils/Constants/toastConfig";
 import { TablesButtonsMenu } from "../Components/Tables/TablesButtonsMenu/TablesButtonsMenu";
 
 import { useScreenshot, createFileName } from "use-react-screenshot";
-import {DragTables} from "../Components/Tables/DragTables/DragTables";
-import {toastContainerConfig} from "../Utils/Constants/toastConfig";
+import { DragTables } from "../Components/Tables/DragTables/DragTables";
+import { toastContainerConfig } from "../Utils/Constants/toastConfig";
 
 const TablesPage = (props) => {
-  const { user, updateTables,updateSeats } = useContext(UserContext);
+  const { user, updateTables, updateSeats } = useContext(UserContext);
   const tables = user.tables;
   const guests = user.guests;
-  console.log("guests table page", guests)
   const ref = createRef(null);
   const [image, takeScreenShot] = useScreenshot({
     type: "image/jpeg",
@@ -35,7 +34,8 @@ const TablesPage = (props) => {
     a.download = createFileName(extension, name);
     a.click();
   };
-  const downloadScreenshot = () => takeScreenShot(ref.current).then(exportPositions);
+  const downloadScreenshot = () =>
+    takeScreenShot(ref.current).then(exportPositions);
 
   const onDownload = () => {
     console.log("download");
@@ -83,15 +83,14 @@ const TablesPage = (props) => {
         name: guest.name,
         group: guest.group,
         table: tableNumber,
-        attending: guest.attending==null? " " :guest.attending,
-        
+        attending: guest.attending == null ? " " : guest.attending,
       };
       data.push(row);
     });
     return data;
   };
 
-  let dataToCsv = guests.length>0 ? ToCsv(createDataCsvGuestsTables()) :[]
+  let dataToCsv = guests.length > 0 ? ToCsv(createDataCsvGuestsTables()) : [];
 
   const handleSavePositions = async () => {
     try {
@@ -109,8 +108,7 @@ const TablesPage = (props) => {
     } catch (err) {
       toast.error("Generate seats failed!", toastConfig);
     }
-
-  }
+  };
 
   const handleDragTable = (e, data) => {
     const tableIndex = preparedTables.findIndex(
@@ -124,8 +122,6 @@ const TablesPage = (props) => {
     setPreparedTables(newTables);
   };
 
-
-  console.log("guests adika", guests)
   return (
     <>
       <Head
@@ -136,26 +132,25 @@ const TablesPage = (props) => {
             downloadScreenshot={downloadScreenshot}
             handleSavePositions={handleSavePositions}
             handleOpen={handleOpenModalAddTable}
-            handleGenerateSeats={ handleGenerateSeats}
+            handleGenerateSeats={handleGenerateSeats}
           />
         }
         headerName="Tables"
       />
       <div className={classes.tablesContainer} style={{ height: vh }} ref={ref}>
-         <DragTables preparedTables={preparedTables} guests={guests} handleDragTable={handleDragTable}  />
+        <DragTables
+          preparedTables={preparedTables}
+          guests={guests}
+          handleDragTable={handleDragTable}
+        />
       </div>
 
-      <Modal
-        open={openModalAddTable}
-        onClose={handleCloseModalAddTable}
-      >
+      <Modal open={openModalAddTable} onClose={handleCloseModalAddTable}>
         <Box sx={modalStyle}>
           <AddTableForm onClose={handleCloseModalAddTable} />
         </Box>
       </Modal>
-      <ToastContainer
-       {...toastContainerConfig}
-      />
+      <ToastContainer {...toastContainerConfig} />
       <ToastContainer />
     </>
   );

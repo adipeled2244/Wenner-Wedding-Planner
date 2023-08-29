@@ -34,8 +34,7 @@ const AddGuestForm = ({ onClose }) => {
 
   const handleSubmit = async () => {
     const guest = form.values;
-    console.log(guest)
-    guest.invitation = true;
+     guest.invitation = true;
     if (guest.attending > 0) {
       guest.status = "attending";
     } else if (guest.attending == "") {

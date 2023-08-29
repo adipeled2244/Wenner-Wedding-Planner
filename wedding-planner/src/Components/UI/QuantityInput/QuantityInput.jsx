@@ -51,8 +51,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function QuantityInput({ min = 1, max = 10, handleChange }) {
- console.log(typeof max)
-  const { classes } = useStyles();
+   const { classes } = useStyles();
   const handlers = useRef(null);
   // let value=Number(max);
   const[value,setValue]=useState(Number(max))

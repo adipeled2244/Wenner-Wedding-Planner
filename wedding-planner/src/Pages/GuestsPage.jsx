@@ -36,15 +36,12 @@ const GuestPage = (props) => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    console.log("guests:", guests);
-    setRowsAfterFilter(guests);
+     setRowsAfterFilter(guests);
   }, [guests]);
 
   useEffect(() => {
-    console.log("user updated");
-    const { guests } = user;
-    console.log("guests updated:", guests);
-    setGuests(guests);
+     const { guests } = user;
+     setGuests(guests);
     setRowsAfterFilter(guests);
   }, [user]);
 
@@ -74,8 +71,7 @@ const GuestPage = (props) => {
 
   const filterChange = (filtersMap) => {
     let filteredRows = [];
-    console.log(guests.length);
-    if (guests.length === 0) return filteredRows;
+     if (guests.length === 0) return filteredRows;
     filteredRows = guests.filter((row) => {
       if (
         (row.attending == filtersMap.get("attending") ||

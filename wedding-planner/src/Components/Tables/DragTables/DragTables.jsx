@@ -4,8 +4,7 @@ import DraggableTable from "../DraggableTable/DraggableTable";
 export const  DragTables=(props) =>{
 
 const {preparedTables, guests, handleDragTable}=props;
-console.log("1", guests)
-  return (
+   return (
      <>
      {
         preparedTables&& preparedTables.map((table, i) => {

@@ -21,8 +21,7 @@ export const LoginForm = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const res= await handleLogin(username, password);
-    console.log(res)
-   if(res.status===200){
+    if(res.status===200){
     navigate("/home")
    }
    else{
